@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>City Smarts Vocab Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  /* City Smarts brand palette */
+  --blue:#4A8FE0;--blue-dark:#2B6CBF;--blue-dim:rgba(74,143,224,.1);--blue-bdr:rgba(74,143,224,.25);
+  --gold:#E8A817;--gold-dim:rgba(232,168,23,.1);--gold-bdr:rgba(232,168,23,.3);
+  --green:#2A9D5C;--green-dim:rgba(42,157,92,.1);--green-bdr:rgba(42,157,92,.3);
+  --red:#D94040;--red-dim:rgba(217,64,64,.08);--red-bdr:rgba(217,64,64,.22);
+  /* Surfaces */
+  --bg:#F5F4F1;--surface:#FFFFFF;--s2:#EFF4FC;--s3:#E2EBF8;
+  /* Typography */
+  --text:#1D1616;--muted:#4A4A4A;--muted2:#888;
+  --border:rgba(0,0,0,.09);
+  /* Font */
+  --font:proxima-nova,'Nunito',system-ui,sans-serif;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);
+  font-family:var(--font);-webkit-font-smoothing:antialiased}
+body{display:flex;flex-direction:column;min-height:100vh}
+
+/* ── HEADER ── */
+header{background:var(--surface);border-bottom:1px solid var(--border);
+  padding:13px 20px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:10;box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.brand-wrap{display:flex;align-items:center;gap:8px}
+.brand-icon{font-size:18px;line-height:1}
+.brand-text{}
+.brand-sub{font-size:9px;letter-spacing:3px;color:var(--gold);
+  text-transform:uppercase;font-weight:700;line-height:1.2}
+.brand-name{font-size:15px;font-weight:800;color:var(--text);letter-spacing:.3px}
+.header-stats{display:flex;align-items:center;gap:20px}
+.hstat{text-align:center}
+.hstat-val{font-size:16px;font-weight:800}
+.hstat-lbl{font-size:8px;color:var(--muted2);text-transform:uppercase;letter-spacing:1.5px}
+
+/* ── NAV ── */
+nav{display:flex;background:var(--surface);border-bottom:2px solid var(--border)}
+nav button{flex:1;padding:13px 8px;border:none;background:transparent;
+  color:var(--muted2);font-size:12px;font-weight:700;cursor:pointer;
+  font-family:var(--font);border-bottom:3px solid transparent;
+  transition:all .18s;letter-spacing:1px;text-transform:uppercase;margin-bottom:-2px}
+nav button.active{color:var(--text);border-bottom-color:var(--gold)}
+
+/* ── MAIN ── */
+main{flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:flex-start;padding:24px 16px 60px}
+
+/* ── CARD ── */
+.card-wrap{width:100%;max-width:480px;height:290px;perspective:1200px;
+  cursor:pointer;margin-bottom:20px}
+.card-flipper{position:relative;width:100%;height:100%;
+  transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.card-wrap.flipped .card-flipper{transform:rotateY(180deg)}
+.card-face{position:absolute;inset:0;backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;border-radius:16px;padding:26px 28px;
+  display:flex;flex-direction:column;
+  box-shadow:0 4px 24px rgba(0,0,0,.1)}
+.card-front{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 100%);
+  border:none}
+.card-back{background:var(--surface);border:1px solid var(--border);
+  transform:rotateY(180deg)}
+.card-tags{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.chip{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  padding:3px 9px;border-radius:20px;white-space:nowrap}
+/* Chips on blue card front — always white regardless of inline style */
+.card-front .chip{background:rgba(255,255,255,.18)!important;border:1px solid rgba(255,255,255,.3)!important;color:#fff!important}
+/* Chips on white card back — always blue-dark */
+.card-back .chip{background:var(--blue-dim)!important;border:1px solid var(--blue-bdr)!important;color:var(--blue-dark)!important}
+.card-word{font-family:'Playfair Display',Georgia,serif;font-size:42px;
+  font-weight:700;color:#fff;line-height:1.1;margin-bottom:5px}
+.card-pos{font-family:'Playfair Display',Georgia,serif;font-style:italic;
+  font-size:15px;color:rgba(255,255,255,.75)}
+.card-hint{margin-top:auto;font-size:9px;color:rgba(255,255,255,.5);
+  letter-spacing:2px;text-transform:uppercase}
+/* Back face */
+.card-back-label{font-size:9px;font-weight:800;color:var(--blue);
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.card-def{font-family:'Playfair Display',Georgia,serif;font-size:18px;
+  color:var(--text);line-height:1.55;margin-bottom:14px;flex:0 0 auto}
+.card-ex{border-left:3px solid var(--gold);padding-left:12px;
+  font-size:13px;color:var(--muted);line-height:1.7;font-style:italic}
+
+/* ── BUTTONS ── */
+.btn-row{display:flex;gap:10px;width:100%;max-width:480px}
+.btn{padding:13px 20px;border-radius:300px;border:none;cursor:pointer;
+  font-family:var(--font);font-size:14px;font-weight:700;transition:all .15s;flex:1;
+  letter-spacing:.3px}
+.btn-wrong{background:var(--red-dim);border:1px solid var(--red-bdr);color:var(--red)}
+.btn-right{background:var(--green-dim);border:1px solid var(--green-bdr);color:var(--green)}
+.btn-wrong:hover{background:rgba(217,64,64,.15)}
+.btn-right:hover{background:rgba(42,157,92,.18)}
+.btn-primary{background:var(--blue);color:#fff;border:none;
+  padding:14px 36px;border-radius:300px;font-size:14px;font-weight:800;
+  cursor:pointer;font-family:var(--font);transition:all .15s;letter-spacing:.5px}
+.btn-primary:hover{background:var(--blue-dark)}
+.btn-gold{background:var(--gold);color:var(--text);border:none;
+  padding:14px 36px;border-radius:300px;font-size:14px;font-weight:800;
+  cursor:pointer;font-family:var(--font);transition:all .15s;letter-spacing:.5px}
+.btn-gold:hover{background:#d49810}
+.btn-neutral{background:var(--surface);border:1px solid var(--border);
+  color:var(--muted);padding:12px 28px;border-radius:300px;font-size:13px;
+  font-weight:700;cursor:pointer;font-family:var(--font);transition:all .15s}
+.btn-neutral:hover{border-color:var(--blue-bdr);color:var(--blue)}
+
+/* ── PROGRESS BAR ── */
+.prog-wrap{width:100%;max-width:480px;margin-bottom:18px}
+.prog-meta{display:flex;justify-content:space-between;
+  font-size:11px;color:var(--muted2);margin-bottom:7px;font-weight:600;letter-spacing:.5px}
+.prog-track{background:var(--s3);border-radius:4px;height:4px}
+.prog-fill{background:linear-gradient(90deg,var(--blue),var(--gold));
+  height:4px;border-radius:4px;transition:width .35s ease}
+
+/* ── SECTION CONTAINERS ── */
+.section{width:100%;max-width:480px;display:flex;
+  flex-direction:column;align-items:center;gap:0}
+
+/* ── WOTD ── */
+.wotd-header{width:100%;max-width:480px;display:flex;
+  justify-content:space-between;align-items:center;margin-bottom:18px}
+.wotd-day{font-size:10px;color:var(--muted2);letter-spacing:2px;text-transform:uppercase;font-weight:700}
+.wotd-day span{color:var(--gold)}
+.wotd-cta{width:100%;max-width:480px;text-align:center;
+  padding-top:8px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.wotd-note{font-size:12px;color:var(--muted2);line-height:1.7}
+.streak-badge{display:inline-flex;align-items:center;gap:7px;
+  background:var(--gold-dim);border:1px solid var(--gold-bdr);
+  border-radius:300px;padding:7px 16px;font-size:12px;font-weight:800;
+  color:var(--gold);letter-spacing:.5px}
+
+/* ── STUDY ── */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;
+  background:var(--surface);border-radius:12px;padding:11px 16px;
+  border:1px solid var(--border);margin-bottom:14px}
+.toggle-label{font-size:12px;color:var(--muted2)}
+.toggle-label strong{color:var(--text);font-size:13px;display:block;
+  margin-bottom:1px;font-weight:700}
+.toggle{position:relative;display:inline-block;width:40px;height:22px}
+.toggle input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;background:var(--s3);
+  border-radius:22px;cursor:pointer;transition:.2s}
+.slider:before{content:'';position:absolute;height:16px;width:16px;
+  left:3px;bottom:3px;background:var(--muted2);border-radius:50%;transition:.2s}
+input:checked+.slider{background:var(--blue)}
+input:checked+.slider:before{transform:translateX(18px);background:#fff}
+
+/* ── DONE / EMPTY SCREENS ── */
+.done-screen,.empty-screen{text-align:center;max-width:400px;padding:20px 16px}
+.done-emoji,.empty-emoji{font-size:52px;margin-bottom:14px}
+.screen-title{font-family:'Playfair Display',Georgia,serif;
+  font-size:28px;color:var(--text);margin-bottom:8px}
+.screen-sub{color:var(--muted);font-size:14px;line-height:1.75;margin-bottom:28px}
+.stat-row{display:flex;gap:10px;justify-content:center;margin-bottom:28px;flex-wrap:wrap}
+.stat-box{background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:16px 18px;min-width:82px;text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.stat-val{font-size:28px;font-weight:800}
+.stat-lbl{font-size:8px;color:var(--muted2);text-transform:uppercase;
+  letter-spacing:1.5px;margin-top:4px;font-weight:700}
+
+/* ── STATS TAB ── */
+.stats-section{width:100%;max-width:480px}
+.stats-section h2{font-family:'Playfair Display',Georgia,serif;
+  font-size:24px;color:var(--text);margin-bottom:18px}
+.panel{background:var(--surface);border:1px solid var(--border);
+  border-radius:14px;padding:20px;margin-bottom:12px;
+  box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.panel-label{font-size:9px;font-weight:800;color:var(--muted2);
+  text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
+.bucket-row{margin-bottom:12px}
+.bucket-meta{display:flex;justify-content:space-between;
+  font-size:12px;margin-bottom:5px;font-weight:600}
+.bucket-name{font-weight:700}
+.bucket-bar-track{background:var(--s3);border-radius:4px;height:5px}
+.bucket-bar-fill{height:5px;border-radius:4px;transition:width .5s ease}
+.struggle-row{display:flex;justify-content:space-between;align-items:center;
+  padding:8px 0;border-bottom:1px solid var(--border)}
+.struggle-word{font-size:14px;font-weight:700}
+.struggle-pos{font-size:11px;color:var(--muted2);font-style:italic;margin-left:6px}
+.struggle-count{font-size:12px;color:var(--red);font-weight:700}
+.reset-btn{width:100%;padding:11px;background:transparent;
+  border:1px solid var(--border);border-radius:300px;color:var(--muted2);
+  font-size:12px;cursor:pointer;font-family:var(--font);font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;transition:all .15s}
+.reset-btn:hover{border-color:var(--red-bdr);color:var(--red)}
+.confirm-panel{background:var(--surface);border:1px solid var(--red-bdr);
+  border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.confirm-text{font-size:13px;color:var(--text);text-align:center;font-weight:600}
+.confirm-row{display:flex;gap:10px}
+.confirm-yes{flex:1;padding:10px;background:var(--red-dim);
+  border:1px solid var(--red-bdr);border-radius:300px;color:var(--red);
+  font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)}
+.confirm-no{flex:1;padding:10px;background:var(--s3);
+  border:1px solid var(--border);border-radius:300px;color:var(--muted);
+  font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)}
+.pool-info{font-size:12px;color:var(--muted2);text-align:center;
+  margin-bottom:14px;line-height:1.6}
+.pool-info strong{color:var(--text);font-weight:700}
+
+/* ── MODE TOGGLE ── */
+.mode-toggle{display:flex;background:var(--surface);padding:4px;border-radius:300px;
+  width:100%;max-width:480px;margin-bottom:14px;border:1px solid var(--border)}
+.mode-btn{flex:1;padding:8px 12px;border:none;background:transparent;
+  color:var(--muted2);font-size:11px;font-weight:800;cursor:pointer;
+  font-family:var(--font);border-radius:300px;transition:all .18s;
+  white-space:nowrap;text-transform:uppercase;letter-spacing:1px}
+.mode-btn.active{background:var(--blue);color:#fff;
+  box-shadow:0 2px 8px rgba(74,143,224,.35)}
+
+/* ── MULTIPLE CHOICE ── */
+.mc-card{width:100%;max-width:480px;
+  background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 100%);
+  border:none;border-radius:16px;padding:24px 28px;
+  margin-bottom:14px;box-shadow:0 4px 24px rgba(74,143,224,.25)}
+.mc-card .chip{background:rgba(255,255,255,.18)!important;border:1px solid rgba(255,255,255,.3)!important;color:#fff!important}
+.mc-word{font-family:'Playfair Display',Georgia,serif;font-size:42px;
+  font-weight:700;color:#fff;line-height:1.1;margin:12px 0 5px}
+.mc-pos{font-family:'Playfair Display',Georgia,serif;font-style:italic;
+  font-size:15px;color:rgba(255,255,255,.75);margin-bottom:4px}
+.mc-prompt{font-size:9px;color:rgba(255,255,255,.55);text-transform:uppercase;
+  letter-spacing:2px;margin-top:10px;font-weight:700}
+.mc-choices{width:100%;max-width:480px;display:flex;flex-direction:column;gap:8px}
+.mc-choice{width:100%;padding:13px 18px;border-radius:12px;
+  border:1px solid var(--border);background:var(--surface);
+  color:var(--text);font-size:13px;line-height:1.55;text-align:left;
+  cursor:pointer;font-family:var(--font);font-weight:600;
+  transition:all .12s;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.mc-choice:hover:not([disabled]){background:var(--s2);border-color:var(--blue-bdr);color:var(--blue-dark)}
+.mc-choice.correct{background:var(--green-dim)!important;
+  border-color:var(--green-bdr)!important;color:var(--green)!important;font-weight:700}
+.mc-choice.wrong{background:var(--red-dim)!important;
+  border-color:var(--red-bdr)!important;color:var(--red)!important}
+.mc-choice[disabled]{cursor:default;pointer-events:none}
+.mc-result{width:100%;max-width:480px;text-align:center;
+  font-size:13px;font-weight:700;padding:8px;min-height:28px;letter-spacing:.3px}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="brand-wrap">
+    <div class="brand-icon">💡</div>
+    <div class="brand-text">
+      <div class="brand-sub">City Smarts</div>
+      <div class="brand-name">Vocab Builder</div>
+    </div>
+  </div>
+  <div class="header-stats">
+    <div class="hstat">
+      <div class="hstat-val" id="h-day" style="color:var(--gold)">—</div>
+      <div class="hstat-lbl">Day</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-val" id="h-mastered" style="color:var(--green)">0</div>
+      <div class="hstat-lbl">Mastered</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-val" id="h-streak" style="color:var(--text)">0🔥</div>
+      <div class="hstat-lbl">Streak</div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <button id="tab-wotd" class="active" onclick="switchTab('wotd')">☀️ Word of the Day</button>
+  <button id="tab-study" onclick="switchTab('study')">📚 Study</button>
+  <button id="tab-stats" onclick="switchTab('stats')">📊 Progress</button>
+</nav>
+
+<main id="main-content"></main>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// WORD DATABASE — 100 words, grades 7–10, SHSAT + TACHS calibrated
+// ═══════════════════════════════════════════════════════════════
+const WORDS = [
+  {id:1,  word:"Adamant",      pos:"adj",  def:"Refusing to change; stubbornly insistent",                              ex:"She was adamant that the project deadline could not be extended.",               cat:"Character"},
+  {id:2,  word:"Adept",        pos:"adj",  def:"Highly skilled or proficient at something",                             ex:"Marcus became adept at solving complex equations after months of practice.",    cat:"Character"},
+  {id:3,  word:"Alacrity",     pos:"noun", def:"Brisk, cheerful eagerness or readiness",                                ex:"She accepted the challenge with alacrity, excited by the opportunity.",          cat:"Character"},
+  {id:4,  word:"Altruistic",   pos:"adj",  def:"Showing selfless concern for the well-being of others",                 ex:"His altruistic decision to donate his savings surprised even close friends.",    cat:"Character"},
+  {id:5,  word:"Candid",       pos:"adj",  def:"Open and honest in expression",                                         ex:"The coach gave her a candid assessment of her weaknesses as a player.",          cat:"Character"},
+  {id:6,  word:"Diffident",    pos:"adj",  def:"Modest or shy due to lack of self-confidence",                          ex:"The diffident student rarely raised his hand despite knowing the answers.",      cat:"Character"},
+  {id:7,  word:"Diligent",     pos:"adj",  def:"Showing care, steady effort, and persistence",                          ex:"A diligent student reviews her notes every evening without fail.",               cat:"Character"},
+  {id:8,  word:"Gregarious",   pos:"adj",  def:"Fond of company; outgoing and sociable",                                ex:"The gregarious new student quickly made friends with everyone in the class.",    cat:"Character"},
+  {id:9,  word:"Impudent",     pos:"adj",  def:"Disrespectfully bold or rude",                                          ex:"His impudent reply shocked the teacher, who had expected more respect.",         cat:"Character"},
+  {id:10, word:"Indignant",    pos:"adj",  def:"Feeling righteous anger at unfair treatment",                           ex:"She was indignant when she learned her work was credited to someone else.",      cat:"Character"},
+  {id:11, word:"Indolent",     pos:"adj",  def:"Lazy; habitually avoiding work or activity",                            ex:"The indolent student put off his essay until the night before it was due.",      cat:"Character"},
+  {id:12, word:"Magnanimous",  pos:"adj",  def:"Generous in forgiving; noble and unselfish in spirit",                  ex:"After winning the debate, she was magnanimous in praising her opponent.",        cat:"Character"},
+  {id:13, word:"Miserly",      pos:"adj",  def:"Excessively unwilling to spend; extremely stingy",                      ex:"The miserly landlord refused to spend money on basic repairs.",                  cat:"Character"},
+  {id:14, word:"Obstinate",    pos:"adj",  def:"Stubbornly refusing to change opinion or course of action",             ex:"The obstinate child refused to eat anything that wasn't pizza.",                 cat:"Character"},
+  {id:15, word:"Pedantic",     pos:"adj",  def:"Overly focused on minor details or rules",                              ex:"His pedantic corrections of every grammatical slip annoyed his classmates.",    cat:"Character"},
+  {id:16, word:"Pragmatic",    pos:"adj",  def:"Dealing with things practically rather than theoretically",             ex:"Rather than debating the ideal plan, she took a pragmatic approach.",           cat:"Character"},
+  {id:17, word:"Prudent",      pos:"adj",  def:"Acting with careful thought and good judgment",                         ex:"It was prudent to save some money for unexpected emergencies.",                  cat:"Character"},
+  {id:18, word:"Stoic",        pos:"adj",  def:"Enduring pain or hardship without complaint",                           ex:"Despite his injury, the stoic athlete finished the race without complaint.",     cat:"Character"},
+  {id:19, word:"Sycophant",    pos:"noun", def:"A person who flatters powerful people to gain favor",                   ex:"The sycophant agreed with everything the boss said, hoping for a promotion.",   cat:"Character"},
+  {id:20, word:"Tenacious",    pos:"adj",  def:"Persistent; holding firmly to a goal and not giving up",                ex:"Her tenacious work ethic allowed her to overcome every obstacle.",               cat:"Character"},
+  {id:21, word:"Vehement",     pos:"adj",  def:"Showing strong feeling; intensely passionate",                          ex:"She made a vehement argument against the proposed budget cuts.",                 cat:"Character"},
+  {id:22, word:"Reticent",     pos:"adj",  def:"Reserved; reluctant to express feelings or share information",          ex:"He was reticent about his struggles, rarely asking anyone for help.",            cat:"Character"},
+  {id:23, word:"Callous",      pos:"adj",  def:"Emotionally hardened; showing no sympathy for others",                  ex:"Her callous response to the sad news shocked everyone in the room.",            cat:"Character"},
+  {id:24, word:"Intrepid",     pos:"adj",  def:"Fearless and bold in the face of danger or difficulty",                 ex:"The intrepid explorer pressed on despite the harsh conditions.",                 cat:"Character"},
+  {id:25, word:"Capricious",   pos:"adj",  def:"Unpredictable; prone to sudden, impulsive changes of mood",             ex:"Her capricious decisions made it hard for the team to plan ahead.",             cat:"Character"},
+  {id:26, word:"Contemptuous", pos:"adj",  def:"Showing open disrespect or scorn toward someone",                       ex:"His contemptuous tone made clear he thought the question was beneath him.",      cat:"Character"},
+  {id:27, word:"Meticulous",   pos:"adj",  def:"Extremely careful and precise; attentive to every detail",              ex:"The meticulous editor caught every typo before the article went to print.",     cat:"Character"},
+  {id:28, word:"Vindictive",   pos:"adj",  def:"Seeking revenge; unwilling to forgive a perceived wrong",               ex:"After losing the election, he became vindictive toward his former supporters.",  cat:"Character"},
+  {id:29, word:"Apprehensive", pos:"adj",  def:"Anxious or uneasy about something in the future",                       ex:"She felt apprehensive before the big exam, unable to sleep the night before.",  cat:"Character"},
+  {id:30, word:"Condescending",pos:"adj",  def:"Acting as if others are inferior; patronizing",                         ex:"His condescending tone made the younger students feel unwelcome.",               cat:"Character"},
+  {id:31, word:"Furtive",      pos:"adj",  def:"Done in a secretive or sneaky way; trying not to be noticed",           ex:"She cast a furtive glance at the clock during the silent exam.",                cat:"Character"},
+  {id:32, word:"Impetuous",    pos:"adj",  def:"Acting quickly and without thinking; rash and impulsive",               ex:"His impetuous decision to quit the team surprised his coach.",                  cat:"Character"},
+  {id:33, word:"Integrity",    pos:"noun", def:"Honesty and strong moral principles; doing the right thing",            ex:"She showed real integrity by admitting her mistake rather than hiding it.",      cat:"Character"},
+  {id:34, word:"Vigilant",     pos:"adj",  def:"Staying alert and watchful, especially for danger",                     ex:"The vigilant lifeguard spotted the struggling swimmer before anyone else.",      cat:"Character"},
+  {id:35, word:"Assiduous",    pos:"adj",  def:"Hardworking and showing great care and dedication",                     ex:"His assiduous preparation for the competition paid off with a first-place finish.", cat:"Character"},
+  {id:36, word:"Nonchalant",   pos:"adj",  def:"Casually calm and unconcerned, as if nothing bothers you",             ex:"Despite the chaos, she remained nonchalant and finished her essay on time.",    cat:"Character"},
+  {id:37, word:"Empathy",      pos:"noun", def:"The ability to understand and share the feelings of another person",    ex:"Her empathy for the new student helped him feel welcome on his first day.",      cat:"Character"},
+  {id:38, word:"Acrimonious",  pos:"adj",  def:"Bitter and harsh in speech or manner; full of ill feeling",             ex:"The acrimonious debate ended with both sides more divided than before.",         cat:"Character"},
+  {id:39, word:"Ambiguous",    pos:"adj",  def:"Open to more than one interpretation; unclear in meaning",              ex:"The ambiguous instructions left students unsure how to complete the task.",     cat:"Thinking"},
+  {id:40, word:"Astute",       pos:"adj",  def:"Having quick and accurate judgment; sharp-minded",                      ex:"Her astute analysis of the problem impressed even the senior engineers.",       cat:"Thinking"},
+  {id:41, word:"Discern",      pos:"verb", def:"To recognize or perceive clearly; to judge carefully",                  ex:"It was difficult to discern the truth from the contradictory reports.",         cat:"Thinking"},
+  {id:42, word:"Dubious",      pos:"adj",  def:"Uncertain; hesitant; of questionable quality or truth",                 ex:"He was dubious about the plan and asked for more details before agreeing.",     cat:"Thinking"},
+  {id:43, word:"Implicit",     pos:"adj",  def:"Implied but not directly stated",                                       ex:"There was implicit criticism in her comments, even if never said directly.",   cat:"Thinking"},
+  {id:44, word:"Incredulous",  pos:"adj",  def:"Unwilling or unable to believe something",                              ex:"She was incredulous when she heard that her favorite store was closing.",       cat:"Thinking"},
+  {id:45, word:"Inference",    pos:"noun", def:"A conclusion reached from evidence and reasoning, not stated outright", ex:"Based on his muddy boots, she made the inference that he had been outside.",    cat:"Thinking"},
+  {id:46, word:"Lucid",        pos:"adj",  def:"Clearly expressed and easy to understand; rational",                    ex:"Her lucid explanation made the complex theory accessible to everyone.",         cat:"Thinking"},
+  {id:47, word:"Perceptive",   pos:"adj",  def:"Having sharp insight or intuitive understanding",                       ex:"The perceptive student noticed the rhyme scheme broke at a key moment.",        cat:"Thinking"},
+  {id:48, word:"Speculate",    pos:"verb", def:"To form theories without firm evidence; to hypothesize",                ex:"Scientists could only speculate about what caused the civilization to vanish.",  cat:"Thinking"},
+  {id:49, word:"Substantiate", pos:"verb", def:"To provide evidence to prove or support a claim",                       ex:"She needed data to substantiate her bold claims about climate change.",         cat:"Thinking"},
+  {id:50, word:"Scrutinize",   pos:"verb", def:"To examine something very closely and critically",                      ex:"The teacher told students to scrutinize each answer choice before selecting.",  cat:"Thinking"},
+  {id:51, word:"Erroneous",    pos:"adj",  def:"Wrong; containing errors or based on incorrect information",            ex:"The article was pulled after an erroneous claim was discovered.",              cat:"Thinking"},
+  {id:52, word:"Abate",        pos:"verb", def:"To become less intense, widespread, or severe",                         ex:"The storm began to abate by nightfall, and the skies finally cleared.",         cat:"Change"},
+  {id:53, word:"Acquiesce",    pos:"verb", def:"To accept reluctantly but without protest",                             ex:"After arguing for an hour, he finally acquiesced to his sister's plan.",        cat:"Change"},
+  {id:54, word:"Alleviate",    pos:"verb", def:"To make less severe, painful, or serious",                              ex:"The cold pack helped alleviate the swelling from her sprained ankle.",         cat:"Change"},
+  {id:55, word:"Augment",      pos:"verb", def:"To increase or make greater in size, value, or scope",                  ex:"She took on freelance projects to augment her regular income.",                 cat:"Change"},
+  {id:56, word:"Curtail",      pos:"verb", def:"To reduce or limit something; to cut short",                            ex:"Budget problems forced the school to curtail its after-school programs.",       cat:"Change"},
+  {id:57, word:"Exacerbate",   pos:"verb", def:"To make a problem or bad situation worse",                              ex:"Staying up late only exacerbated his fatigue before the big exam.",            cat:"Change"},
+  {id:58, word:"Facilitate",   pos:"verb", def:"To make an action or process easier or more efficient",                 ex:"The new software was designed to facilitate communication between teams.",       cat:"Change"},
+  {id:59, word:"Impede",       pos:"verb", def:"To delay or prevent by obstructing; to hinder",                        ex:"Heavy fog impeded the driver's view and slowed traffic significantly.",         cat:"Change"},
+  {id:60, word:"Mitigate",     pos:"verb", def:"To lessen the severity or seriousness of something",                   ex:"Sunscreen can help mitigate the risk of long-term sun damage.",                cat:"Change"},
+  {id:61, word:"Ostracize",    pos:"verb", def:"To exclude someone from a group or community",                          ex:"Students who broke unwritten rules were often ostracized by their peers.",     cat:"Change"},
+  {id:62, word:"Proliferate",  pos:"verb", def:"To increase rapidly and spread in large numbers",                       ex:"Social media platforms proliferated rapidly during the 2010s.",                cat:"Change"},
+  {id:63, word:"Reconcile",    pos:"verb", def:"To restore friendly relations; to make two things compatible",          ex:"After their argument, the two friends took time to reconcile.",                cat:"Change"},
+  {id:64, word:"Thwart",       pos:"verb", def:"To prevent someone from accomplishing something",                       ex:"The surprise inspection thwarted any plans to cheat on the test.",             cat:"Change"},
+  {id:65, word:"Deter",        pos:"verb", def:"To discourage someone from taking an action",                           ex:"The harsh penalty was meant to deter students from plagiarizing.",              cat:"Change"},
+  {id:66, word:"Lament",       pos:"verb", def:"To express deep sadness, grief, or regret",                            ex:"She lamented the loss of the old library where she had spent her childhood.",   cat:"Change"},
+  {id:67, word:"Jeopardize",   pos:"verb", def:"To put something at risk of being lost, damaged, or destroyed",         ex:"Skipping practice could jeopardize her spot on the varsity team.",             cat:"Change"},
+  {id:68, word:"Affluent",     pos:"adj",  def:"Wealthy; having an abundance of money or possessions",                  ex:"The affluent neighborhood donated generously to the local library.",            cat:"Description"},
+  {id:69, word:"Ambivalent",   pos:"adj",  def:"Having mixed or contradictory feelings about something",                ex:"She felt ambivalent — excited about college but sad to leave home.",            cat:"Description"},
+  {id:70, word:"Auspicious",   pos:"adj",  def:"Giving signs of future success; favorable",                             ex:"Winning the opening match was an auspicious start to the tournament.",         cat:"Description"},
+  {id:71, word:"Autonomous",   pos:"adj",  def:"Having the freedom to act independently; self-governing",               ex:"The student council was autonomous and made its own decisions.",                cat:"Description"},
+  {id:72, word:"Benevolent",   pos:"adj",  def:"Well-meaning and kindly; desiring to do good for others",               ex:"The benevolent donor funded scholarships for students across the district.",    cat:"Description"},
+  {id:73, word:"Benign",       pos:"adj",  def:"Gentle and not harmful; mild and favorable",                            ex:"The growth turned out to be benign — nothing to worry about.",                 cat:"Description"},
+  {id:74, word:"Conspicuous",  pos:"adj",  def:"Clearly visible; attracting notice or attention",                       ex:"The bright red jacket made him conspicuous in the crowd.",                     cat:"Description"},
+  {id:75, word:"Copious",      pos:"adj",  def:"Abundant; in large quantities; plentiful",                              ex:"She took copious notes during the lecture, filling three pages.",               cat:"Description"},
+  {id:76, word:"Eloquent",     pos:"adj",  def:"Fluent, vivid, and persuasive in speech or writing",                   ex:"Her eloquent speech moved many in the audience to tears.",                     cat:"Description"},
+  {id:77, word:"Ephemeral",    pos:"adj",  def:"Lasting a very short time; fleeting",                                   ex:"The beauty of a sand castle is ephemeral — the tide always wins.",             cat:"Description"},
+  {id:78, word:"Erratic",      pos:"adj",  def:"Unpredictable; not following a consistent pattern",                     ex:"His erratic behavior worried his teachers and friends.",                       cat:"Description"},
+  {id:79, word:"Frugal",       pos:"adj",  def:"Sparing in the use of money or resources; economical",                  ex:"By being frugal all year, she saved enough to buy a new laptop.",              cat:"Description"},
+  {id:80, word:"Immutable",    pos:"adj",  def:"Unchanging over time; unable to be altered",                            ex:"The laws of mathematics are immutable — they hold true everywhere.",           cat:"Description"},
+  {id:81, word:"Innocuous",    pos:"adj",  def:"Not harmful or offensive; appearing to be harmless",                   ex:"What seemed like an innocuous comment actually hurt her feelings deeply.",     cat:"Description"},
+  {id:82, word:"Intrinsic",    pos:"adj",  def:"Belonging naturally to something; essential and inherent",              ex:"Curiosity is intrinsic to good science — without it, discovery stops.",        cat:"Description"},
+  {id:83, word:"Mundane",      pos:"adj",  def:"Lacking interest or excitement; ordinary and routine",                  ex:"After months of adventure, returning to mundane routines felt strange.",        cat:"Description"},
+  {id:84, word:"Ostentatious", pos:"adj",  def:"Designed to impress; showy and extravagant",                            ex:"The ostentatious display of wealth made the other guests uncomfortable.",       cat:"Description"},
+  {id:85, word:"Pensive",      pos:"adj",  def:"Engaged in deep, often melancholy thought",                             ex:"She stared out the window with a pensive expression, lost in thought.",        cat:"Description"},
+  {id:86, word:"Placid",       pos:"adj",  def:"Calm and peaceful; untroubled by disturbance",                          ex:"The placid lake reflected the mountains perfectly in its still surface.",       cat:"Description"},
+  {id:87, word:"Prevalent",    pos:"adj",  def:"Widespread in a particular area or at a particular time",               ex:"Misinformation has become increasingly prevalent on social media.",             cat:"Description"},
+  {id:88, word:"Resilient",    pos:"adj",  def:"Able to withstand and recover quickly from hardship",                   ex:"Children are often more resilient than adults give them credit for.",           cat:"Description"},
+  {id:89, word:"Superfluous",  pos:"adj",  def:"Unnecessary; more than is needed or wanted",                            ex:"The editor removed several superfluous paragraphs that added nothing new.",    cat:"Description"},
+  {id:90, word:"Turbulent",    pos:"adj",  def:"Moving unsteadily; marked by conflict or disturbance",                  ex:"The turbulent years after the war reshaped the entire country.",                cat:"Description"},
+  {id:91, word:"Verbose",      pos:"adj",  def:"Using more words than necessary; unnecessarily long-winded",            ex:"His verbose essays frustrated readers who wanted concise writing.",             cat:"Description"},
+  {id:92, word:"Sporadic",     pos:"adj",  def:"Occurring at irregular intervals; not regular or steady",               ex:"Her sporadic attendance made it hard to keep up with the material.",            cat:"Description"},
+  {id:93, word:"Notorious",    pos:"adj",  def:"Famous for something bad; widely known in a negative way",              ex:"The intersection was notorious for accidents until a traffic light was added.",  cat:"Description"},
+  {id:94, word:"Tedious",      pos:"adj",  def:"Long and monotonous; tiresome and boring",                              ex:"Copying the entire passage by hand was a tedious but oddly calming task.",      cat:"Description"},
+  {id:95, word:"Adversity",    pos:"noun", def:"Difficult or unfavorable circumstances; hardship",                      ex:"She showed remarkable strength in the face of serious adversity.",               cat:"Description"},
+  {id:96, word:"Exemplary",    pos:"adj",  def:"Serving as an excellent model; outstanding and worthy of imitation",    ex:"The teacher praised his exemplary attitude toward group projects.",             cat:"Description"},
+  {id:97, word:"Inevitable",   pos:"adj",  def:"Impossible to avoid or prevent; certain to happen",                    ex:"After weeks of tension, a conflict seemed inevitable.",                        cat:"Description"},
+  {id:98, word:"Concise",      pos:"adj",  def:"Brief and to the point, without unnecessary words",                     ex:"His concise summary captured the key points in just two sentences.",           cat:"Language"},
+  {id:99, word:"Denote",       pos:"verb", def:"To indicate or be a sign of; to mean directly",                        ex:"In this graph, the red line denotes the average temperature over time.",        cat:"Language"},
+  {id:100,word:"Hackneyed",    pos:"adj",  def:"Overused to the point of losing its original meaning; clichéd",         ex:"The judge warned writers to avoid hackneyed phrases like 'as busy as a bee.'", cat:"Language"},
+];
+
+// ═══════════════════════════════════════════════════════════════
+// STORAGE HELPERS
+// ═══════════════════════════════════════════════════════════════
+const STORAGE_KEY = 'citysmarts_vocab_v2';
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return null;
+}
+
+function saveState(s) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch(e) {}
+}
+
+function todayISO() {
+  return new Date().toISOString().slice(0,10);
+}
+
+function daysSince(isoDate) {
+  const ms = new Date(todayISO()) - new Date(isoDate);
+  return Math.floor(ms / 86400000);
+}
+
+function initState() {
+  const existing = loadState();
+  if (existing) return existing;
+  const s = {
+    startDate: todayISO(),
+    lastVisit: todayISO(),
+    streak: 1,
+    progress: {},  // wordId -> {bucket, lastStudiedDay, correct, wrong}
+    wotdSeen: {},  // date -> wordId (which word was shown that day)
+  };
+  saveState(s);
+  return s;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SRS ENGINE
+// ═══════════════════════════════════════════════════════════════
+const BUCKET_INTERVALS = [1, 2, 4, 7, 14]; // days between reviews
+const SESSION_SIZE = 15;
+
+function getIntroducedWords(state, includeAll) {
+  const day = daysSince(state.startDate);
+  if (includeAll) return WORDS;
+  // Words introduced = day 0 → word[0], day 1 → word[1], etc.
+  // Student has seen words 0..day (capped at 99)
+  const count = Math.min(day + 1, 100);
+  return WORDS.slice(0, count);
+}
+
+function getDueWords(state, pool) {
+  const day = daysSince(state.startDate);
+  const due = [], other = [];
+  for (const w of pool) {
+    const p = state.progress[w.id];
+    if (!p) { due.push(w); continue; }
+    const interval = BUCKET_INTERVALS[Math.min(p.bucket - 1, 4)];
+    const daysSinceStudied = day - (p.lastStudiedDay || 0);
+    if (daysSinceStudied >= interval) due.push(w);
+    else other.push(w);
+  }
+  // Sort due by bucket asc (lowest bucket = most in need)
+  due.sort((a,b) => {
+    const ab = state.progress[a.id]?.bucket || 0;
+    const bb = state.progress[b.id]?.bucket || 0;
+    return ab - bb;
+  });
+  let queue = due.slice(0, SESSION_SIZE);
+  if (queue.length < SESSION_SIZE) {
+    const extra = other
+      .sort((a,b) => (state.progress[a.id]?.bucket||0) - (state.progress[b.id]?.bucket||0))
+      .slice(0, SESSION_SIZE - queue.length);
+    queue = [...queue, ...extra];
+  }
+  return queue.sort(() => Math.random() - 0.5);
+}
+
+function getWotdWord(state) {
+  const day = daysSince(state.startDate);
+  return WORDS[day % 100];
+}
+
+function getMasteredCount(state) {
+  return Object.values(state.progress).filter(p => p.bucket >= 5).length;
+}
+
+function getOverallDist(state) {
+  const dist = {0:0,1:0,2:0,3:0,4:0,5:0};
+  for (const w of WORDS) {
+    const p = state.progress[w.id];
+    dist[p ? Math.min(p.bucket,5) : 0]++;
+  }
+  return dist;
+}
+
+// Build 4 MC answer choices: 1 correct + 3 distractors, shuffled
+// Distractors are picked from WORDS that share the same part of speech when
+// possible (makes choices more genuinely challenging), fallback to any word.
+function buildMCChoices(correctWord) {
+  const samePOS = WORDS.filter(w => w.id !== correctWord.id && w.pos === correctWord.pos);
+  const other   = WORDS.filter(w => w.id !== correctWord.id && w.pos !== correctWord.pos);
+  const pool = [...samePOS, ...other];
+  // Fisher-Yates shuffle, take first 3
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  const choices = [
+    {word: correctWord, isCorrect: true},
+    {word: pool[0],     isCorrect: false},
+    {word: pool[1],     isCorrect: false},
+    {word: pool[2],     isCorrect: false},
+  ];
+  // Shuffle choices so correct answer isn't always first
+  for (let i = choices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [choices[i], choices[j]] = [choices[j], choices[i]];
+  }
+  return choices;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// APP STATE
+// ═══════════════════════════════════════════════════════════════
+let S = initState(); // storage state
+let UI = {
+  tab: 'wotd',
+  wotdFlipped: false,
+  studyMode: 'flashcard',   // 'flashcard' | 'mc'
+  studyQueue: [],
+  studyIdx: 0,
+  studyFlipped: false,
+  studySessionStats: {correct:0, wrong:0},
+  studyDone: false,
+  studyAhead: false,
+  mcChoices: [],            // [{word, isCorrect}] shuffled 4 options
+  mcAnswered: null,         // null | {selectedIdx, correctIdx}
+  confirmReset: false,
+};
+
+// Update streak on load
+(function updateStreak() {
+  const today = todayISO();
+  if (S.lastVisit === today) return;
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yday = yesterday.toISOString().slice(0,10);
+  if (S.lastVisit === yday) {
+    S.streak = (S.streak || 1) + 1;
+  } else {
+    S.streak = 1;
+  }
+  S.lastVisit = today;
+  saveState(S);
+})();
+
+// ═══════════════════════════════════════════════════════════════
+// CAT COLORS
+// ═══════════════════════════════════════════════════════════════
+const CAT_COLOR = {
+  Character:   '#7C3AED',  // purple
+  Thinking:    '#2563EB',  // blue
+  Change:      '#C2610A',  // amber-orange
+  Description: '#047857',  // green
+  Language:    '#BE185D',  // pink
+};
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER HELPERS
+// ═══════════════════════════════════════════════════════════════
+function chipHTML(text, color) {
+  return `<span class="chip" style="color:${color};background:${color}18;border:1px solid ${color}30">${text}</span>`;
+}
+
+function cardHTML(word, flipped, showHint=true) {
+  const cc = CAT_COLOR[word.cat] || '#888';
+  return `
+  <div class="card-wrap ${flipped?'flipped':''}" id="card-wrap" onclick="flipCard()">
+    <div class="card-flipper">
+      <div class="card-face card-front">
+        <div class="card-tags">
+          ${chipHTML(word.cat, cc)}
+          ${chipHTML(word.pos, 'var(--gold)')}
+        </div>
+        <div class="card-word">${word.word}</div>
+        <div class="card-pos">${word.pos}.</div>
+        ${showHint ? `<div class="card-hint">Tap to reveal</div>` : ''}
+      </div>
+      <div class="card-face card-back">
+        <div class="card-back-label">${word.word} · ${word.pos}.</div>
+        <div class="card-def">${word.def}</div>
+        <div class="card-ex">"${word.ex}"</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER HEADER
+// ═══════════════════════════════════════════════════════════════
+function renderHeader() {
+  const day = daysSince(S.startDate) + 1;
+  document.getElementById('h-day').textContent = day;
+  document.getElementById('h-mastered').textContent = getMasteredCount(S);
+  document.getElementById('h-streak').textContent = (S.streak||1) + '🔥';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER WOTD
+// ═══════════════════════════════════════════════════════════════
+function renderWotd() {
+  const word = getWotdWord(S);
+  const day = daysSince(S.startDate) + 1;
+  const introduced = Math.min(day, 100);
+  document.getElementById('main-content').innerHTML = `
+    <div class="section">
+      <div class="wotd-header">
+        <div class="wotd-day">Day <span>${day}</span> · Word ${((day-1)%100)+1} of 100</div>
+        <div class="streak-badge">🔥 ${S.streak||1} day streak</div>
+      </div>
+      ${cardHTML(word, UI.wotdFlipped, true)}
+      <div class="wotd-cta">
+        ${UI.wotdFlipped
+          ? `<button class="btn-primary" onclick="switchTab('study')">Study Your ${introduced} Introduced Words →</button>
+             <div class="wotd-note">Each day adds a new word to your study pool.</div>`
+          : `<div class="wotd-note">Flip the card to learn today's word, then head to Study to practice everything you've learned so far.</div>`
+        }
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER STUDY
+// ═══════════════════════════════════════════════════════════════
+function studyHeaderHTML() {
+  const day = daysSince(S.startDate) + 1;
+  const introduced = Math.min(day, 100);
+  return `
+    <div class="mode-toggle">
+      <button class="mode-btn ${UI.studyMode==='flashcard'?'active':''}"
+        onclick="setStudyMode('flashcard')">🃏 Flashcards</button>
+      <button class="mode-btn ${UI.studyMode==='mc'?'active':''}"
+        onclick="setStudyMode('mc')">🎯 Multiple Choice</button>
+    </div>
+    <div class="toggle-row" style="width:100%;max-width:480px">
+      <div class="toggle-label">
+        <strong>Study Ahead</strong>
+        Unlock all 100 words
+      </div>
+      <label class="toggle">
+        <input type="checkbox" ${UI.studyAhead?'checked':''}
+          onchange="toggleStudyAhead(this.checked)"/>
+        <span class="slider"></span>
+      </label>
+    </div>`;
+}
+
+function renderStudy() {
+  const day = daysSince(S.startDate) + 1;
+  const introduced = Math.min(day, 100);
+
+  if (UI.studyDone) {
+    const {correct, wrong} = UI.studySessionStats;
+    const tot = correct + wrong;
+    const pct = tot > 0 ? Math.round(correct/tot*100) : 0;
+    const emoji = pct>=80?'🏆':pct>=60?'⭐':'📚';
+    document.getElementById('main-content').innerHTML = `
+      <div class="done-screen">
+        <div class="done-emoji">${emoji}</div>
+        <div class="screen-title">Session Complete</div>
+        <div class="screen-sub">${pct}% accuracy this round</div>
+        <div class="stat-row">
+          <div class="stat-box"><div class="stat-val" style="color:var(--green)">${correct}</div><div class="stat-lbl">Got It</div></div>
+          <div class="stat-box"><div class="stat-val" style="color:var(--red)">${wrong}</div><div class="stat-lbl">Learning</div></div>
+          <div class="stat-box"><div class="stat-val" style="color:var(--gold)">${getMasteredCount(S)}</div><div class="stat-lbl">Mastered</div></div>
+        </div>
+        <button class="btn-primary" onclick="startStudySession()">Study Again</button>
+      </div>`;
+    return;
+  }
+
+  if (UI.studyQueue.length === 0) {
+    document.getElementById('main-content').innerHTML = `
+      <div class="section">
+        ${studyHeaderHTML()}
+        <div class="empty-screen">
+          <div class="empty-emoji">✨</div>
+          <div class="screen-title">All Caught Up</div>
+          <div class="screen-sub">
+            No words are due right now.<br/>
+            You've mastered <strong style="color:var(--gold)">${getMasteredCount(S)}</strong>
+            of <strong>${introduced}</strong> introduced words.
+          </div>
+          <button class="btn-neutral" onclick="startStudySession()">Study Anyway</button>
+        </div>
+      </div>`;
+    return;
+  }
+
+  if (UI.studyMode === 'mc') {
+    renderMC();
+  } else {
+    renderFlashcard();
+  }
+}
+
+function renderFlashcard() {
+  const word = UI.studyQueue[UI.studyIdx];
+  const pct  = UI.studyIdx / UI.studyQueue.length * 100;
+  document.getElementById('main-content').innerHTML = `
+    <div class="section">
+      ${studyHeaderHTML()}
+      <div class="prog-wrap">
+        <div class="prog-meta">
+          <span>${UI.studyIdx+1} of ${UI.studyQueue.length}</span>
+          <span><span style="color:var(--green)">✓ ${UI.studySessionStats.correct}</span>&nbsp;&nbsp;<span style="color:var(--red)">✗ ${UI.studySessionStats.wrong}</span></span>
+        </div>
+        <div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
+      </div>
+      ${cardHTML(word, UI.studyFlipped, true)}
+      <div class="btn-row" style="opacity:${UI.studyFlipped?1:0};pointer-events:${UI.studyFlipped?'auto':'none'};transition:opacity .25s">
+        <button class="btn btn-wrong" onclick="respond(false)">✗&nbsp; Still Learning</button>
+        <button class="btn btn-right" onclick="respond(true)">✓&nbsp; Got It</button>
+      </div>
+    </div>`;
+}
+
+function renderMC() {
+  const word    = UI.studyQueue[UI.studyIdx];
+  const choices = UI.mcChoices;
+  const answered = UI.mcAnswered;
+  const pct     = UI.studyIdx / UI.studyQueue.length * 100;
+  const cc      = CAT_COLOR[word.cat] || '#888';
+
+  const choiceButtons = choices.map((c, i) => {
+    let cls = 'mc-choice';
+    let disabled = '';
+    if (answered !== null) {
+      disabled = 'disabled';
+      if (c.isCorrect)           cls += ' correct';
+      else if (i === answered.selectedIdx && !c.isCorrect) cls += ' wrong';
+    }
+    return `<button class="${cls}" ${disabled} onclick="selectAnswer(${i})">${c.word.def}</button>`;
+  }).join('');
+
+  let resultMsg = '';
+  if (answered !== null) {
+    const wasRight = choices[answered.selectedIdx].isCorrect;
+    resultMsg = wasRight
+      ? `<div class="mc-result" style="color:var(--green)">✓ Correct!</div>`
+      : `<div class="mc-result" style="color:var(--red)">✗ Not quite — the green answer is correct.</div>`;
+  }
+
+  document.getElementById('main-content').innerHTML = `
+    <div class="section">
+      ${studyHeaderHTML()}
+      <div class="prog-wrap">
+        <div class="prog-meta">
+          <span>${UI.studyIdx+1} of ${UI.studyQueue.length}</span>
+          <span><span style="color:var(--green)">✓ ${UI.studySessionStats.correct}</span>&nbsp;&nbsp;<span style="color:var(--red)">✗ ${UI.studySessionStats.wrong}</span></span>
+        </div>
+        <div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="mc-card">
+        <div class="card-tags">
+          ${chipHTML(word.cat, cc)}
+          ${chipHTML(word.pos, 'var(--gold)')}
+        </div>
+        <div class="mc-word">${word.word}</div>
+        <div class="mc-pos">${word.pos}.</div>
+        <div class="mc-prompt">Choose the correct definition</div>
+      </div>
+      <div class="mc-choices">${choiceButtons}</div>
+      ${resultMsg}
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER STATS
+// ═══════════════════════════════════════════════════════════════
+function renderStats() {
+  const dist = getOverallDist(S);
+  const day = daysSince(S.startDate) + 1;
+  const introduced = Math.min(day, 100);
+  const buckets = [
+    {key:0,label:'Unseen',    color:'var(--muted)'},
+    {key:1,label:'Learning',  color:'var(--red)'},
+    {key:2,label:'Reviewing', color:'#FB923C'},
+    {key:3,label:'Progressing',color:'var(--gold)'},
+    {key:4,label:'Almost There',color:'#16A34A'},
+    {key:5,label:'Mastered ✓',color:'var(--green)'},
+  ];
+  const struggling = WORDS.filter(w => {
+    const p = S.progress[w.id];
+    return p && p.bucket === 1 && (p.wrong||0) > 0;
+  }).sort((a,b)=>(S.progress[b.id]?.wrong||0)-(S.progress[a.id]?.wrong||0)).slice(0,10);
+
+  const bucketRows = buckets.map(b=>{
+    const count = dist[b.key]||0;
+    const pct = Math.round(count/100*100);
+    return `<div class="bucket-row">
+      <div class="bucket-meta">
+        <span class="bucket-name" style="color:${b.color}">${b.label}</span>
+        <span style="color:var(--muted);font-size:12px">${count}</span>
+      </div>
+      <div class="bucket-bar-track"><div class="bucket-bar-fill" style="background:${b.color};width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+
+  const struggleRows = struggling.length ? struggling.map(w=>`
+    <div class="struggle-row">
+      <div><span class="struggle-word">${w.word}</span><span class="struggle-pos">${w.pos}.</span></div>
+      <span class="struggle-count">✗ ${S.progress[w.id]?.wrong}</span>
+    </div>`).join('') : '<div style="font-size:13px;color:var(--muted);padding:8px 0">Nothing struggling yet — keep studying!</div>';
+
+  const resetHTML = UI.confirmReset
+    ? `<div class="confirm-panel">
+        <div class="confirm-text">Reset all progress? This cannot be undone.</div>
+        <div class="confirm-row">
+          <button class="confirm-yes" onclick="doReset()">Yes, Reset</button>
+          <button class="confirm-no" onclick="cancelReset()">Cancel</button>
+        </div>
+       </div>`
+    : `<button class="reset-btn" onclick="askReset()">Reset All Progress</button>`;
+
+  document.getElementById('main-content').innerHTML = `
+    <div class="stats-section">
+      <h2>Your Progress</h2>
+      <div class="panel">
+        <div class="panel-label">Word Distribution</div>
+        ${bucketRows}
+      </div>
+      <div class="panel" style="max-height:260px;overflow-y:auto">
+        <div class="panel-label">Needs Work (${struggling.length})</div>
+        ${struggleRows}
+      </div>
+      ${resetHTML}
+    </div>`;
+}
+
+function setStudyMode(mode) {
+  UI.studyMode = mode;
+  startStudySession();
+}
+
+function switchTab(tab) {
+  UI.tab = tab;
+  ['wotd','study','stats'].forEach(t=>{
+    document.getElementById('tab-'+t).classList.toggle('active', t===tab);
+  });
+  if (tab === 'study' && UI.studyQueue.length === 0 && !UI.studyDone) {
+    startStudySession();
+    return;
+  }
+  render();
+}
+
+function flipCard() {
+  if (UI.tab === 'wotd') {
+    UI.wotdFlipped = !UI.wotdFlipped;
+  } else if (UI.tab === 'study') {
+    UI.studyFlipped = true;
+  }
+  render();
+}
+
+// MC: student picks an answer
+function selectAnswer(idx) {
+  if (UI.mcAnswered !== null) return; // already answered
+  const correctIdx = UI.mcChoices.findIndex(c => c.isCorrect);
+  UI.mcAnswered = {selectedIdx: idx, correctIdx};
+  const wasRight = UI.mcChoices[idx].isCorrect;
+  render();
+  // Auto-advance after 1.4s
+  setTimeout(() => {
+    respond(wasRight);
+  }, 1400);
+}
+
+function respond(correct) {
+  const word = UI.studyQueue[UI.studyIdx];
+  const day  = daysSince(S.startDate);
+  const p    = S.progress[word.id] || {bucket:1, lastStudiedDay:0, correct:0, wrong:0};
+  S.progress[word.id] = {
+    bucket:          correct ? Math.min(p.bucket+1, 5) : 1,
+    lastStudiedDay:  day,
+    correct:         (p.correct||0) + (correct?1:0),
+    wrong:           (p.wrong||0)  + (correct?0:1),
+  };
+  if (correct) UI.studySessionStats.correct++;
+  else         UI.studySessionStats.wrong++;
+  saveState(S);
+  UI.studyFlipped = false;
+  UI.mcAnswered   = null;
+  if (UI.studyIdx + 1 >= UI.studyQueue.length) {
+    UI.studyDone = true;
+  } else {
+    UI.studyIdx++;
+    // Pre-build choices for the next MC card
+    if (UI.studyMode === 'mc') {
+      UI.mcChoices = buildMCChoices(UI.studyQueue[UI.studyIdx]);
+    }
+  }
+  render();
+}
+
+function startStudySession() {
+  const pool       = getIntroducedWords(S, UI.studyAhead);
+  UI.studyQueue    = getDueWords(S, pool);
+  UI.studyIdx      = 0;
+  UI.studyFlipped  = false;
+  UI.mcAnswered    = null;
+  UI.studySessionStats = {correct:0, wrong:0};
+  UI.studyDone     = false;
+  // Pre-build first MC choices if needed
+  if (UI.studyMode === 'mc' && UI.studyQueue.length > 0) {
+    UI.mcChoices = buildMCChoices(UI.studyQueue[0]);
+  }
+  render();
+}
+
+function toggleStudyAhead(checked) {
+  UI.studyAhead = checked;
+  startStudySession();
+}
+
+function askReset()    { UI.confirmReset = true;  render(); }
+function cancelReset() { UI.confirmReset = false; render(); }
+function doReset() {
+  S.progress   = {};
+  S.startDate  = todayISO();
+  S.lastVisit  = todayISO();
+  S.streak     = 1;
+  saveState(S);
+  UI.confirmReset = false;
+  UI.studyQueue   = [];
+  UI.studyDone    = false;
+  UI.mcAnswered   = null;
+  render();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MAIN RENDER
+// ═══════════════════════════════════════════════════════════════
+function render() {
+  renderHeader();
+  if (UI.tab === 'wotd')  renderWotd();
+  if (UI.tab === 'study') renderStudy();
+  if (UI.tab === 'stats') renderStats();
+}
+
+render();
+</script>
+</body>
+</html>
