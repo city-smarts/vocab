@@ -8,247 +8,209 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  /* City Smarts brand palette */
   --blue:#4A8FE0;--blue-dark:#2B6CBF;--blue-dim:rgba(74,143,224,.1);--blue-bdr:rgba(74,143,224,.25);
   --gold:#E8A817;--gold-dim:rgba(232,168,23,.1);--gold-bdr:rgba(232,168,23,.3);
   --green:#2A9D5C;--green-dim:rgba(42,157,92,.1);--green-bdr:rgba(42,157,92,.3);
   --red:#D94040;--red-dim:rgba(217,64,64,.08);--red-bdr:rgba(217,64,64,.22);
-  /* Surfaces */
   --bg:#F5F4F1;--surface:#FFFFFF;--s2:#EFF4FC;--s3:#E2EBF8;
-  /* Typography */
-  --text:#1D1616;--muted:#4A4A4A;--muted2:#888;
-  --border:rgba(0,0,0,.09);
-  /* Font */
+  --text:#1D1616;--muted:#4A4A4A;--muted2:#888;--border:rgba(0,0,0,.09);
   --font:proxima-nova,'Nunito',system-ui,sans-serif;
 }
-html,body{height:100%;background:var(--bg);color:var(--text);
-  font-family:var(--font);-webkit-font-smoothing:antialiased}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);-webkit-font-smoothing:antialiased}
 body{display:flex;flex-direction:column;min-height:100vh}
 
-/* ── HEADER ── */
-header{background:var(--surface);border-bottom:1px solid var(--border);
-  padding:13px 20px;display:flex;align-items:center;justify-content:space-between;
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);padding:13px 20px;
+  display:flex;align-items:center;justify-content:space-between;
   position:sticky;top:0;z-index:10;box-shadow:0 1px 8px rgba(0,0,0,.06)}
 .brand-wrap{display:flex;align-items:center;gap:8px}
-.brand-icon{font-size:18px;line-height:1}
-.brand-text{}
-.brand-sub{font-size:9px;letter-spacing:3px;color:var(--gold);
-  text-transform:uppercase;font-weight:700;line-height:1.2}
+.brand-sub{font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;font-weight:700;line-height:1.2}
 .brand-name{font-size:15px;font-weight:800;color:var(--text);letter-spacing:.3px}
 .header-stats{display:flex;align-items:center;gap:20px}
 .hstat{text-align:center}
 .hstat-val{font-size:16px;font-weight:800}
 .hstat-lbl{font-size:8px;color:var(--muted2);text-transform:uppercase;letter-spacing:1.5px}
 
-/* ── NAV ── */
+/* NAV */
 nav{display:flex;background:var(--surface);border-bottom:2px solid var(--border)}
-nav button{flex:1;padding:13px 8px;border:none;background:transparent;
-  color:var(--muted2);font-size:12px;font-weight:700;cursor:pointer;
-  font-family:var(--font);border-bottom:3px solid transparent;
-  transition:all .18s;letter-spacing:1px;text-transform:uppercase;margin-bottom:-2px}
+nav button{flex:1;padding:13px 8px;border:none;background:transparent;color:var(--muted2);
+  font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);
+  border-bottom:3px solid transparent;transition:all .18s;letter-spacing:1px;
+  text-transform:uppercase;margin-bottom:-2px}
 nav button.active{color:var(--text);border-bottom-color:var(--gold)}
 
-/* ── MAIN ── */
+/* MAIN */
 main{flex:1;display:flex;flex-direction:column;align-items:center;
-  justify-content:flex-start;padding:24px 16px 60px}
+  justify-content:flex-start;padding:20px 16px 60px}
 
-/* ── CARD ── */
-.card-wrap{width:100%;max-width:480px;height:290px;perspective:1200px;
-  cursor:pointer;margin-bottom:20px}
+/* CARD */
+.card-wrap{width:100%;max-width:480px;height:280px;perspective:1200px;
+  cursor:pointer;margin-bottom:18px}
 .card-flipper{position:relative;width:100%;height:100%;
   transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,0,.2,1)}
 .card-wrap.flipped .card-flipper{transform:rotateY(180deg)}
 .card-face{position:absolute;inset:0;backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;border-radius:16px;padding:26px 28px;
-  display:flex;flex-direction:column;
-  box-shadow:0 4px 24px rgba(0,0,0,.1)}
-.card-front{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 100%);
-  border:none}
-.card-back{background:var(--surface);border:1px solid var(--border);
-  transform:rotateY(180deg)}
-.card-tags{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+  -webkit-backface-visibility:hidden;border-radius:16px;padding:24px 28px;
+  display:flex;flex-direction:column;box-shadow:0 4px 24px rgba(0,0,0,.1)}
+.card-front{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 100%);border:none}
+.card-back{background:var(--surface);border:1px solid var(--border);transform:rotateY(180deg);overflow:hidden}
+.card-tags{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
 .chip{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
   padding:3px 9px;border-radius:20px;white-space:nowrap}
-/* Chips on blue card front — always white regardless of inline style */
 .card-front .chip{background:rgba(255,255,255,.18)!important;border:1px solid rgba(255,255,255,.3)!important;color:#fff!important}
-/* Chips on white card back — always blue-dark */
-.card-back .chip{background:var(--blue-dim)!important;border:1px solid var(--blue-bdr)!important;color:var(--blue-dark)!important}
-.card-word{font-family:'Playfair Display',Georgia,serif;font-size:42px;
+.card-back  .chip{background:var(--blue-dim)!important;border:1px solid var(--blue-bdr)!important;color:var(--blue-dark)!important}
+.mc-card    .chip{background:rgba(255,255,255,.18)!important;border:1px solid rgba(255,255,255,.3)!important;color:#fff!important}
+.card-word{font-family:'Playfair Display',Georgia,serif;font-size:40px;
   font-weight:700;color:#fff;line-height:1.1;margin-bottom:5px}
-.card-pos{font-family:'Playfair Display',Georgia,serif;font-style:italic;
-  font-size:15px;color:rgba(255,255,255,.75)}
-.card-hint{margin-top:auto;font-size:9px;color:rgba(255,255,255,.5);
-  letter-spacing:2px;text-transform:uppercase}
-/* Back face */
-.card-back-label{font-size:9px;font-weight:800;color:var(--blue);
-  letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
-.card-def{font-family:'Playfair Display',Georgia,serif;font-size:18px;
-  color:var(--text);line-height:1.55;margin-bottom:14px;flex:0 0 auto}
+.card-pos{font-family:'Playfair Display',Georgia,serif;font-style:italic;font-size:14px;color:rgba(255,255,255,.75)}
+.card-hint{margin-top:auto;font-size:9px;color:rgba(255,255,255,.5);letter-spacing:2px;text-transform:uppercase}
+.card-back-label{font-size:9px;font-weight:800;color:var(--blue);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.card-def{font-family:'Playfair Display',Georgia,serif;font-size:17px;
+  color:var(--text);line-height:1.55;margin-bottom:12px}
 .card-ex{border-left:3px solid var(--gold);padding-left:12px;
-  font-size:13px;color:var(--muted);line-height:1.7;font-style:italic}
+  font-size:12px;color:var(--muted);line-height:1.7;font-style:italic}
 
-/* ── BUTTONS ── */
+/* BUTTONS */
 .btn-row{display:flex;gap:10px;width:100%;max-width:480px}
-.btn{padding:13px 20px;border-radius:300px;border:none;cursor:pointer;
-  font-family:var(--font);font-size:14px;font-weight:700;transition:all .15s;flex:1;
-  letter-spacing:.3px}
+.btn{padding:12px 20px;border-radius:300px;border:none;cursor:pointer;
+  font-family:var(--font);font-size:13px;font-weight:700;transition:all .15s;flex:1;letter-spacing:.3px}
 .btn-wrong{background:var(--red-dim);border:1px solid var(--red-bdr);color:var(--red)}
 .btn-right{background:var(--green-dim);border:1px solid var(--green-bdr);color:var(--green)}
 .btn-wrong:hover{background:rgba(217,64,64,.15)}
 .btn-right:hover{background:rgba(42,157,92,.18)}
-.btn-primary{background:var(--blue);color:#fff;border:none;
-  padding:14px 36px;border-radius:300px;font-size:14px;font-weight:800;
-  cursor:pointer;font-family:var(--font);transition:all .15s;letter-spacing:.5px}
+.btn-primary{background:var(--blue);color:#fff;border:none;padding:13px 32px;
+  border-radius:300px;font-size:14px;font-weight:800;cursor:pointer;
+  font-family:var(--font);transition:all .15s;letter-spacing:.5px}
 .btn-primary:hover{background:var(--blue-dark)}
-.btn-gold{background:var(--gold);color:var(--text);border:none;
-  padding:14px 36px;border-radius:300px;font-size:14px;font-weight:800;
-  cursor:pointer;font-family:var(--font);transition:all .15s;letter-spacing:.5px}
+.btn-gold{background:var(--gold);color:var(--text);border:none;padding:13px 32px;
+  border-radius:300px;font-size:14px;font-weight:800;cursor:pointer;
+  font-family:var(--font);transition:all .15s;letter-spacing:.5px}
 .btn-gold:hover{background:#d49810}
 .btn-neutral{background:var(--surface);border:1px solid var(--border);
-  color:var(--muted);padding:12px 28px;border-radius:300px;font-size:13px;
+  color:var(--muted);padding:11px 24px;border-radius:300px;font-size:13px;
   font-weight:700;cursor:pointer;font-family:var(--font);transition:all .15s}
 .btn-neutral:hover{border-color:var(--blue-bdr);color:var(--blue)}
 
-/* ── PROGRESS BAR ── */
-.prog-wrap{width:100%;max-width:480px;margin-bottom:18px}
+/* PROGRESS BAR */
+.prog-wrap{width:100%;max-width:480px;margin-bottom:16px}
 .prog-meta{display:flex;justify-content:space-between;
-  font-size:11px;color:var(--muted2);margin-bottom:7px;font-weight:600;letter-spacing:.5px}
+  font-size:11px;color:var(--muted2);margin-bottom:6px;font-weight:600;letter-spacing:.5px}
 .prog-track{background:var(--s3);border-radius:4px;height:4px}
 .prog-fill{background:linear-gradient(90deg,var(--blue),var(--gold));
   height:4px;border-radius:4px;transition:width .35s ease}
 
-/* ── SECTION CONTAINERS ── */
-.section{width:100%;max-width:480px;display:flex;
-  flex-direction:column;align-items:center;gap:0}
+.section{width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center;gap:0}
 
-/* ── WOTD ── */
-.wotd-header{width:100%;max-width:480px;display:flex;
-  justify-content:space-between;align-items:center;margin-bottom:18px}
+/* WOTD */
+.wotd-header{width:100%;max-width:480px;display:flex;justify-content:space-between;
+  align-items:center;margin-bottom:14px}
 .wotd-day{font-size:10px;color:var(--muted2);letter-spacing:2px;text-transform:uppercase;font-weight:700}
 .wotd-day span{color:var(--gold)}
-.wotd-cta{width:100%;max-width:480px;text-align:center;
-  padding-top:8px;display:flex;flex-direction:column;align-items:center;gap:10px}
-.wotd-note{font-size:12px;color:var(--muted2);line-height:1.7}
 .streak-badge{display:inline-flex;align-items:center;gap:7px;
   background:var(--gold-dim);border:1px solid var(--gold-bdr);
-  border-radius:300px;padding:7px 16px;font-size:12px;font-weight:800;
-  color:var(--gold);letter-spacing:.5px}
+  border-radius:300px;padding:6px 14px;font-size:12px;font-weight:800;color:var(--gold)}
+.word-dots{display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap;
+  width:100%;max-width:480px;justify-content:center}
+.word-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);
+  background:var(--surface);font-size:11px;font-weight:700;color:var(--muted2);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.word-dot.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.word-dot.seen{background:var(--s2);border-color:var(--blue-bdr);color:var(--blue-dark)}
+.wotd-cta{width:100%;max-width:480px;text-align:center;
+  padding-top:6px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.wotd-note{font-size:12px;color:var(--muted2);line-height:1.7}
 
-/* ── STUDY ── */
+/* STUDY */
 .toggle-row{display:flex;align-items:center;justify-content:space-between;
-  background:var(--surface);border-radius:12px;padding:11px 16px;
-  border:1px solid var(--border);margin-bottom:14px}
+  background:var(--surface);border-radius:12px;padding:10px 16px;
+  border:1px solid var(--border);margin-bottom:12px}
 .toggle-label{font-size:12px;color:var(--muted2)}
-.toggle-label strong{color:var(--text);font-size:13px;display:block;
-  margin-bottom:1px;font-weight:700}
+.toggle-label strong{color:var(--text);font-size:13px;display:block;margin-bottom:1px;font-weight:700}
 .toggle{position:relative;display:inline-block;width:40px;height:22px}
 .toggle input{opacity:0;width:0;height:0}
-.slider{position:absolute;inset:0;background:var(--s3);
-  border-radius:22px;cursor:pointer;transition:.2s}
+.slider{position:absolute;inset:0;background:var(--s3);border-radius:22px;cursor:pointer;transition:.2s}
 .slider:before{content:'';position:absolute;height:16px;width:16px;
   left:3px;bottom:3px;background:var(--muted2);border-radius:50%;transition:.2s}
 input:checked+.slider{background:var(--blue)}
 input:checked+.slider:before{transform:translateX(18px);background:#fff}
 
-/* ── DONE / EMPTY SCREENS ── */
-.done-screen,.empty-screen{text-align:center;max-width:400px;padding:20px 16px}
-.done-emoji,.empty-emoji{font-size:52px;margin-bottom:14px}
-.screen-title{font-family:'Playfair Display',Georgia,serif;
-  font-size:28px;color:var(--text);margin-bottom:8px}
-.screen-sub{color:var(--muted);font-size:14px;line-height:1.75;margin-bottom:28px}
-.stat-row{display:flex;gap:10px;justify-content:center;margin-bottom:28px;flex-wrap:wrap}
-.stat-box{background:var(--surface);border:1px solid var(--border);
-  border-radius:12px;padding:16px 18px;min-width:82px;text-align:center;
-  box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.stat-val{font-size:28px;font-weight:800}
-.stat-lbl{font-size:8px;color:var(--muted2);text-transform:uppercase;
-  letter-spacing:1.5px;margin-top:4px;font-weight:700}
-
-/* ── STATS TAB ── */
-.stats-section{width:100%;max-width:480px}
-.stats-section h2{font-family:'Playfair Display',Georgia,serif;
-  font-size:24px;color:var(--text);margin-bottom:18px}
-.panel{background:var(--surface);border:1px solid var(--border);
-  border-radius:14px;padding:20px;margin-bottom:12px;
-  box-shadow:0 2px 8px rgba(0,0,0,.04)}
-.panel-label{font-size:9px;font-weight:800;color:var(--muted2);
-  text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
-.bucket-row{margin-bottom:12px}
-.bucket-meta{display:flex;justify-content:space-between;
-  font-size:12px;margin-bottom:5px;font-weight:600}
-.bucket-name{font-weight:700}
-.bucket-bar-track{background:var(--s3);border-radius:4px;height:5px}
-.bucket-bar-fill{height:5px;border-radius:4px;transition:width .5s ease}
-.struggle-row{display:flex;justify-content:space-between;align-items:center;
-  padding:8px 0;border-bottom:1px solid var(--border)}
-.struggle-word{font-size:14px;font-weight:700}
-.struggle-pos{font-size:11px;color:var(--muted2);font-style:italic;margin-left:6px}
-.struggle-count{font-size:12px;color:var(--red);font-weight:700}
-.reset-btn{width:100%;padding:11px;background:transparent;
-  border:1px solid var(--border);border-radius:300px;color:var(--muted2);
-  font-size:12px;cursor:pointer;font-family:var(--font);font-weight:700;
-  letter-spacing:1px;text-transform:uppercase;transition:all .15s}
-.reset-btn:hover{border-color:var(--red-bdr);color:var(--red)}
-.confirm-panel{background:var(--surface);border:1px solid var(--red-bdr);
-  border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;
-  box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.confirm-text{font-size:13px;color:var(--text);text-align:center;font-weight:600}
-.confirm-row{display:flex;gap:10px}
-.confirm-yes{flex:1;padding:10px;background:var(--red-dim);
-  border:1px solid var(--red-bdr);border-radius:300px;color:var(--red);
-  font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)}
-.confirm-no{flex:1;padding:10px;background:var(--s3);
-  border:1px solid var(--border);border-radius:300px;color:var(--muted);
-  font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)}
-.pool-info{font-size:12px;color:var(--muted2);text-align:center;
-  margin-bottom:14px;line-height:1.6}
-.pool-info strong{color:var(--text);font-weight:700}
-
-/* ── MODE TOGGLE ── */
+/* MODE TOGGLE */
 .mode-toggle{display:flex;background:var(--surface);padding:4px;border-radius:300px;
-  width:100%;max-width:480px;margin-bottom:14px;border:1px solid var(--border)}
+  width:100%;max-width:480px;margin-bottom:12px;border:1px solid var(--border)}
 .mode-btn{flex:1;padding:8px 12px;border:none;background:transparent;
   color:var(--muted2);font-size:11px;font-weight:800;cursor:pointer;
   font-family:var(--font);border-radius:300px;transition:all .18s;
   white-space:nowrap;text-transform:uppercase;letter-spacing:1px}
-.mode-btn.active{background:var(--blue);color:#fff;
-  box-shadow:0 2px 8px rgba(74,143,224,.35)}
+.mode-btn.active{background:var(--blue);color:#fff;box-shadow:0 2px 8px rgba(74,143,224,.35)}
 
-/* ── MULTIPLE CHOICE ── */
+/* MC */
 .mc-card{width:100%;max-width:480px;
   background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 100%);
-  border:none;border-radius:16px;padding:24px 28px;
-  margin-bottom:14px;box-shadow:0 4px 24px rgba(74,143,224,.25)}
-.mc-card .chip{background:rgba(255,255,255,.18)!important;border:1px solid rgba(255,255,255,.3)!important;color:#fff!important}
-.mc-word{font-family:'Playfair Display',Georgia,serif;font-size:42px;
-  font-weight:700;color:#fff;line-height:1.1;margin:12px 0 5px}
+  border:none;border-radius:16px;padding:22px 26px;
+  margin-bottom:12px;box-shadow:0 4px 24px rgba(74,143,224,.25)}
+.mc-word{font-family:'Playfair Display',Georgia,serif;font-size:40px;
+  font-weight:700;color:#fff;line-height:1.1;margin:10px 0 4px}
 .mc-pos{font-family:'Playfair Display',Georgia,serif;font-style:italic;
-  font-size:15px;color:rgba(255,255,255,.75);margin-bottom:4px}
+  font-size:14px;color:rgba(255,255,255,.75);margin-bottom:2px}
 .mc-prompt{font-size:9px;color:rgba(255,255,255,.55);text-transform:uppercase;
-  letter-spacing:2px;margin-top:10px;font-weight:700}
+  letter-spacing:2px;margin-top:8px;font-weight:700}
 .mc-choices{width:100%;max-width:480px;display:flex;flex-direction:column;gap:8px}
-.mc-choice{width:100%;padding:13px 18px;border-radius:12px;
+.mc-choice{width:100%;padding:12px 16px;border-radius:12px;
   border:1px solid var(--border);background:var(--surface);
-  color:var(--text);font-size:13px;line-height:1.55;text-align:left;
-  cursor:pointer;font-family:var(--font);font-weight:600;
-  transition:all .12s;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+  color:var(--text);font-size:13px;line-height:1.5;text-align:left;
+  cursor:pointer;font-family:var(--font);font-weight:600;transition:all .12s;
+  box-shadow:0 1px 4px rgba(0,0,0,.04)}
 .mc-choice:hover:not([disabled]){background:var(--s2);border-color:var(--blue-bdr);color:var(--blue-dark)}
-.mc-choice.correct{background:var(--green-dim)!important;
-  border-color:var(--green-bdr)!important;color:var(--green)!important;font-weight:700}
-.mc-choice.wrong{background:var(--red-dim)!important;
-  border-color:var(--red-bdr)!important;color:var(--red)!important}
+.mc-choice.correct{background:var(--green-dim)!important;border-color:var(--green-bdr)!important;color:var(--green)!important;font-weight:700}
+.mc-choice.wrong{background:var(--red-dim)!important;border-color:var(--red-bdr)!important;color:var(--red)!important}
 .mc-choice[disabled]{cursor:default;pointer-events:none}
 .mc-result{width:100%;max-width:480px;text-align:center;
-  font-size:13px;font-weight:700;padding:8px;min-height:28px;letter-spacing:.3px}
-</style>
+  font-size:13px;font-weight:700;padding:6px;min-height:26px;letter-spacing:.3px}
 
+/* SCREENS */
+.done-screen,.empty-screen{text-align:center;max-width:400px;padding:20px 16px}
+.done-emoji,.empty-emoji{font-size:52px;margin-bottom:14px}
+.screen-title{font-family:'Playfair Display',Georgia,serif;font-size:26px;color:var(--text);margin-bottom:8px}
+.screen-sub{color:var(--muted);font-size:14px;line-height:1.75;margin-bottom:24px}
+.stat-row{display:flex;gap:10px;justify-content:center;margin-bottom:24px;flex-wrap:wrap}
+.stat-box{background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:14px 16px;min-width:78px;text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.stat-val{font-size:26px;font-weight:800}
+.stat-lbl{font-size:8px;color:var(--muted2);text-transform:uppercase;letter-spacing:1.5px;margin-top:4px;font-weight:700}
+
+/* STATS */
+.stats-section{width:100%;max-width:480px}
+.stats-section h2{font-family:'Playfair Display',Georgia,serif;font-size:22px;color:var(--text);margin-bottom:16px}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.panel-label{font-size:9px;font-weight:800;color:var(--muted2);text-transform:uppercase;letter-spacing:2px;margin-bottom:14px}
+.bucket-row{margin-bottom:11px}
+.bucket-meta{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;font-weight:600}
+.bucket-bar-track{background:var(--s3);border-radius:4px;height:5px}
+.bucket-bar-fill{height:5px;border-radius:4px;transition:width .5s ease}
+.struggle-row{display:flex;justify-content:space-between;align-items:center;
+  padding:7px 0;border-bottom:1px solid var(--border)}
+.struggle-word{font-size:14px;font-weight:700}
+.struggle-pos{font-size:11px;color:var(--muted2);font-style:italic;margin-left:6px}
+.struggle-count{font-size:12px;color:var(--red);font-weight:700}
+.reset-btn{width:100%;padding:10px;background:transparent;border:1px solid var(--border);
+  border-radius:300px;color:var(--muted2);font-size:11px;cursor:pointer;
+  font-family:var(--font);font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:all .15s}
+.reset-btn:hover{border-color:var(--red-bdr);color:var(--red)}
+.confirm-panel{background:var(--surface);border:1px solid var(--red-bdr);border-radius:12px;
+  padding:14px;display:flex;flex-direction:column;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.confirm-text{font-size:13px;color:var(--text);text-align:center;font-weight:600}
+.confirm-row{display:flex;gap:10px}
+.confirm-yes{flex:1;padding:9px;background:var(--red-dim);border:1px solid var(--red-bdr);
+  border-radius:300px;color:var(--red);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)}
+.confirm-no{flex:1;padding:9px;background:var(--s3);border:1px solid var(--border);
+  border-radius:300px;color:var(--muted);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)}
+</style>
 </head>
 <body>
-
 <header>
   <div class="brand-wrap">
-    <div class="brand-icon">💡</div>
-    <div class="brand-text">
+    <div>
       <div class="brand-sub">City Smarts</div>
       <div class="brand-name">Vocab Builder</div>
     </div>
@@ -270,7 +232,7 @@ input:checked+.slider:before{transform:translateX(18px);background:#fff}
 </header>
 
 <nav>
-  <button id="tab-wotd" class="active" onclick="switchTab('wotd')">☀️ Word of the Day</button>
+  <button id="tab-wotd" class="active" onclick="switchTab('wotd')">☀️ Words of the Day</button>
   <button id="tab-study" onclick="switchTab('study')">📚 Study</button>
   <button id="tab-stats" onclick="switchTab('stats')">📊 Progress</button>
 </nav>
@@ -278,382 +240,1231 @@ input:checked+.slider:before{transform:translateX(18px);background:#fff}
 <main id="main-content"></main>
 
 <script>
-// ═══════════════════════════════════════════════════════════════
-// WORD DATABASE — 100 words, grades 7–10, SHSAT + TACHS calibrated
-// ═══════════════════════════════════════════════════════════════
 const WORDS = [
-  {id:1,  word:"Adamant",      pos:"adj",  def:"Refusing to change; stubbornly insistent",                              ex:"She was adamant that the project deadline could not be extended.",               cat:"Character"},
-  {id:2,  word:"Adept",        pos:"adj",  def:"Highly skilled or proficient at something",                             ex:"Marcus became adept at solving complex equations after months of practice.",    cat:"Character"},
-  {id:3,  word:"Alacrity",     pos:"noun", def:"Brisk, cheerful eagerness or readiness",                                ex:"She accepted the challenge with alacrity, excited by the opportunity.",          cat:"Character"},
-  {id:4,  word:"Altruistic",   pos:"adj",  def:"Showing selfless concern for the well-being of others",                 ex:"His altruistic decision to donate his savings surprised even close friends.",    cat:"Character"},
-  {id:5,  word:"Candid",       pos:"adj",  def:"Open and honest in expression",                                         ex:"The coach gave her a candid assessment of her weaknesses as a player.",          cat:"Character"},
-  {id:6,  word:"Diffident",    pos:"adj",  def:"Modest or shy due to lack of self-confidence",                          ex:"The diffident student rarely raised his hand despite knowing the answers.",      cat:"Character"},
-  {id:7,  word:"Diligent",     pos:"adj",  def:"Showing care, steady effort, and persistence",                          ex:"A diligent student reviews her notes every evening without fail.",               cat:"Character"},
-  {id:8,  word:"Gregarious",   pos:"adj",  def:"Fond of company; outgoing and sociable",                                ex:"The gregarious new student quickly made friends with everyone in the class.",    cat:"Character"},
-  {id:9,  word:"Impudent",     pos:"adj",  def:"Disrespectfully bold or rude",                                          ex:"His impudent reply shocked the teacher, who had expected more respect.",         cat:"Character"},
-  {id:10, word:"Indignant",    pos:"adj",  def:"Feeling righteous anger at unfair treatment",                           ex:"She was indignant when she learned her work was credited to someone else.",      cat:"Character"},
-  {id:11, word:"Indolent",     pos:"adj",  def:"Lazy; habitually avoiding work or activity",                            ex:"The indolent student put off his essay until the night before it was due.",      cat:"Character"},
-  {id:12, word:"Magnanimous",  pos:"adj",  def:"Generous in forgiving; noble and unselfish in spirit",                  ex:"After winning the debate, she was magnanimous in praising her opponent.",        cat:"Character"},
-  {id:13, word:"Miserly",      pos:"adj",  def:"Excessively unwilling to spend; extremely stingy",                      ex:"The miserly landlord refused to spend money on basic repairs.",                  cat:"Character"},
-  {id:14, word:"Obstinate",    pos:"adj",  def:"Stubbornly refusing to change opinion or course of action",             ex:"The obstinate child refused to eat anything that wasn't pizza.",                 cat:"Character"},
-  {id:15, word:"Pedantic",     pos:"adj",  def:"Overly focused on minor details or rules",                              ex:"His pedantic corrections of every grammatical slip annoyed his classmates.",    cat:"Character"},
-  {id:16, word:"Pragmatic",    pos:"adj",  def:"Dealing with things practically rather than theoretically",             ex:"Rather than debating the ideal plan, she took a pragmatic approach.",           cat:"Character"},
-  {id:17, word:"Prudent",      pos:"adj",  def:"Acting with careful thought and good judgment",                         ex:"It was prudent to save some money for unexpected emergencies.",                  cat:"Character"},
-  {id:18, word:"Stoic",        pos:"adj",  def:"Enduring pain or hardship without complaint",                           ex:"Despite his injury, the stoic athlete finished the race without complaint.",     cat:"Character"},
-  {id:19, word:"Sycophant",    pos:"noun", def:"A person who flatters powerful people to gain favor",                   ex:"The sycophant agreed with everything the boss said, hoping for a promotion.",   cat:"Character"},
-  {id:20, word:"Tenacious",    pos:"adj",  def:"Persistent; holding firmly to a goal and not giving up",                ex:"Her tenacious work ethic allowed her to overcome every obstacle.",               cat:"Character"},
-  {id:21, word:"Vehement",     pos:"adj",  def:"Showing strong feeling; intensely passionate",                          ex:"She made a vehement argument against the proposed budget cuts.",                 cat:"Character"},
-  {id:22, word:"Reticent",     pos:"adj",  def:"Reserved; reluctant to express feelings or share information",          ex:"He was reticent about his struggles, rarely asking anyone for help.",            cat:"Character"},
-  {id:23, word:"Callous",      pos:"adj",  def:"Emotionally hardened; showing no sympathy for others",                  ex:"Her callous response to the sad news shocked everyone in the room.",            cat:"Character"},
-  {id:24, word:"Intrepid",     pos:"adj",  def:"Fearless and bold in the face of danger or difficulty",                 ex:"The intrepid explorer pressed on despite the harsh conditions.",                 cat:"Character"},
-  {id:25, word:"Capricious",   pos:"adj",  def:"Unpredictable; prone to sudden, impulsive changes of mood",             ex:"Her capricious decisions made it hard for the team to plan ahead.",             cat:"Character"},
-  {id:26, word:"Contemptuous", pos:"adj",  def:"Showing open disrespect or scorn toward someone",                       ex:"His contemptuous tone made clear he thought the question was beneath him.",      cat:"Character"},
-  {id:27, word:"Meticulous",   pos:"adj",  def:"Extremely careful and precise; attentive to every detail",              ex:"The meticulous editor caught every typo before the article went to print.",     cat:"Character"},
-  {id:28, word:"Vindictive",   pos:"adj",  def:"Seeking revenge; unwilling to forgive a perceived wrong",               ex:"After losing the election, he became vindictive toward his former supporters.",  cat:"Character"},
-  {id:29, word:"Apprehensive", pos:"adj",  def:"Anxious or uneasy about something in the future",                       ex:"She felt apprehensive before the big exam, unable to sleep the night before.",  cat:"Character"},
-  {id:30, word:"Condescending",pos:"adj",  def:"Acting as if others are inferior; patronizing",                         ex:"His condescending tone made the younger students feel unwelcome.",               cat:"Character"},
-  {id:31, word:"Furtive",      pos:"adj",  def:"Done in a secretive or sneaky way; trying not to be noticed",           ex:"She cast a furtive glance at the clock during the silent exam.",                cat:"Character"},
-  {id:32, word:"Impetuous",    pos:"adj",  def:"Acting quickly and without thinking; rash and impulsive",               ex:"His impetuous decision to quit the team surprised his coach.",                  cat:"Character"},
-  {id:33, word:"Integrity",    pos:"noun", def:"Honesty and strong moral principles; doing the right thing",            ex:"She showed real integrity by admitting her mistake rather than hiding it.",      cat:"Character"},
-  {id:34, word:"Vigilant",     pos:"adj",  def:"Staying alert and watchful, especially for danger",                     ex:"The vigilant lifeguard spotted the struggling swimmer before anyone else.",      cat:"Character"},
-  {id:35, word:"Assiduous",    pos:"adj",  def:"Hardworking and showing great care and dedication",                     ex:"His assiduous preparation for the competition paid off with a first-place finish.", cat:"Character"},
-  {id:36, word:"Nonchalant",   pos:"adj",  def:"Casually calm and unconcerned, as if nothing bothers you",             ex:"Despite the chaos, she remained nonchalant and finished her essay on time.",    cat:"Character"},
-  {id:37, word:"Empathy",      pos:"noun", def:"The ability to understand and share the feelings of another person",    ex:"Her empathy for the new student helped him feel welcome on his first day.",      cat:"Character"},
-  {id:38, word:"Acrimonious",  pos:"adj",  def:"Bitter and harsh in speech or manner; full of ill feeling",             ex:"The acrimonious debate ended with both sides more divided than before.",         cat:"Character"},
-  {id:39, word:"Ambiguous",    pos:"adj",  def:"Open to more than one interpretation; unclear in meaning",              ex:"The ambiguous instructions left students unsure how to complete the task.",     cat:"Thinking"},
-  {id:40, word:"Astute",       pos:"adj",  def:"Having quick and accurate judgment; sharp-minded",                      ex:"Her astute analysis of the problem impressed even the senior engineers.",       cat:"Thinking"},
-  {id:41, word:"Discern",      pos:"verb", def:"To recognize or perceive clearly; to judge carefully",                  ex:"It was difficult to discern the truth from the contradictory reports.",         cat:"Thinking"},
-  {id:42, word:"Dubious",      pos:"adj",  def:"Uncertain; hesitant; of questionable quality or truth",                 ex:"He was dubious about the plan and asked for more details before agreeing.",     cat:"Thinking"},
-  {id:43, word:"Implicit",     pos:"adj",  def:"Implied but not directly stated",                                       ex:"There was implicit criticism in her comments, even if never said directly.",   cat:"Thinking"},
-  {id:44, word:"Incredulous",  pos:"adj",  def:"Unwilling or unable to believe something",                              ex:"She was incredulous when she heard that her favorite store was closing.",       cat:"Thinking"},
-  {id:45, word:"Inference",    pos:"noun", def:"A conclusion reached from evidence and reasoning, not stated outright", ex:"Based on his muddy boots, she made the inference that he had been outside.",    cat:"Thinking"},
-  {id:46, word:"Lucid",        pos:"adj",  def:"Clearly expressed and easy to understand; rational",                    ex:"Her lucid explanation made the complex theory accessible to everyone.",         cat:"Thinking"},
-  {id:47, word:"Perceptive",   pos:"adj",  def:"Having sharp insight or intuitive understanding",                       ex:"The perceptive student noticed the rhyme scheme broke at a key moment.",        cat:"Thinking"},
-  {id:48, word:"Speculate",    pos:"verb", def:"To form theories without firm evidence; to hypothesize",                ex:"Scientists could only speculate about what caused the civilization to vanish.",  cat:"Thinking"},
-  {id:49, word:"Substantiate", pos:"verb", def:"To provide evidence to prove or support a claim",                       ex:"She needed data to substantiate her bold claims about climate change.",         cat:"Thinking"},
-  {id:50, word:"Scrutinize",   pos:"verb", def:"To examine something very closely and critically",                      ex:"The teacher told students to scrutinize each answer choice before selecting.",  cat:"Thinking"},
-  {id:51, word:"Erroneous",    pos:"adj",  def:"Wrong; containing errors or based on incorrect information",            ex:"The article was pulled after an erroneous claim was discovered.",              cat:"Thinking"},
-  {id:52, word:"Abate",        pos:"verb", def:"To become less intense, widespread, or severe",                         ex:"The storm began to abate by nightfall, and the skies finally cleared.",         cat:"Change"},
-  {id:53, word:"Acquiesce",    pos:"verb", def:"To accept reluctantly but without protest",                             ex:"After arguing for an hour, he finally acquiesced to his sister's plan.",        cat:"Change"},
-  {id:54, word:"Alleviate",    pos:"verb", def:"To make less severe, painful, or serious",                              ex:"The cold pack helped alleviate the swelling from her sprained ankle.",         cat:"Change"},
-  {id:55, word:"Augment",      pos:"verb", def:"To increase or make greater in size, value, or scope",                  ex:"She took on freelance projects to augment her regular income.",                 cat:"Change"},
-  {id:56, word:"Curtail",      pos:"verb", def:"To reduce or limit something; to cut short",                            ex:"Budget problems forced the school to curtail its after-school programs.",       cat:"Change"},
-  {id:57, word:"Exacerbate",   pos:"verb", def:"To make a problem or bad situation worse",                              ex:"Staying up late only exacerbated his fatigue before the big exam.",            cat:"Change"},
-  {id:58, word:"Facilitate",   pos:"verb", def:"To make an action or process easier or more efficient",                 ex:"The new software was designed to facilitate communication between teams.",       cat:"Change"},
-  {id:59, word:"Impede",       pos:"verb", def:"To delay or prevent by obstructing; to hinder",                        ex:"Heavy fog impeded the driver's view and slowed traffic significantly.",         cat:"Change"},
-  {id:60, word:"Mitigate",     pos:"verb", def:"To lessen the severity or seriousness of something",                   ex:"Sunscreen can help mitigate the risk of long-term sun damage.",                cat:"Change"},
-  {id:61, word:"Ostracize",    pos:"verb", def:"To exclude someone from a group or community",                          ex:"Students who broke unwritten rules were often ostracized by their peers.",     cat:"Change"},
-  {id:62, word:"Proliferate",  pos:"verb", def:"To increase rapidly and spread in large numbers",                       ex:"Social media platforms proliferated rapidly during the 2010s.",                cat:"Change"},
-  {id:63, word:"Reconcile",    pos:"verb", def:"To restore friendly relations; to make two things compatible",          ex:"After their argument, the two friends took time to reconcile.",                cat:"Change"},
-  {id:64, word:"Thwart",       pos:"verb", def:"To prevent someone from accomplishing something",                       ex:"The surprise inspection thwarted any plans to cheat on the test.",             cat:"Change"},
-  {id:65, word:"Deter",        pos:"verb", def:"To discourage someone from taking an action",                           ex:"The harsh penalty was meant to deter students from plagiarizing.",              cat:"Change"},
-  {id:66, word:"Lament",       pos:"verb", def:"To express deep sadness, grief, or regret",                            ex:"She lamented the loss of the old library where she had spent her childhood.",   cat:"Change"},
-  {id:67, word:"Jeopardize",   pos:"verb", def:"To put something at risk of being lost, damaged, or destroyed",         ex:"Skipping practice could jeopardize her spot on the varsity team.",             cat:"Change"},
-  {id:68, word:"Affluent",     pos:"adj",  def:"Wealthy; having an abundance of money or possessions",                  ex:"The affluent neighborhood donated generously to the local library.",            cat:"Description"},
-  {id:69, word:"Ambivalent",   pos:"adj",  def:"Having mixed or contradictory feelings about something",                ex:"She felt ambivalent — excited about college but sad to leave home.",            cat:"Description"},
-  {id:70, word:"Auspicious",   pos:"adj",  def:"Giving signs of future success; favorable",                             ex:"Winning the opening match was an auspicious start to the tournament.",         cat:"Description"},
-  {id:71, word:"Autonomous",   pos:"adj",  def:"Having the freedom to act independently; self-governing",               ex:"The student council was autonomous and made its own decisions.",                cat:"Description"},
-  {id:72, word:"Benevolent",   pos:"adj",  def:"Well-meaning and kindly; desiring to do good for others",               ex:"The benevolent donor funded scholarships for students across the district.",    cat:"Description"},
-  {id:73, word:"Benign",       pos:"adj",  def:"Gentle and not harmful; mild and favorable",                            ex:"The growth turned out to be benign — nothing to worry about.",                 cat:"Description"},
-  {id:74, word:"Conspicuous",  pos:"adj",  def:"Clearly visible; attracting notice or attention",                       ex:"The bright red jacket made him conspicuous in the crowd.",                     cat:"Description"},
-  {id:75, word:"Copious",      pos:"adj",  def:"Abundant; in large quantities; plentiful",                              ex:"She took copious notes during the lecture, filling three pages.",               cat:"Description"},
-  {id:76, word:"Eloquent",     pos:"adj",  def:"Fluent, vivid, and persuasive in speech or writing",                   ex:"Her eloquent speech moved many in the audience to tears.",                     cat:"Description"},
-  {id:77, word:"Ephemeral",    pos:"adj",  def:"Lasting a very short time; fleeting",                                   ex:"The beauty of a sand castle is ephemeral — the tide always wins.",             cat:"Description"},
-  {id:78, word:"Erratic",      pos:"adj",  def:"Unpredictable; not following a consistent pattern",                     ex:"His erratic behavior worried his teachers and friends.",                       cat:"Description"},
-  {id:79, word:"Frugal",       pos:"adj",  def:"Sparing in the use of money or resources; economical",                  ex:"By being frugal all year, she saved enough to buy a new laptop.",              cat:"Description"},
-  {id:80, word:"Immutable",    pos:"adj",  def:"Unchanging over time; unable to be altered",                            ex:"The laws of mathematics are immutable — they hold true everywhere.",           cat:"Description"},
-  {id:81, word:"Innocuous",    pos:"adj",  def:"Not harmful or offensive; appearing to be harmless",                   ex:"What seemed like an innocuous comment actually hurt her feelings deeply.",     cat:"Description"},
-  {id:82, word:"Intrinsic",    pos:"adj",  def:"Belonging naturally to something; essential and inherent",              ex:"Curiosity is intrinsic to good science — without it, discovery stops.",        cat:"Description"},
-  {id:83, word:"Mundane",      pos:"adj",  def:"Lacking interest or excitement; ordinary and routine",                  ex:"After months of adventure, returning to mundane routines felt strange.",        cat:"Description"},
-  {id:84, word:"Ostentatious", pos:"adj",  def:"Designed to impress; showy and extravagant",                            ex:"The ostentatious display of wealth made the other guests uncomfortable.",       cat:"Description"},
-  {id:85, word:"Pensive",      pos:"adj",  def:"Engaged in deep, often melancholy thought",                             ex:"She stared out the window with a pensive expression, lost in thought.",        cat:"Description"},
-  {id:86, word:"Placid",       pos:"adj",  def:"Calm and peaceful; untroubled by disturbance",                          ex:"The placid lake reflected the mountains perfectly in its still surface.",       cat:"Description"},
-  {id:87, word:"Prevalent",    pos:"adj",  def:"Widespread in a particular area or at a particular time",               ex:"Misinformation has become increasingly prevalent on social media.",             cat:"Description"},
-  {id:88, word:"Resilient",    pos:"adj",  def:"Able to withstand and recover quickly from hardship",                   ex:"Children are often more resilient than adults give them credit for.",           cat:"Description"},
-  {id:89, word:"Superfluous",  pos:"adj",  def:"Unnecessary; more than is needed or wanted",                            ex:"The editor removed several superfluous paragraphs that added nothing new.",    cat:"Description"},
-  {id:90, word:"Turbulent",    pos:"adj",  def:"Moving unsteadily; marked by conflict or disturbance",                  ex:"The turbulent years after the war reshaped the entire country.",                cat:"Description"},
-  {id:91, word:"Verbose",      pos:"adj",  def:"Using more words than necessary; unnecessarily long-winded",            ex:"His verbose essays frustrated readers who wanted concise writing.",             cat:"Description"},
-  {id:92, word:"Sporadic",     pos:"adj",  def:"Occurring at irregular intervals; not regular or steady",               ex:"Her sporadic attendance made it hard to keep up with the material.",            cat:"Description"},
-  {id:93, word:"Notorious",    pos:"adj",  def:"Famous for something bad; widely known in a negative way",              ex:"The intersection was notorious for accidents until a traffic light was added.",  cat:"Description"},
-  {id:94, word:"Tedious",      pos:"adj",  def:"Long and monotonous; tiresome and boring",                              ex:"Copying the entire passage by hand was a tedious but oddly calming task.",      cat:"Description"},
-  {id:95, word:"Adversity",    pos:"noun", def:"Difficult or unfavorable circumstances; hardship",                      ex:"She showed remarkable strength in the face of serious adversity.",               cat:"Description"},
-  {id:96, word:"Exemplary",    pos:"adj",  def:"Serving as an excellent model; outstanding and worthy of imitation",    ex:"The teacher praised his exemplary attitude toward group projects.",             cat:"Description"},
-  {id:97, word:"Inevitable",   pos:"adj",  def:"Impossible to avoid or prevent; certain to happen",                    ex:"After weeks of tension, a conflict seemed inevitable.",                        cat:"Description"},
-  {id:98, word:"Concise",      pos:"adj",  def:"Brief and to the point, without unnecessary words",                     ex:"His concise summary captured the key points in just two sentences.",           cat:"Language"},
-  {id:99, word:"Denote",       pos:"verb", def:"To indicate or be a sign of; to mean directly",                        ex:"In this graph, the red line denotes the average temperature over time.",        cat:"Language"},
-  {id:100,word:"Hackneyed",    pos:"adj",  def:"Overused to the point of losing its original meaning; clichéd",         ex:"The judge warned writers to avoid hackneyed phrases like 'as busy as a bee.'", cat:"Language"},
+  {id:777,word:"Prescient",pos:"adj.",def:"to have foreknowledge of events Maggie was quite prescient, seeing the future as"},
+  {id:484,word:"Forage",pos:"v.",def:"to graze, rummage for food"},
+  {id:896,word:"Solvent",pos:"n.",def:"substances that dissolve other substances"},
+  {id:508,word:"Gregarious",pos:"adj.",def:"drawn to the company of others, sociable"},
+  {id:185,word:"Captivate",pos:"v.",def:"to get the attention of, hold"},
+  {id:923,word:"Tangential",pos:"adj.",def:"incidental, peripheral, divergent"},
+  {id:810,word:"Quell",pos:"v.",def:"to control or diffuse a potentially explosive situation"},
+  {id:524,word:"Hypocrisy",pos:"n.",def:"pretending to believe what one does not"},
+  {id:34,word:"Adept",pos:"adj.",def:"extremely skilled"},
+  {id:419,word:"Engender",pos:"v.",def:"to bring about, create, generate"},
+  {id:86,word:"Anonymous",pos:"adj.",def:"being unknown, unrecognized"},
+  {id:451,word:"Expiate",pos:"v.",def:"to make amends for,"},
+  {id:616,word:"Larceny",pos:"n.",def:"obtaining another’s property by theft or trickery"},
+  {id:751,word:"Phlegmatic",pos:"adj.",def:"uninterested, unresponsive"},
+  {id:351,word:"Disavow",pos:"v.",def:"to deny knowledge of or responsibility for"},
+  {id:355,word:"Discordant",pos:"adj.",def:"not agreeing, not in harmony with"},
+  {id:366,word:"Disperse",pos:"v.",def:"to scatter, cause to scatter"},
+  {id:502,word:"Gluttony",pos:"n.",def:"overindulgence in food or drink"},
+  {id:683,word:"Noisome",pos:"adj.",def:"unpleasant, offensive, especially to the sense of smell"},
+  {id:771,word:"Preclude",pos:"v.",def:"to prevent"},
+  {id:733,word:"Pejorative",pos:"adj.",def:"derogatory, uncomplimentary"},
+  {id:370,word:"Dissent",pos:"v.",def:"to disagree"},
+  {id:761,word:"Plenitude",pos:"n.",def:"an abundance"},
+  {id:468,word:"Feral",pos:"adj.",def:"wild, savage"},
+  {id:186,word:"Carouse",pos:"v.",def:"to party,"},
+  {id:623,word:"Lethargic",pos:"adj.",def:"in a state of sluggishness or apathy"},
+  {id:790,word:"Propagate",pos:"v.",def:"to multiply, spread out"},
+  {id:50,word:"Aggregate",pos:"n.",def:"a whole or total"},
+  {id:477,word:"Figurative",pos:"adj.",def:"symbolic"},
+  {id:175,word:"Calibrate",pos:"v.",def:"to set, standardize"},
+  {id:615,word:"Languid",pos:"adj.",def:"sluggish from fatigue or weakness"},
+  {id:966,word:"Vehemently",pos:"adv.",def:"marked by intense force or emotion"},
+  {id:337,word:"Despot",pos:"n.",def:"one who has"},
+  {id:555,word:"Incorrigible",pos:"adj.",def:"incapable of correction, delinquent"},
+  {id:19,word:"Accede",pos:"v.",def:"To agree, yield to another\'s wishes"},
+  {id:631,word:"Lucid",pos:"adj.",def:"clear, easily understandable"},
+  {id:365,word:"Dispel",pos:"v.",def:"to drive away, scatter"},
+  {id:791,word:"Propensity",pos:"n.",def:"an inclination, preference"},
+  {id:941,word:"Transient",pos:"adj.",def:"passing through briefly; moving in and out of existence"},
+  {id:17,word:"Abstain",pos:"v.",def:"to freely choose not to commit an action"},
+  {id:497,word:"Frugal",pos:"adj.",def:"thrifty, economical"},
+  {id:2,word:"Abate",pos:"v.",def:"to reduce or to lessen"},
+  {id:798,word:"Prudence",pos:"n.",def:"cautious, circumspect"},
+  {id:925,word:"Tedious",pos:"adj.",def:"dull, boring"},
+  {id:910,word:"Subjugate",pos:"v.",def:"to bring under control, subdue"},
+  {id:597,word:"Intransigent",pos:"adj.",def:"refusing to compromise, often on an extreme opinion"},
+  {id:849,word:"Repulse",pos:"v.",def:"to disgust"},
+  {id:721,word:"Paradigm",pos:"n.",def:"an example that is a perfect pattern or model"},
+  {id:467,word:"Felicitous",pos:"adj.",def:"well suited, apt"},
+  {id:940,word:"Transgress",pos:"v.",def:"to violate, go over a limit"},
+  {id:151,word:"Benevolent",pos:"adj.",def:"marked by goodness or doing good"},
+  {id:230,word:"Compensate",pos:"v.",def:"to make an appropriate payment for something"},
+  {id:54,word:"Agriculture",pos:"n.",def:"The practice of cultivating land for crops"},
+  {id:742,word:"Pernicious",pos:"adj.",def:"extremely destructive or harmful"},
+  {id:29,word:"Acquiesce",pos:"v.",def:"to agree without protesting"},
+  {id:114,word:"Arid",pos:"adj.",def:"excessively dry"},
+  {id:375,word:"Dither",pos:"v.",def:"to be indecisive"},
+  {id:427,word:"Epitome",pos:"n.",def:"a perfect example, embodiment"},
+  {id:429,word:"Equivocal",pos:"adj.",def:"ambiguous, uncertain, undecided"},
+  {id:820,word:"Raze",pos:"v.",def:"to demolish, level"},
+  {id:764,word:"Poignant",pos:"adj.",def:"deeply affecting, moving"},
+  {id:317,word:"Delegate",pos:"v.",def:"to hand over responsibility for something"},
+  {id:57,word:"Alias",pos:"n.",def:"a false name or identity"},
+  {id:222,word:"Colloquial",pos:"adj.",def:"characteristic of informal conversation"},
+  {id:418,word:"Enfranchise",pos:"v.",def:"to grant the vote to"},
+  {id:587,word:"Insolent",pos:"adj.",def:"rude, arrogant, overbearing"},
+  {id:326,word:"Denounce",pos:"v.",def:"to criticize publicly"},
+  {id:265,word:"Constituent",pos:"n.",def:"an essential part"},
+  {id:300,word:"Curt",pos:"adj.",def:"abruptly"},
+  {id:824,word:"Reciprocate",pos:"v.",def:"to give in return"},
+  {id:387,word:"Ebullient",pos:"adj.",def:"extremely lively, enthusiastic"},
+  {id:865,word:"Rhapsodize",pos:"v.",def:"to engage in excessive enthusiasm"},
+  {id:773,word:"Predilection",pos:"n.",def:"a preference or inclination for something"},
+  {id:880,word:"Scintillating",pos:"adj.",def:"sparkling"},
+  {id:837,word:"Renovate",pos:"v.",def:"restore, return to original state"},
+  {id:335,word:"Desolate",pos:"adj.",def:"deserted, dreary, lifeless"},
+  {id:878,word:"Satiate",pos:"v.",def:"to satisfy excessively"},
+  {id:190,word:"Caucus",pos:"n.",def:"a meeting usually held by people working toward the same goal"},
+  {id:494,word:"Fraught",pos:"adj.",def:"(usually used with “with”) filled or accompanied with"},
+  {id:789,word:"Promulgate",pos:"v.",def:"to proclaim, make known"},
+  {id:507,word:"Gratuitous",pos:"adj.",def:"uncalled for, unwarranted"},
+  {id:189,word:"Catalyze",pos:"v.",def:"to charge, inspire"},
+  {id:415,word:"Encore",pos:"n.",def:"a repeat performance at the audiences\' insistence."},
+  {id:897,word:"Somnolent",pos:"adj.",def:"sleepy, drowsy"},
+  {id:67,word:"Ameliorate",pos:"v.",def:"to improve"},
+  {id:912,word:"Submissive",pos:"adj.",def:"easily yielding to authority"},
+  {id:331,word:"Deride",pos:"v.",def:"to laugh at mockingly, scorn"},
+  {id:590,word:"Insurgent",pos:"n.",def:"one who rebels"},
+  {id:509,word:"Grievous",pos:"adj.",def:"injurious, hurtful; serious or grave in nature"},
+  {id:464,word:"Fathom",pos:"v.",def:"to understand, comprehend"},
+  {id:843,word:"Reprehensible",pos:"adj.",def:"deserving rebuke"},
+  {id:312,word:"Defer",pos:"v.",def:"To postpone; to yield to another\'s wisdom"},
+  {id:667,word:"Nadir",pos:"n.",def:"the lowest point of something"},
+  {id:201,word:"Chronological",pos:"adj.",def:"arranged in order of time"},
+  {id:196,word:"Chastise",pos:"v.",def:"to criticize severely"},
+  {id:294,word:"Culpable",pos:"adj.",def:"deserving blame"},
+  {id:694,word:"Obfuscate",pos:"v.",def:"to render incomprehensible"},
+  {id:582,word:"Inquisitor",pos:"n.",def:"one who inquires, especially in a hostile manner"},
+  {id:539,word:"Impetuous",pos:"adj.",def:"rash; hastily done"},
+  {id:741,word:"Permeate",pos:"v.",def:"to spread throughout, saturate Leaven, or yeast, tends to permeate everything it touches."},
+  {id:695,word:"Oblique",pos:"adj.",def:"diverging from a straight line or course, not straightforward"},
+  {id:158,word:"Bilk",pos:"v.",def:"cheat, defraud"},
+  {id:639,word:"Mandate",pos:"n.",def:"an authoritative command"},
+  {id:425,word:"Ephemeral",pos:"adj.",def:"short-lived, fleeting"},
+  {id:362,word:"Disparage",pos:"v.",def:"to criticize or speak ill of"},
+  {id:529,word:"Ignominious",pos:"adj.",def:"humiliating, disgracing"},
+  {id:402,word:"Elucidate",pos:"v.",def:"to clarify, explain"},
+  {id:203,word:"Circumlocution",pos:"n.",def:"indirect and wordy language"},
+  {id:929,word:"Tenuous",pos:"adj.",def:"having little substance or strength"},
+  {id:452,word:"Expunge",pos:"v.",def:"to obliterate, eradicate"},
+  {id:608,word:"Jubilant",pos:"adj.",def:"extremely joyful, happy"},
+  {id:130,word:"Atrophy",pos:"v.",def:"To wither away, waste from lack of use"},
+  {id:39,word:"Adulation",pos:"n.",def:"extreme praise"},
+  {id:299,word:"Cursory",pos:"adj.",def:"brief, to the point of being superficial and inadequate"},
+  {id:309,word:"Decry",pos:"v.",def:"to criticize"},
+  {id:669,word:"Nebulous",pos:"adj.",def:"vaguely defined, cloudy"},
+  {id:149,word:"Beguile",pos:"v.",def:"to trick, deceive"},
+  {id:291,word:"Crescendo",pos:"n.",def:"a steady increase in intensity or volume"},
+  {id:945,word:"Trenchant",pos:"adj.",def:"effective, articulate, clear-cut"},
+  {id:232,word:"Complement",pos:"v.",def:"to complete, make perfect or whole"},
+  {id:607,word:"Irrevocable",pos:"adj.",def:"incapable of being taken back"},
+  {id:120,word:"Ascribe",pos:"v.",def:"to assign, credit, attribute to"},
+  {id:248,word:"Conduit",pos:"n.",def:"a pipe or channel through which something passes"},
+  {id:935,word:"Torpid",pos:"adj.",def:"lethargic, dormant, lacking motion"},
+  {id:122,word:"Aspire",pos:"v.",def:"to long for or to aim toward"},
+  {id:732,word:"Paucity",pos:"adj.",def:"small in quantity"},
+  {id:573,word:"Inhibit",pos:"v.",def:"to prevent, restrain, stop"},
+  {id:714,word:"Ostracism",pos:"n.",def:"exclusion from a group"},
+  {id:528,word:"Idolatrous",pos:"adj.",def:"excessively worshipping one object or person"},
+  {id:6,word:"Abet",pos:"v.",def:"to aid, assist, encourage"},
+  {id:808,word:"Quaint",pos:"adj.",def:"charmingly old-fashioned"},
+  {id:440,word:"Exalt",pos:"v.",def:"to glorify, praise"},
+  {id:892,word:"Sobriety",pos:"n.",def:"sedate, calm"},
+  {id:437,word:"Evanescent",pos:"adj.",def:"fleeting, momentary"},
+  {id:743,word:"Perplex",pos:"v.",def:"to confuse"},
+  {id:242,word:"Concise",pos:"adj.",def:"brief and direct in expression"},
+  {id:192,word:"Cavort",pos:"v.",def:"to leap about, behave boisterously"},
+  {id:77,word:"Anarchist",pos:"n.",def:"one who opposes and wants to eliminate all forms of government and law"},
+  {id:517,word:"Haughty",pos:"adj.",def:"disdainfully proud"},
+  {id:214,word:"Coagulate",pos:"v.",def:"To thicken or clot, as blood does"},
+  {id:661,word:"Morose",pos:"adj.",def:"gloomy or sullen"},
+  {id:483,word:"Foil",pos:"v.",def:"to thwart, frustrate, defeat"},
+  {id:793,word:"Propriety",pos:"n.",def:"the quality or state of being proper, decent"},
+  {id:586,word:"Insipid",pos:"adj.",def:"dull, boring"},
+  {id:958,word:"Usurp",pos:"v.",def:"to seize by force, take possession of without right"},
+  {id:703,word:"Odious",pos:"adj.",def:"instilling hatred or intense displeasure"},
+  {id:14,word:"Abrogate",pos:"v.",def:"to abolish, usually by authority"},
+  {id:178,word:"Camaraderie",pos:"n.",def:"brotherhood, partnership, jovial unity"},
+  {id:950,word:"Turgid",pos:"adj.",def:"swollen, excessively embellished in style or language"},
+  {id:240,word:"Concede",pos:"v.",def:"To accept as valid or true, acknowledge"},
+  {id:516,word:"Harrowing",pos:"adj.",def:"greatly distressing, vexing"},
+  {id:173,word:"Cajole",pos:"v.",def:"to urge, coax"},
+  {id:766,word:"Portent",pos:"n.",def:"An omen, sign of things to come"},
+  {id:360,word:"Disgruntled",pos:"adj.",def:"upset, not content"},
+  {id:486,word:"Forestall",pos:"v.",def:"to prevent, thwart, delay"},
+  {id:800,word:"Puerile",pos:"adj.",def:"juvenile, immature"},
+  {id:455,word:"Extol",pos:"v.",def:"to praise, revere"},
+  {id:25,word:"Accord",pos:"n.",def:"an agreement"},
+  {id:903,word:"Staid",pos:"adj.",def:"sedate, serious, self-restrained"},
+  {id:847,word:"Reprove",pos:"v.",def:"to scold, rebuke"},
+  {id:921,word:"Tacit",pos:"adj.",def:"expressed without words"},
+  {id:902,word:"Stagnate",pos:"v.",def:"to become or remain inactive, not develop, not flow"},
+  {id:211,word:"Clemency",pos:"n.",def:"Mercy, leniency toward an offender"},
+  {id:397,word:"Elaborate",pos:"adj.",def:"complex, detailed, intricate"},
+  {id:424,word:"Enthrall",pos:"v.",def:"to charm,"},
+  {id:745,word:"Pert",pos:"adj.",def:"flippant, bold"},
+  {id:405,word:"Embellish",pos:"v.",def:"to decorate, adorn"},
+  {id:35,word:"Adhere",pos:"n.",def:"to stick to something"},
+  {id:922,word:"Taciturn",pos:"adj.",def:"not inclined to talk; peevish"},
+  {id:373,word:"Dissuade",pos:"v.",def:"to persuade someone not to do something"},
+  {id:462,word:"Fallacious",pos:"adj.",def:"incorrect, misleading"},
+  {id:711,word:"Oscillate",pos:"v.",def:"to sway from one side to the other"},
+  {id:399,word:"Elegy",pos:"n.",def:"a speech given in honor"},
+  {id:632,word:"Luminous",pos:"adj.",def:"brightly shining"},
+  {id:42,word:"Advocate",pos:"v.",def:"to argue in favor of"},
+  {id:578,word:"Innocuous",pos:"adj.",def:"harmless, inoffensive"},
+  {id:140,word:"Avenge",pos:"v.",def:"to seek revenge"},
+  {id:960,word:"Utopia",pos:"n.",def:"an imaginary and remote place of perfection"},
+  {id:393,word:"Efficacious",pos:"adj.",def:"effective"},
+  {id:457,word:"Extricate",pos:"v.",def:"To free from a difficult situation"},
+  {id:93,word:"Antiseptic",pos:"adj.",def:"clean, sterile"},
+  {id:814,word:"Rail",pos:"v.",def:"to scold, protest"},
+  {id:288,word:"Coup",pos:"n.",def:"a brilliant, unexpected act"},
+  {id:490,word:"Fortuitous",pos:"adj.",def:"happening by chance, often lucky or fortunate"},
+  {id:458,word:"Exult",pos:"v.",def:"to rejoice"},
+  {id:654,word:"Moderate",pos:"adj.",def:"not extreme"},
+  {id:327,word:"Deplore",pos:"v.",def:"to feel or express sorrow, disapproval"},
+  {id:561,word:"Indignation",pos:"n.",def:"anger sparked by something unjust or unfair"},
+  {id:671,word:"Multifarious",pos:"adj.",def:"Having great variety and diversity"},
+  {id:916,word:"Surmise",pos:"v.",def:"to infer with little evidence"},
+  {id:638,word:"Malleable",pos:"adj.",def:"capable of being shaped or transformed"},
+  {id:416,word:"Encumber",pos:"v.",def:"to weigh down, burden"},
+  {id:150,word:"Behemoth",pos:"n.",def:"large creature; something of tremendous power or size The behemoths were rolled"},
+  {id:992,word:"Wily",pos:"adj.",def:"crafty, sly"},
+  {id:259,word:"Connive",pos:"v.",def:"to plot, scheme"},
+  {id:343,word:"Didactic",pos:"adj.",def:"intended to instruct"},
+  {id:314,word:"Defile",pos:"v.",def:"to make unclean, impure"},
+  {id:199,word:"Choreography",pos:"n.",def:"the arrangement of dances"},
+  {id:137,word:"Auspicious",pos:"adj.",def:"favorable, indicative of good things"},
+  {id:410,word:"Emote",pos:"v.",def:"to express emotion"},
+  {id:89,word:"Antediluvian",pos:"adj.",def:"ancient; before Noah’s flood"},
+  {id:305,word:"Debase",pos:"v.",def:"to lower the"},
+  {id:595,word:"Intimation",pos:"n.",def:"an indirect suggestion"},
+  {id:982,word:"Viscous",pos:"adj.",def:"not free flowing, syrupy"},
+  {id:287,word:"Counteract",pos:"v.",def:"to neutralize, make ineffective"},
+  {id:893,word:"Solicitous",pos:"adj.",def:"concerned, attentive"},
+  {id:354,word:"Discomfit",pos:"v.",def:"to thwart, baffle"},
+  {id:356,word:"Discrepancy",pos:"n.",def:"difference, failure of things to correspond"},
+  {id:376,word:"Divine",pos:"adj.",def:"godly, exceedingly wonderful"},
+  {id:834,word:"Relish",pos:"v.",def:"to enjoy"},
+  {id:350,word:"Disaffected",pos:"adj.",def:"rebellious,"},
+  {id:238,word:"Compress",pos:"v.",def:"to apply pressure, squeeze together."},
+  {id:943,word:"Travesty",pos:"n.",def:"a grossly inferior imitation"},
+  {id:500,word:"Garrulous",pos:"adj.",def:"talkative, wordy"},
+  {id:863,word:"Revere",pos:"v.",def:"to esteem, show deference, venerate"},
+  {id:475,word:"Fickle",pos:"adj.",def:"shifting in character, inconstant"},
+  {id:407,word:"Emend",pos:"v.",def:"to correct or revise a written text"},
+  {id:728,word:"Partisan",pos:"n.",def:"a follower, adherent"},
+  {id:618,word:"Latent",pos:"adj.",def:"hidden, but capable of being"},
+  {id:492,word:"Foster",pos:"v.",def:"to stimulate, promote, encourage"},
+  {id:698,word:"Obsequious",pos:"adj.",def:"excessively compliant or submissive"},
+  {id:431,word:"Eschew",pos:"v.",def:"to shun, avoid"},
+  {id:394,word:"Effrontery",pos:"n.",def:"impudence, nerve, insolence"},
+  {id:51,word:"Aggrieved",pos:"adj.",def:"distressed, wronged, injured"},
+  {id:295,word:"Cultivate",pos:"v.",def:"to nurture, improve, refine"},
+  {id:382,word:"Dour",pos:"adj.",def:"stern, joyless"},
+  {id:861,word:"Retract",pos:"v.",def:"withdraw"},
+  {id:681,word:"Neophyte",pos:"n.",def:"someone who is young or inexperienced"},
+  {id:420,word:"Enigmatic",pos:"adj.",def:"mystifying, cryptic"},
+  {id:126,word:"Assuage",pos:"v.",def:"to ease, pacify"},
+  {id:962,word:"Vacuous",pos:"adj.",def:"lack of content or ideas, stupid"},
+  {id:325,word:"Denigrate",pos:"v.",def:"to belittle, diminish the opinion of"},
+  {id:523,word:"Hierarchy",pos:"n.",def:"a system with ranked groups"},
+  {id:775,word:"Prepossessing",pos:"adj.",def:"preoccupying the mind to the exclusion of all else Job\'s prepossessing thoughts"},
+  {id:531,word:"Immerse",pos:"v.",def:"to absorb, deeply involve, engross"},
+  {id:626,word:"Licentious",pos:"adj.",def:"displaying a lack of moral or legal restraints"},
+  {id:852,word:"Rescind",pos:"v.",def:"to take back, repeal"},
+  {id:491,word:"Forum",pos:"n.",def:"a medium"},
+  {id:801,word:"Pugnacious",pos:"adj.",def:"quarrelsome, combative"},
+  {id:988,word:"Wallow",pos:"v.",def:"to roll oneself indolently; to become or remain helpless"},
+  {id:562,word:"Indolent",pos:"adj.",def:"Lazy, avoiding work or effort"},
+  {id:448,word:"Exonerate",pos:"v.",def:"to free from guilt or blame, exculpate"},
+  {id:257,word:"Congregation",pos:"n.",def:"a gathering of people, especially for religious services"},
+  {id:841,word:"Replete",pos:"adj.",def:"full, abundant"},
+  {id:156,word:"Beseech",pos:"v.",def:"to beg, plead, implore"},
+  {id:495,word:"Frenetic",pos:"adj.",def:"frenzied, hectic, frantic"},
+  {id:459,word:"Fabricate",pos:"v.",def:"to make up, invent"},
+  {id:613,word:"Laceration",pos:"n.",def:"a cut, tear"},
+  {id:478,word:"Flabbergasted",pos:"adj.",def:"astounded"},
+  {id:588,word:"Instigate",pos:"v.",def:"to urge, goad"},
+  {id:911,word:"Sublime",pos:"adj.",def:"lofty, grand, exalted"},
+  {id:260,word:"Consecrate",pos:"v.",def:"To dedicate to a sacred or holy purpose"},
+  {id:970,word:"Veracity",pos:"n.",def:"truthfulness, accuracy"},
+  {id:62,word:"Aloof",pos:"adj.",def:"reserved, distant"},
+  {id:154,word:"Berate",pos:"v.",def:"to scold vehemently"},
+  {id:640,word:"Manifest",pos:"adj.",def:"easily understandable, obvious"},
+  {id:64,word:"Amalgamate",pos:"v.",def:"to bring together, unite"},
+  {id:689,word:"Novice",pos:"n.",def:"a beginner, someone without training or experience"},
+  {id:194,word:"Cerebral",pos:"adj.",def:"related to the intellect"},
+  {id:488,word:"Forsake",pos:"v.",def:"to give up, renounce"},
+  {id:627,word:"Limpid",pos:"adj.",def:"clear, transparent"},
+  {id:187,word:"Carp",pos:"v.",def:"to annoy, pester"},
+  {id:817,word:"Rapport",pos:"n.",def:"mutual understanding and harmony"},
+  {id:572,word:"Ingenuous",pos:"adj.",def:"not devious; innocent and candid"},
+  {id:378,word:"Divulge",pos:"v.",def:"To reveal something secret or private"},
+  {id:18,word:"Abstruse",pos:"adj.",def:"hard to comprehend"},
+  {id:369,word:"Disseminate",pos:"v.",def:"to spread widely"},
+  {id:918,word:"Surrogate",pos:"n.",def:"one acting in place of another"},
+  {id:511,word:"Hackneyed",pos:"adj.",def:"unoriginal, trite"},
+  {id:276,word:"Convene",pos:"v.",def:"to call together"},
+  {id:574,word:"Inimical",pos:"adj.",def:"hostile, enemy-like"},
+  {id:267,word:"Construe",pos:"v.",def:"To interpret or understand the meaning of"},
+  {id:252,word:"Confluence",pos:"n.",def:"a gathering together"},
+  {id:21,word:"Accessible",pos:"adj.",def:"obtainable, reachable"},
+  {id:198,word:"Chide",pos:"v.",def:"to voice disapproval"},
+  {id:65,word:"Ambiguous",pos:"adj.",def:"uncertain, variably interpretable"},
+  {id:262,word:"Consign",pos:"v.",def:"To give something over to another\'s care"},
+  {id:770,word:"Precipice",pos:"n.",def:"the face of a cliff, a steep or overhanging place"},
+  {id:412,word:"Empirical",pos:"adj.",def:"based on observation or experience"},
+  {id:403,word:"Elude",pos:"v.",def:"to evade, escape"},
+  {id:302,word:"Daunting",pos:"adj.",def:"intimidating, causing one to lose courage"},
+  {id:540,word:"Impinge",pos:"v.",def:"to impact, affect, make an impression"},
+  {id:328,word:"Depravity",pos:"n.",def:"wickedness"},
+  {id:334,word:"Desiccated",pos:"adj.",def:"dried up, dehydrated"},
+  {id:15,word:"Abscond",pos:"v.",def:"to sneak away and hide"},
+  {id:665,word:"Mutable",pos:"adj.",def:"able to change"},
+  {id:997,word:"Yoke",pos:"v.",def:"to join, link"},
+  {id:476,word:"Fidelity",pos:"n.",def:"loyalty, devotion"},
+  {id:648,word:"Mendacious",pos:"adj.",def:"having a lying, false character"},
+  {id:503,word:"Goad",pos:"v.",def:"to urge, spur, incite to action"},
+  {id:811,word:"Querulous",pos:"adj.",def:"whiny, complaining"},
+  {id:329,word:"Deprecate",pos:"v.",def:"to belittle, depreciate"},
+  {id:851,word:"Requisition",pos:"n.",def:"a demand for goods, usually made by an authority"},
+  {id:233,word:"Compliant",pos:"adj.",def:"ready to adapt oneself to another’s wishes"},
+  {id:36,word:"Admonish",pos:"v.",def:"to caution, criticize, reprove"},
+  {id:796,word:"Protean",pos:"adj.",def:"Able to change shape; displaying great variety"},
+  {id:443,word:"Exculpate",pos:"v.",def:"to free from guilt or blame, exonerate"},
+  {id:179,word:"Candor",pos:"n.",def:"honesty, frankness"},
+  {id:682,word:"Nocturnal",pos:"adj.",def:"relating to or occurring during the night"},
+  {id:99,word:"Appease",pos:"v.",def:"to calm, satisfy"},
+  {id:805,word:"Punitive",pos:"adj.",def:"involving punishment"},
+  {id:13,word:"Abridge",pos:"v.",def:"to cut down, shorten"},
+  {id:27,word:"Accretion",pos:"n.",def:"slow growth in size or amount"},
+  {id:361,word:"Disheartened",pos:"adj.",def:"feeling a loss of spirit or morale"},
+  {id:359,word:"Disdain",pos:"v.",def:"to scorn, hold in low esteem"},
+  {id:237,word:"Comprehensive",pos:"adj.",def:"including everything"},
+  {id:472,word:"Fetter",pos:"v.",def:"to chain or restrain"},
+  {id:212,word:"Clergy",pos:"n.",def:"members of Christian holy orders"},
+  {id:583,word:"Insatiable",pos:"adj.",def:"incapable of being satisfied"},
+  {id:482,word:"Flout",pos:"v.",def:"to disregard or disobey openly"},
+  {id:273,word:"Contrite",pos:"adj.",def:"penitent, eager to be forgiven"},
+  {id:40,word:"Adumbrate",pos:"v.",def:"to sketch out in a vague way"},
+  {id:884,word:"Semaphore",pos:"n.",def:"A visual signal used to communicate"},
+  {id:202,word:"Circuitous",pos:"adj.",def:"roundabout"},
+  {id:833,word:"Relegate",pos:"v.",def:"to assign to the proper place"},
+  {id:533,word:"Impeccable",pos:"adj.",def:"exemplary, flawless"},
+  {id:963,word:"Validate",pos:"v.",def:"to confirm, support, corroborate"},
+  {id:174,word:"Calamity",pos:"n.",def:"an event with disastrous consequences"},
+  {id:330,word:"Derelict",pos:"adj.",def:"abandoned, run-down"},
+  {id:423,word:"Entail",pos:"v.",def:"to include as a necessary step"},
+  {id:684,word:"Nomadic",pos:"adj.",def:"wandering from place to place"},
+  {id:862,word:"Revel",pos:"v.",def:"to enjoy intensely"},
+  {id:148,word:"Battery",pos:"n.",def:"a device that supplies power"},
+  {id:319,word:"Deliberate",pos:"adj.",def:"intentional, reflecting careful consideration"},
+  {id:131,word:"Attain",pos:"v.",def:"to achieve, arrive at"},
+  {id:280,word:"Copious",pos:"adj.",def:"profuse, abundant"},
+  {id:441,word:"Exasperate",pos:"v.",def:"to irritate, irk"},
+  {id:976,word:"Vicissitude",pos:"n.",def:"event that occurs by chance and brings heart-ship or pain The vicissitude of the hike"},
+  {id:456,word:"Extraneous",pos:"adj.",def:"irrelevant, extra, not necessary"},
+  {id:37,word:"Adorn",pos:"v.",def:"to decorate"},
+  {id:548,word:"Inarticulate",pos:"adj.",def:"incapable of expressing oneself clearly through speech"},
+  {id:153,word:"Bequeath",pos:"v.",def:"to pass on in a will, give or donate legally"},
+  {id:80,word:"Anesthesia",pos:"n.",def:"a substance that causes loss of sensation"},
+  {id:558,word:"Indefatigable",pos:"adj.",def:"incapable of defeat, failure, decay"},
+  {id:961,word:"Vacillate",pos:"v.",def:"to fluctuate, hesitate"},
+  {id:629,word:"Lithe",pos:"adj.",def:"graceful, flexible, supple"},
+  {id:438,word:"Evince",pos:"v.",def:"to show, reveal"},
+  {id:776,word:"Presage",pos:"n.",def:"An omen or forewarning of the future"},
+  {id:426,word:"Epistolary",pos:"adj.",def:"relating to or contained in letters"},
+  {id:453,word:"Expurgate",pos:"v.",def:"to remove offensive or incorrect parts, usually of a book"},
+  {id:535,word:"Imperative",pos:"adj.",def:"necessary, pressing"},
+  {id:284,word:"Corroborate",pos:"v.",def:"To support with evidence, verify"},
+  {id:303,word:"Dearth",pos:"n.",def:"A lack or scarcity of something"},
+  {id:32,word:"Acute",pos:"adj.",def:"sharp, severe"},
+  {id:653,word:"Mitigate",pos:"v.",def:"to make less violent, alleviate"},
+  {id:278,word:"Convivial",pos:"adj.",def:"characterized by feasting, drinking, merriment"},
+  {id:949,word:"Truncate",pos:"v.",def:"to shorten by cutting off"},
+  {id:996,word:"Wrath",pos:"n.",def:"vengeful anger, punishment"},
+  {id:445,word:"Execrable",pos:"adj.",def:"loathsome, detestable"},
+  {id:978,word:"Vilify",pos:"v.",def:"to lower in importance, defame"},
+  {id:772,word:"Precocious",pos:"adj.",def:"advanced, developing ahead of time"},
+  {id:600,word:"Inure",pos:"v.",def:"to cause one to become accustomed or acclimated"},
+  {id:526,word:"Iconoclast",pos:"n.",def:"one who attacks commonly held beliefs or institutions"},
+  {id:401,word:"Eloquent",pos:"adj.",def:"expressive, articulate, moving"},
+  {id:352,word:"Discern",pos:"v.",def:"to perceive, detect"},
+  {id:538,word:"Impervious",pos:"adj.",def:"impenetrable, incapable of being affected"},
+  {id:821,word:"Rebuke",pos:"v.",def:"to scold, criticize"},
+  {id:510,word:"Guile",pos:"n.",def:"deceitfulness, cunning, sly behavior"},
+  {id:549,word:"Incarnate",pos:"adj.",def:"existing in the flesh, embodied"},
+  {id:942,word:"Transmute",pos:"v.",def:"To change or alter in form"},
+  {id:886,word:"Sensual",pos:"adj.",def:"involving sensory gratification, usually related to sex"},
+  {id:307,word:"Debunk",pos:"v.",def:"to expose the falseness of something"},
+  {id:145,word:"Bane",pos:"n.",def:"a burden"},
+  {id:633,word:"Lurid",pos:"adj.",def:"ghastly, sensational"},
+  {id:823,word:"Recapitulate",pos:"v.",def:"to sum up, repeat"},
+  {id:386,word:"Dynamic",pos:"adj.",def:"actively changing"},
+  {id:310,word:"Deface",pos:"v.",def:"to ruin or injure something’s appearance"},
+  {id:30,word:"Acrimony",pos:"n.",def:"bitterness, discord"},
+  {id:625,word:"Libertarian",pos:"adj.",def:"advocating principles of liberty and free will"},
+  {id:103,word:"Appropriate",pos:"v.",def:"to take and make use of"},
+  {id:709,word:"Ornate",pos:"adj.",def:"highly elaborate, excessively decorated"},
+  {id:10,word:"Abjure",pos:"v.",def:"to reject, renounce"},
+  {id:606,word:"Irreverence",pos:"n.",def:"disrespect"},
+  {id:127,word:"Astute",pos:"adj.",def:"very clever, crafty"},
+  {id:210,word:"Cleave",pos:"v.",def:"to divide into parts"},
+  {id:133,word:"Atypical",pos:"adj.",def:"not typical, unusual"},
+  {id:268,word:"Consummate",pos:"v.",def:"to complete a deal or ceremony"},
+  {id:872,word:"Sagacity",pos:"n.",def:"shrewdness, soundness of perspective"},
+  {id:818,word:"Rash",pos:"adj.",def:"hasty, incautious"},
+  {id:579,word:"Innovate",pos:"v.",def:"to do something in an unprecedented way"},
+  {id:398,word:"Elated",pos:"adj.",def:"overjoyed, thrilled"},
+  {id:969,word:"Venerate",pos:"v.",def:"To regard with deep respect and reverence"},
+  {id:927,word:"Temperance",pos:"n.",def:"moderation in action or thought"},
+  {id:994,word:"Wistful",pos:"adj.",def:"full of yearning; musingly sad"},
+  {id:84,word:"Annul",pos:"v.",def:"to make void or invalid"},
+  {id:596,word:"Intractable",pos:"adj.",def:"difficult to manipulate, unmanageable"},
+  {id:123,word:"Assail",pos:"v.",def:"To attack forcefully"},
+  {id:730,word:"Pathology",pos:"n.",def:"a deviation from the normal; study of disease"},
+  {id:163,word:"Bombastic",pos:"adj.",def:"excessively"},
+  {id:414,word:"Enamor",pos:"v.",def:"to fill with love, to fascinate (usually used with “of” or “with”) The husband-hunting"},
+  {id:679,word:"Nefarious",pos:"adj.",def:"heinously villainous"},
+  {id:83,word:"Annex",pos:"v.",def:"to incorporate a space"},
+  {id:753,word:"Pinnacle",pos:"n.",def:"the highest point"},
+  {id:936,word:"Torrid",pos:"adj.",def:"giving off intense heat, passionate"},
+  {id:848,word:"Repudiate",pos:"v.",def:"to reject, refuse to accept"},
+  {id:680,word:"Negligent",pos:"adj.",def:"habitually careless, neglectful"},
+  {id:59,word:"Allege",pos:"v.",def:"to assert, usually without proof"},
+  {id:915,word:"Surfeit",pos:"n.",def:"an overabundant supply or indulgence"},
+  {id:836,word:"Remiss",pos:"adj.",def:"negligent, failing to take care"},
+  {id:692,word:"Nurture",pos:"v.",def:"to assist the development of"},
+  {id:944,word:"Tremulous",pos:"adj.",def:"Fearful, trembling with anxiety"},
+  {id:159,word:"Blandish",pos:"v.",def:"to coax by using flattery"},
+  {id:139,word:"Avarice",pos:"n.",def:"excessive greed"},
+  {id:381,word:"Dormant",pos:"adj.",def:"asleep or temporarily inactive"},
+  {id:989,word:"Wane",pos:"v.",def:"to decrease in size, dwindle"},
+  {id:125,word:"Assiduous",pos:"adj.",def:"hard-working, diligent"},
+  {id:400,word:"Elicit",pos:"v.",def:"to bring forth, draw out, evoke"},
+  {id:5,word:"Aberration",pos:"n.",def:"something that differs from what’s normal"},
+  {id:803,word:"Punctilious",pos:"adj.",def:"eager to follow rules or conventions"},
+  {id:3,word:"Abdicate",pos:"v.",def:"to give up a position, usually one of great power or authority"},
+  {id:901,word:"Spurious",pos:"adj.",def:"false but designed to seem plausible"},
+  {id:169,word:"Burnish",pos:"v.",def:"to polish, shine"},
+  {id:444,word:"Excursion",pos:"n.",def:"a trip or outing"},
+  {id:704,word:"Officious",pos:"adj.",def:"insisting on helping when it\'s neither wanted nor needed"},
+  {id:752,word:"Pillage",pos:"v.",def:"to seize or plunder, especially in war"},
+  {id:879,word:"Scathing",pos:"adj.",def:"sharp, critical, hurtful"},
+  {id:243,word:"Concoct",pos:"v.",def:"to fabricate, make up"},
+  {id:193,word:"Censure",pos:"n.",def:"harsh criticism"},
+  {id:213,word:"Cloying",pos:"adj.",def:"sickeningly sweet"},
+  {id:564,word:"Induce",pos:"v.",def:"to bring about, stimulate"},
+  {id:919,word:"Swarthy",pos:"adj.",def:"of dark color or complexion"},
+  {id:718,word:"Palliate",pos:"v.",def:"to reduce the severity of, ameliorate"},
+  {id:263,word:"Consolation",pos:"n.",def:"an act of comforting"},
+  {id:38,word:"Adroit",pos:"adj.",def:"skillful, dexterous"},
+  {id:188,word:"Catalog",pos:"v.",def:"to list or enter onto a list"},
+  {id:899,word:"Sovereign",pos:"adj.",def:"having absolute authority in a certain realm"},
+  {id:830,word:"Refurbish",pos:"v.",def:"to restore, clean up"},
+  {id:839,word:"Renunciation",pos:"n.",def:"a rejection"},
+  {id:24,word:"Accommodating",pos:"adj.",def:"helpful, obliging, polite"},
+  {id:255,word:"Congeal",pos:"v.",def:"to thicken into a solid"},
+  {id:840,word:"Repentant",pos:"adj.",def:"penitent, sorry"},
+  {id:413,word:"Emulate",pos:"v.",def:"to imitate"},
+  {id:628,word:"Linchpin",pos:"n.",def:"something that holds separate parts together"},
+  {id:977,word:"Vigilant",pos:"adj.",def:"watchful, alert"},
+  {id:101,word:"Apprehend",pos:"v.",def:"to seize, arrest"},
+  {id:436,word:"Euphoric",pos:"adj.",def:"elated, uplifted"},
+  {id:756,word:"Placate",pos:"v.",def:"to ease the anger of, soothe"},
+  {id:428,word:"Equanimity",pos:"n.",def:"composure"},
+  {id:318,word:"Deleterious",pos:"adj.",def:"Harmful to health or well-being"},
+  {id:442,word:"Excavate",pos:"v.",def:"to dig out of the ground and remove"},
+  {id:881,word:"Scrupulous",pos:"adj.",def:"painstaking, careful in conduct or manner"},
+  {id:417,word:"Enervate",pos:"v.",def:"to weaken, exhaust"},
+  {id:85,word:"Anomaly",pos:"n.",def:"something that does not fit into the normal order"},
+  {id:264,word:"Consonant",pos:"adj.",def:"in harmony"},
+  {id:585,word:"Insinuate",pos:"v.",def:"to suggest indirectly or subtly"},
+  {id:44,word:"Aesthetic",pos:"adj.",def:"artistic, related to one’s sense of beauty"},
+  {id:136,word:"Augment",pos:"v.",def:"to add to, expand"},
+  {id:290,word:"Credulity",pos:"n.",def:"readiness to believe"},
+  {id:377,word:"Divisive",pos:"adj.",def:"causing dissent, discord"},
+  {id:339,word:"Deter",pos:"v.",def:"to discourage,"},
+  {id:985,word:"Vivacious",pos:"adj.",def:"lively, sprightly"},
+  {id:61,word:"Allocate",pos:"v.",def:"to distribute, set aside"},
+  {id:250,word:"Confidant",pos:"n.",def:"a person entrusted with secrets"},
+  {id:346,word:"Dilatory",pos:"adj.",def:"tending to delay, causing delay"},
+  {id:8,word:"Abide",pos:"v.",def:"to put up with"},
+  {id:404,word:"Emaciated",pos:"adj.",def:"very thin, enfeebled looking"},
+  {id:236,word:"Compound",pos:"v.",def:"to combine parts"},
+  {id:762,word:"Plethora",pos:"n.",def:"an abundance, excess"},
+  {id:227,word:"Commensurate",pos:"adj.",def:"corresponding in size or amount"},
+  {id:254,word:"Confound",pos:"v.",def:"to frustrate, confuse"},
+  {id:336,word:"Despondent",pos:"adj.",def:"Feeling depressed, discouraged, or hopeless"},
+  {id:124,word:"Assess",pos:"v.",def:"to evaluate"},
+  {id:181,word:"Canvas",pos:"n.",def:"a piece of cloth for an artist to paint"},
+  {id:917,word:"Surreptitious",pos:"adj.",def:"stealthy"},
+  {id:832,word:"Regurgitate",pos:"v.",def:"to vomit"},
+  {id:281,word:"Cordial",pos:"adj.",def:"warm, affectionate"},
+  {id:845,word:"Reproach",pos:"v.",def:"to scold, disapprove"},
+  {id:844,word:"Reprieve",pos:"n.",def:"a temporary delay of punishment"},
+  {id:155,word:"Bereft",pos:"adj.",def:"devoid of, without"},
+  {id:320,word:"Delineate",pos:"v.",def:"To describe or outline clearly"},
+  {id:649,word:"Mercurial",pos:"adj.",def:"characterized by rapid change or temperament"},
+  {id:206,word:"Circumvent",pos:"v.",def:"to go around an established route or authority"},
+  {id:11,word:"Abnegation",pos:"n.",def:"denial of comfort to oneself"},
+  {id:537,word:"Impertinent",pos:"adj.",def:"rude, insolent"},
+  {id:785,word:"Procure",pos:"v.",def:"to obtain, acquire"},
+  {id:738,word:"Penurious",pos:"adj.",def:"miserly, stingy"},
+  {id:867,word:"Rife",pos:"adv.",def:"abundant"},
+  {id:200,word:"Chronicle",pos:"n.",def:"a written history"},
+  {id:560,word:"Indigent",pos:"adj.",def:"very poor, impoverished"},
+  {id:856,word:"Resolve",pos:"v.",def:"to find a solution"},
+  {id:545,word:"Impudent",pos:"adj.",def:"casually rude, insolent, impertinent"},
+  {id:170,word:"Buttress",pos:"v.",def:"to support, hold up"},
+  {id:580,word:"Innuendo",pos:"n.",def:"an insinuation"},
+  {id:207,word:"Clairvoyant",pos:"adj.",def:"able to perceive things that normal people cannot"},
+  {id:132,word:"Attribute",pos:"v.",def:"to credit, assign"},
+  {id:889,word:"Serene",pos:"adj.",def:"calm, untroubled"},
+  {id:129,word:"Atone",pos:"v.",def:"To repent or make amends for wrongdoing"},
+  {id:723,word:"Paragon",pos:"n.",def:"a model of excellence or perfection"},
+  {id:712,word:"Ostensible",pos:"adj.",def:"appearing as such, seemingly"},
+  {id:546,word:"Impute",pos:"v.",def:"to ascribe, blame"},
+  {id:532,word:"Immutable",pos:"adj.",def:"not changeable"},
+  {id:247,word:"Condone",pos:"v.",def:"to pardon, deliberately overlook"},
+  {id:79,word:"Anecdote",pos:"n.",def:"a short, humorous account"},
+  {id:340,word:"Devious",pos:"adj.",def:"not straightforward, deceitful"},
+  {id:60,word:"Alleviate",pos:"v.",def:"to relieve, make more bearable"},
+  {id:525,word:"Hypothetical",pos:"adj.",def:"supposed or assumed true, but unproven"},
+  {id:20,word:"Accentuate",pos:"v.",def:"to stress, highlight"},
+  {id:576,word:"Injunction",pos:"n.",def:"an order of official warning"},
+  {id:894,word:"Solipsistic",pos:"adj.",def:"believing that oneself is all that exists"},
+  {id:1,word:"Abase",pos:"v.",def:"to humiliate, to degrade"},
+  {id:674,word:"Mutable",pos:"adj.",def:"able to change"},
+  {id:974,word:"Vex",pos:"v.",def:"to confuse or"},
+  {id:859,word:"Restitution",pos:"n.",def:"restoration to the rightful owner"},
+  {id:344,word:"Diffident",pos:"adj.",def:"shy, quiet, modest"},
+  {id:306,word:"Debauch",pos:"v.",def:"to corrupt by means of sensual pleasures"},
+  {id:904,word:"Stingy",pos:"adj.",def:"not generous, not inclined to spend or give"},
+  {id:183,word:"Capitulate",pos:"v.",def:"To surrender, give up resistance"},
+  {id:933,word:"Toady",pos:"n.",def:"one who flatters in the hope of gaining favors"},
+  {id:938,word:"Tractable",pos:"adj.",def:"easily controlled"},
+  {id:4,word:"Abduct",pos:"v.",def:"to kidnap, take by force"},
+  {id:534,word:"Impecunious",pos:"adj.",def:"desperately poor"},
+  {id:909,word:"Stupefy",pos:"v.",def:"to astonish, make insensible"},
+  {id:141,word:"Aversion",pos:"n.",def:"a particular dislike for something"},
+  {id:543,word:"Implicit",pos:"adj.",def:"understood but not outwardly obvious; implied"},
+  {id:446,word:"Exhort",pos:"v.",def:"to urge, prod, spur"},
+  {id:98,word:"Appalling",pos:"adj.",def:"inspiring shock, horror, disgust"},
+  {id:956,word:"Undulate",pos:"v.",def:"to move in waves"},
+  {id:321,word:"Demagogue",pos:"n.",def:"a leader who appeals to a people’s prejudices"},
+  {id:296,word:"Cumulative",pos:"adj.",def:"increasing, building upon itself"},
+  {id:657,word:"Mollify",pos:"v.",def:"to soften in temper"},
+  {id:461,word:"Facile",pos:"adj.",def:"easy, requiring little effort"},
+  {id:118,word:"Ascertain",pos:"v.",def:"to perceive, to receive, to learn"},
+  {id:874,word:"Salutation",pos:"n.",def:"a greeting"},
+  {id:311,word:"Defamatory",pos:"adj.",def:"harmful toward another’s reputation"},
+  {id:831,word:"Refute",pos:"v.",def:"to prove wrong"},
+  {id:980,word:"Vindictive",pos:"adj.",def:"vengeful"},
+  {id:12,word:"Abort",pos:"v.",def:"to give up on a half-finished project or effort"},
+  {id:645,word:"Maxim",pos:"n.",def:"a common saying expressing a principle of conduct"},
+  {id:794,word:"Prosaic",pos:"adj.",def:"plain, lacking liveliness"},
+  {id:391,word:"Efface",pos:"v.",def:"to wipe out, obliterate, rub away"},
+  {id:819,word:"Raucous",pos:"adj.",def:"loud, boisterous"},
+  {id:957,word:"Upbraid",pos:"v.",def:"to criticize or scold severely"},
+  {id:636,word:"Malediction",pos:"n.",def:"A curse or expression of ill will"},
+  {id:779,word:"Presumptuous",pos:"adj.",def:"disrespectfully bold"},
+  {id:49,word:"Aggrandize",pos:"v.",def:"to increase or make greater"},
+  {id:757,word:"Placid",pos:"adj.",def:"calm, peaceful"},
+  {id:142,word:"Balk",pos:"v.",def:"to stop, block abruptly"},
+  {id:69,word:"Amenity",pos:"n.",def:"an item that increases comfort"},
+  {id:92,word:"Antiquated",pos:"adj.",def:"old, out of date"},
+  {id:439,word:"Exacerbate",pos:"v.",def:"to make more violent, intense"},
+  {id:930,word:"Terrestrial",pos:"adj.",def:"relating to the land"},
+  {id:599,word:"Inundate",pos:"v.",def:"to flood with abundance"},
+  {id:720,word:"Panacea",pos:"n.",def:"a remedy for all ills or difficulties"},
+  {id:450,word:"Expedient",pos:"adj.",def:"advisable, advantageous, serving one’s self-interest Though I can exempt myself from"},
+  {id:272,word:"Contravene",pos:"v.",def:"to contradict, oppose, violate"},
+  {id:646,word:"Meager",pos:"adj.",def:"deficient in size or quality"},
+  {id:406,word:"Embezzle",pos:"v.",def:"to steal money by falsifying records"},
+  {id:91,word:"Antipathy",pos:"n.",def:"a strong dislike, repugnance"},
+  {id:481,word:"Florid",pos:"adj.",def:"flowery, ornate"},
+  {id:323,word:"Demean",pos:"v.",def:"to lower the status or stature of something"},
+  {id:432,word:"Esoteric",pos:"adj.",def:"understood by only a select few"},
+  {id:581,word:"Inoculate",pos:"v.",def:"to vaccinate against a disease."},
+  {id:55,word:"Aisle",pos:"n.",def:"a passageway between rows of seats"},
+  {id:696,word:"Oblivious",pos:"adj.",def:"lacking consciousness or awareness of something"},
+  {id:217,word:"Coerce",pos:"v.",def:"to make somebody do something by force or threat"},
+  {id:180,word:"Canny",pos:"adj.",def:"shrewd, careful"},
+  {id:842,word:"Repose",pos:"v.",def:"to rest, lie down"},
+  {id:658,word:"Morass",pos:"n.",def:"a wet swampy bog; figuratively, something that traps and confuses"},
+  {id:565,word:"Ineffable",pos:"adj.",def:"unspeakable, not able to be expressed in words"},
+  {id:58,word:"Allay",pos:"v.",def:"to soothe, ease , put to rest"},
+  {id:396,word:"Egregious",pos:"adj.",def:"extremely bad"},
+  {id:795,word:"Proscribe",pos:"v.",def:"to condemn, outlaw"},
+  {id:946,word:"Trepidation",pos:"n.",def:"fear, apprehension"},
+  {id:496,word:"Frivolous",pos:"adj.",def:"of little importance, trifling"},
+  {id:864,word:"Revoke",pos:"v.",def:"to take back"},
+  {id:928,word:"Tenable",pos:"adj.",def:"able to be defended or maintained"},
+  {id:333,word:"Desecrate",pos:"v.",def:"to violate the sacredness of a thing or place"},
+  {id:102,word:"Approbation",pos:"n.",def:"praise, approval"},
+  {id:637,word:"Malevolent",pos:"adj.",def:"wanting harm to befall others"},
+  {id:656,word:"Modulate",pos:"v.",def:"to pass from one state to another, especially in music"},
+  {id:338,word:"Destitute",pos:"adj.",def:"impoverished, utterly lacking"},
+  {id:168,word:"Buffet",pos:"v.",def:"to strike with force"},
+  {id:116,word:"Artifact",pos:"n.",def:"a remaining piece from an extinct culture or place"},
+  {id:685,word:"Nominal",pos:"adj.",def:"trifling, insignificant"},
+  {id:215,word:"Coalesce",pos:"v.",def:"to fuse into a whole"},
+  {id:447,word:"Exigent",pos:"adj.",def:"urgent, critical"},
+  {id:364,word:"Dispatch",pos:"v.",def:"to send off to accomplish a duty"},
+  {id:951,word:"Turpitude",pos:"n.",def:"depravity, moral corruption"},
+  {id:408,word:"Eminent",pos:"adj.",def:"distinguished, prominent, famous"},
+  {id:374,word:"Distend",pos:"v.",def:"to swell out"},
+  {id:313,word:"Deferential",pos:"adj.",def:"showing respect for another’s authority"},
+  {id:979,word:"Vindicate",pos:"v.",def:"to avenge; to free from allegation; to set free"},
+  {id:121,word:"Aspersion",pos:"n.",def:"a curse, expression of ill-will"},
+  {id:205,word:"Circumspect",pos:"adj.",def:"cautious; aware of what’s around you"},
+  {id:197,word:"Cherish",pos:"v.",def:"to feel or show deep affection toward something"},
+  {id:228,word:"Commodious",pos:"adj.",def:"Roomy, having plenty of space"},
+  {id:592,word:"Interject",pos:"v.",def:"to insert between other things"},
+  {id:385,word:"Duress",pos:"n.",def:"hardship, threat"},
+  {id:392,word:"Effervescent",pos:"adj.",def:"bubbly, lively"},
+  {id:371,word:"Dissipate",pos:"v.",def:"to disappear, cause to disappear"},
+  {id:111,word:"Archaic",pos:"adj.",def:"of or relating to an earlier period in time, outdated"},
+  {id:301,word:"Curtail",pos:"v.",def:"To lessen or reduce, cut short"},
+  {id:48,word:"Affront",pos:"n.",def:"An insult or act of disrespect"},
+  {id:813,word:"Quotidian",pos:"adj.",def:"Occurring every day, routine"},
+  {id:471,word:"Fetter",pos:"v.",def:"to chain, restrain"},
+  {id:184,word:"Capricious",pos:"adj.",def:"subject to whim, fickle"},
+  {id:353,word:"Disclose",pos:"v.",def:"to reveal, make public"},
+  {id:172,word:"Cadence",pos:"n.",def:"a rhythm, progression of sound"},
+  {id:998,word:"Zealous",pos:"adj.",def:"fervent, filled with eagerness in pursuit of something"},
+  {id:868,word:"Ruminate",pos:"v.",def:"to contemplate, reflect"},
+  {id:182,word:"Capacious",pos:"adj.",def:"very spacious"},
+  {id:368,word:"Dissemble",pos:"v.",def:"to conceal,"},
+  {id:146,word:"Bard",pos:"n.",def:"a poet, or a singer"},
+  {id:905,word:"Stoic",pos:"adj.",def:"unaffected by passion or feeling"},
+  {id:100,word:"Appraise",pos:"v.",def:"to assess worth or value"},
+  {id:650,word:"Meritorious",pos:"adj.",def:"worthy of esteem or reward"},
+  {id:345,word:"Diffuse",pos:"v.",def:"to scatter, thin out, break up"},
+  {id:505,word:"Grandiloquence",pos:"n.",def:"lofty, pompous language"},
+  {id:746,word:"Pertinacious",pos:"adj.",def:"stubbornly persistent"},
+  {id:984,word:"Vituperate",pos:"v.",def:"to berate"},
+  {id:701,word:"Obstreperous",pos:"adj.",def:"noisy, unruly"},
+  {id:826,word:"Reconcile",pos:"v.",def:"to return to harmony"},
+  {id:87,word:"Antagonism",pos:"n.",def:"Active hostility or opposition"},
+  {id:652,word:"Meticulous",pos:"adj.",def:"extremely careful with details"},
+  {id:778,word:"Prescribe",pos:"v.",def:"to lay down a rule"},
+  {id:620,word:"Lavish",pos:"adj.",def:"given without limits"},
+  {id:7,word:"Abhor",pos:"v.",def:"to hate, detest"},
+  {id:165,word:"Bourgeois",pos:"n.",def:"An upper middle-class, materialistic person"},
+  {id:906,word:"Stolid",pos:"adj.",def:"expressing little sensibility, unemotional"},
+  {id:829,word:"Refract",pos:"v.",def:"to distort, change"},
+  {id:316,word:"Defunct",pos:"adj.",def:"No longer used or in existence"},
+  {id:433,word:"Espouse",pos:"v.",def:"to take up as a cause, support"},
+  {id:601,word:"Invective",pos:"n.",def:"an angry verbal attack"},
+  {id:43,word:"Aerial",pos:"adj.",def:"somehow related to the air"},
+  {id:26,word:"Accost",pos:"v.",def:"to confront verbally"},
+  {id:152,word:"Benign",pos:"adj.",def:"favorable, not threatening, mild"},
+  {id:115,word:"Arrogate",pos:"v.",def:"to take without justification"},
+  {id:473,word:"Fidelity",pos:"n.",def:"loyalty, devotion"},
+  {id:589,word:"Insular",pos:"adj.",def:"separated and narrow-minded; tight-knit, closed off Sometimes, insular communities"},
+  {id:677,word:"Nascent",pos:"adj.",def:"In the early stages of coming into existence"},
+  {id:602,word:"Inveterate",pos:"adj.",def:"stubbornly established by habit"},
+  {id:786,word:"Profane",pos:"adj.",def:"lewd, indecent"},
+  {id:108,word:"Arbitration",pos:"n.",def:"the process or act of resolving a dispute"},
+  {id:134,word:"Audacious",pos:"adj.",def:"excessively bold"},
+  {id:342,word:"Diaphanous",pos:"adj.",def:"light, airy, transparent"},
+  {id:804,word:"Pungent",pos:"adj.",def:"having a pointed, sharp quality (often describing smells)"},
+  {id:53,word:"Agnostic",pos:"adj.",def:"doubting the existence of God"},
+  {id:857,word:"Respite",pos:"n.",def:"a break, rest"},
+  {id:822,word:"Recalcitrant",pos:"adj.",def:"defiant, unapologetic"},
+  {id:209,word:"Clandestine",pos:"adj.",def:"Done in secret, hidden from others"},
+  {id:289,word:"Covert",pos:"adj.",def:"secretly engaged in"},
+  {id:279,word:"Convoluted",pos:"adj.",def:"intricate, complicated"},
+  {id:208,word:"Clamor",pos:"n.",def:"loud noise"},
+  {id:954,word:"Uncanny",pos:"adj.",def:"of supernatural character or origin"},
+  {id:110,word:"Arcane",pos:"adj.",def:"obscure, secret, known only"},
+  {id:119,word:"Ascetic",pos:"adj.",def:"practicing restraint as a means of self-discipline, usually religious Serious Christians"},
+  {id:138,word:"Austere",pos:"adj.",def:"very bare, bleak"},
+  {id:758,word:"Platitude",pos:"n.",def:"an uninspired remark, cliché"},
+  {id:107,word:"Arbitrary",pos:"adj.",def:"based on random factors"},
+  {id:9,word:"Abject",pos:"adj.",def:"wretched, pitiful"},
+  {id:744,word:"Perspicacity",pos:"adj.",def:"shrewdness, perceptiveness"},
+  {id:635,word:"Magnanimous",pos:"adj.",def:"noble, generous"},
+  {id:986,word:"Vocation",pos:"n.",def:"the work in which someone is employed, profession"},
+  {id:379,word:"Docile",pos:"adj.",def:"easily taught or trained"},
+  {id:890,word:"Servile",pos:"adj.",def:"subservient"},
+  {id:358,word:"Discursive",pos:"adj.",def:"rambling, lacking order"},
+  {id:713,word:"Ostentatious",pos:"adj.",def:"excessively showy, glitzy"},
+  {id:384,word:"Duplicity",pos:"n.",def:"crafty dishonesty"},
+  {id:663,word:"Mundane",pos:"adj.",def:"commonplace, concerned with ordinary matters"},
+  {id:551,word:"Incessant",pos:"adj.",def:"unending"},
+  {id:76,word:"Analogous",pos:"adj.",def:"similar to, so that an analogy can be drawn"},
+  {id:577,word:"Innate",pos:"adj.",def:"inborn, native, inherent"},
+  {id:802,word:"Pulchritude",pos:"n.",def:"physical beauty"},
+  {id:858,word:"Resplendent",pos:"adj.",def:"shiny, glowing"},
+  {id:952,word:"Ubiquitous",pos:"adj.",def:"existing everywhere, widespread"},
+  {id:469,word:"Fervent",pos:"adj.",def:"ardent, passionate"},
+  {id:308,word:"Decorous",pos:"adj.",def:"socially proper, appropriate"},
+  {id:807,word:"Quagmire",pos:"n.",def:"a difficult situation"},
+  {id:135,word:"Audible",pos:"adj.",def:"able to be heard"},
+  {id:860,word:"Restive",pos:"adj.",def:"resistant, stubborn, impatient"},
+  {id:885,word:"Seminal",pos:"adj.",def:"original, important, creating a field"},
+  {id:642,word:"Maudlin",pos:"adj.",def:"weakly sentimental"},
+  {id:504,word:"Gourmand",pos:"n.",def:"someone fond of eating and drinking"},
+  {id:871,word:"Sacrosanct",pos:"adj.",def:"holy, something that should not be criticized"},
+  {id:536,word:"Imperious",pos:"adj.",def:"commanding, domineering"},
+  {id:846,word:"Reprobate",pos:"adj.",def:"evil, unprincipled"},
+  {id:41,word:"Adverse",pos:"adj.",def:"antagonistic, unfavorable, dangerous"},
+  {id:357,word:"Discretion",pos:"n.",def:"the quality of being reserved in speech or action; good judgment"},
+  {id:609,word:"Judicious",pos:"adj.",def:"having or exercising sound judgment"},
+  {id:854,word:"Resilient",pos:"adj.",def:"able to recover from misfortune; able to withstand adversity"},
+  {id:584,word:"Insidious",pos:"adj.",def:"appealing, but imperceptibly harmful, seductive"},
+  {id:241,word:"Conciliatory",pos:"adj.",def:"friendly, agreeable"},
+  {id:612,word:"Kudos",pos:"n.",def:"praise for an achievement"},
+  {id:724,word:"Paramount",pos:"adj.",def:"greatest in importance, rank, character"},
+  {id:767,word:"Potable",pos:"adj.",def:"suitable for drinking"},
+  {id:191,word:"Caustic",pos:"adj.",def:"bitter, biting, acidic"},
+  {id:521,word:"Heterogeneous",pos:"adj.",def:"varied, diverse in character"},
+  {id:853,word:"Reservoir",pos:"n.",def:"reserves, large supply"},
+  {id:877,word:"Sanguine",pos:"adj.",def:"optimistic, cheery"},
+  {id:806,word:"Putrid",pos:"adj.",def:"rotten, foul"},
+  {id:515,word:"Hardy",pos:"adj.",def:"robust, capable of surviving through adverse conditions"},
+  {id:594,word:"Interminable",pos:"adj.",def:"without possibility of end"},
+  {id:435,word:"Etymology",pos:"n.",def:"the history of words, their origin and development"},
+  {id:717,word:"Palette",pos:"adj.",def:"a range of colors or qualities"},
+  {id:499,word:"Garish",pos:"adj.",def:"gaudy, in bad taste"},
+  {id:898,word:"Sophomoric",pos:"adj.",def:"immature, uninformed"},
+  {id:466,word:"Fecund",pos:"adj.",def:"fruitful, fertile"},
+  {id:514,word:"Harangue",pos:"n.",def:"a ranting speech"},
+  {id:887,word:"Sensuous",pos:"adj.",def:"involving sensory gratification"},
+  {id:870,word:"Saccharine",pos:"adj.",def:"sickeningly sweet"},
+  {id:219,word:"Cognizant",pos:"adj.",def:"aware, mindful"},
+  {id:493,word:"Fractious",pos:"adj.",def:"troublesome or irritable"},
+  {id:749,word:"Petulance",pos:"n.",def:"rudeness, irritability"},
+  {id:716,word:"Palatable",pos:"adj.",def:"agreeable to the taste or sensibilities"},
+  {id:668,word:"Nascent",pos:"adj.",def:"in the process of being born or coming into existence"},
+  {id:52,word:"Agile",pos:"adj.",def:"quick, nimble"},
+  {id:990,word:"Wanton",pos:"adj.",def:"undisciplined, lewd, lustful"},
+  {id:953,word:"Umbrage",pos:"n.",def:"resentment, offense"},
+  {id:454,word:"Extant",pos:"adj.",def:"existing, not destroyed or lost"},
+  {id:256,word:"Congenial",pos:"adj.",def:"pleasantly agreeable"},
+  {id:913,word:"Succinct",pos:"adj.",def:"marked by compact precision"},
+  {id:144,word:"Banal",pos:"adj.",def:"dull, commonplace"},
+  {id:569,word:"Infamy",pos:"n.",def:"notoriety, extreme ill repute"},
+  {id:815,word:"Rancid",pos:"adj.",def:"having a"},
+  {id:706,word:"Onerous",pos:"adj.",def:"burdensome"},
+  {id:924,word:"Tantamount",pos:"adj.",def:"equivalent in value or significance"},
+  {id:112,word:"Archetypal",pos:"adj.",def:"the most representative or typical example of something"},
+  {id:691,word:"Nuance",pos:"n.",def:"a slight variation in meaning, tone, or expression"},
+  {id:348,word:"Diminutive",pos:"adj.",def:"Small or miniature in size"},
+  {id:662,word:"Multifarious",pos:"adj.",def:"having great diversity or variety"},
+  {id:670,word:"Morose",pos:"adj.",def:"gloomy or sullen"},
+  {id:690,word:"Noxious",pos:"adj.",def:"harmful, unwholesome"},
+  {id:783,word:"Probity",pos:"n.",def:"virtue, integrity"},
+  {id:479,word:"Flaccid",pos:"adj.",def:"limp, not firm or strong"},
+  {id:363,word:"Disparate",pos:"adj.",def:"sharply differing, containing sharply contrasting elements"},
+  {id:675,word:"Myriad",pos:"adj.",def:"consisting of a very great number"},
+  {id:947,word:"Trite",pos:"adj.",def:"not original, overused"},
+  {id:23,word:"Accolade",pos:"n.",def:"high praise, special distinction"},
+  {id:97,word:"Apocryphal",pos:"adj.",def:"probably fictitious, probably false or wrong"},
+  {id:710,word:"Orthodox",pos:"adj.",def:"conventional, conforming to established protocol"},
+  {id:591,word:"Integral",pos:"adj.",def:"necessary for completeness"},
+  {id:754,word:"Pithy",pos:"adj.",def:"concisely meaningful"},
+  {id:708,word:"Oration",pos:"n.",def:"a speech delivered in a formal or ceremonious manner"},
+  {id:220,word:"Coherent",pos:"adj.",def:"logically consistent, intelligible"},
+  {id:686,word:"Nonchalant",pos:"adj.",def:"having a lack of concern, indifference"},
+  {id:286,word:"Cosmopolitan",pos:"adj.",def:"sophisticated, worldly"},
+  {id:244,word:"Concomitant",pos:"adj.",def:"accompanying in a subordinate fashion"},
+  {id:161,word:"Blight",pos:"n.",def:"a plague, disease"},
+  {id:527,word:"Idiosyncratic",pos:"adj.",def:"peculiar to one person; highly individualized"},
+  {id:729,word:"Patent",pos:"adj.",def:"readily seen or understood, clear"},
+  {id:873,word:"Salient",pos:"adj.",def:"significant, conspicuous"},
+  {id:70,word:"Amiable",pos:"adj.",def:"Friendly and pleasant in manner"},
+  {id:177,word:"Calumny",pos:"n.",def:"an attempt to spoil someone else’s reputation by spreading lies"},
+  {id:73,word:"Amorphous",pos:"adj.",def:"without a fixed or definitive shape or type"},
+  {id:968,word:"Venerable",pos:"adj.",def:"deserving of respect because of age or achievement"},
+  {id:568,word:"Inextricable",pos:"adj.",def:"hopelessly tangled or entangled"},
+  {id:603,word:"Inviolable",pos:"adj.",def:"secure from assault"},
+  {id:727,word:"Parsimony",pos:"n.",def:"frugality, stinginess"},
+  {id:347,word:"Diligent",pos:"adj.",def:"Showing careful effort and persistence in work"},
+  {id:828,word:"Redoubtable",pos:"adj.",def:"formidable"},
+  {id:463,word:"Fastidious",pos:"adj.",def:"meticulous, demanding, having high and often unattainable standards"},
+  {id:530,word:"Illicit",pos:"adj.",def:"forbidden, not permitted"},
+  {id:298,word:"Cupidity",pos:"n.",def:"greed, strong desire"},
+  {id:449,word:"Exorbitant",pos:"adj.",def:"excessive"},
+  {id:972,word:"Verdant",pos:"adj.",def:"green in tint or color"},
+  {id:688,word:"Notorious",pos:"adj.",def:"widely and unfavorably known"},
+  {id:707,word:"Opulent",pos:"adj.",def:"characterized by rich abundance verging on ostentation"},
+  {id:869,word:"Ruse",pos:"n.",def:"A trick or clever scheme to deceive"},
+  {id:939,word:"Tranquil",pos:"adj.",def:"Calm and peaceful, free from disturbance"},
+  {id:434,word:"Ethereal",pos:"adj.",def:"heavenly, exceptionally delicate or refined"},
+  {id:622,word:"Lenient",pos:"adj.",def:"demonstrating tolerance or gentleness"},
+  {id:541,word:"Implacable",pos:"adj.",def:"incapable of being appeased or mitigated"},
+  {id:261,word:"Consensus",pos:"n.",def:"an agreement of opinion"},
+  {id:563,word:"Indomitable",pos:"adj.",def:"not capable of being conquered"},
+  {id:487,word:"Forlorn",pos:"adj.",def:"lonely, abandoned, hopeless"},
+  {id:71,word:"Amicable",pos:"adj.",def:"Friendly, characterized by goodwill"},
+  {id:498,word:"Furtive",pos:"adj.",def:"secretive, sly"},
+  {id:660,word:"Mores",pos:"n.",def:"the moral attitudes and fixed customs of a group"},
+  {id:750,word:"Philanthropic",pos:"adj.",def:"charitable, giving"},
+  {id:866,word:"Ribald",pos:"adj.",def:"coarsely, crudely humorous"},
+  {id:315,word:"Deft",pos:"adj.",def:"skillful, capable"},
+  {id:501,word:"Genial",pos:"adj.",def:"friendly, affable"},
+  {id:117,word:"Artisan",pos:"n.",def:"a craftsman"},
+  {id:332,word:"Derivative",pos:"adj.",def:"taken directly from a source, unoriginal"},
+  {id:614,word:"Laconic",pos:"adj.",def:"terse in speech or writing"},
+  {id:544,word:"Impregnable",pos:"adj.",def:"resistant to capture or penetration"},
+  {id:553,word:"Incisive",pos:"adj.",def:"clear, sharp, direct"},
+  {id:816,word:"Rancor",pos:"n.",def:"deep, bitter"},
+  {id:166,word:"Brazen",pos:"adj.",def:"excessively"},
+  {id:799,word:"Prurient",pos:"adj.",def:"eliciting or possessing an extraordinary interest in sex"},
+  {id:383,word:"Dubious",pos:"adj.",def:"doubtful, of uncertain quality"},
+  {id:835,word:"Remedial",pos:"adj.",def:"intended to repair gaps in students’ basic knowledge"},
+  {id:422,word:"Ennui",pos:"n.",def:"boredom, weariness"},
+  {id:895,word:"Soluble",pos:"adj.",def:"able to dissolve"},
+  {id:641,word:"Manifold",pos:"adj.",def:"diverse, varied"},
+  {id:109,word:"Arboreal",pos:"adj.",def:"of or relating to trees"},
+  {id:520,word:"Heinous",pos:"adj.",def:"shockingly wicked, repugnant"},
+  {id:341,word:"Dialect",pos:"n.",def:"a variation of a language"},
+  {id:781,word:"Primeval",pos:"adj.",def:"original, ancient"},
+  {id:513,word:"Hapless",pos:"adj.",def:"Unfortunate, unlucky"},
+  {id:931,word:"Timorous",pos:"adj.",def:"timid, fearful"},
+  {id:737,word:"Penultimate",pos:"adj.",def:"next to last"},
+  {id:106,word:"Arbiter",pos:"n.",def:"one who can resolve a dispute or make a decision"},
+  {id:740,word:"Perfunctory",pos:"adj.",def:"showing little interest or enthusiasm"},
+  {id:162,word:"Boisterous",pos:"adj.",def:"loud and full of energy"},
+  {id:788,word:"Profuse",pos:"adj.",def:"plentiful, abundant"},
+  {id:900,word:"Speculative",pos:"adj.",def:"not based in fact"},
+  {id:920,word:"Sycophant",pos:"n.",def:"one who flatters for self-gain"},
+  {id:769,word:"Pragmatic",pos:"adj.",def:"practical"},
+  {id:937,word:"Tortuous",pos:"adj.",def:"Winding, full of twists and turns"},
+  {id:699,word:"Obsolete",pos:"adj.",def:"no longer used, out of date"},
+  {id:739,word:"Perfidious",pos:"adj.",def:"disloyal, unfaithful"},
+  {id:367,word:"Disrepute",pos:"n.",def:"a state of"},
+  {id:567,word:"Inexorable",pos:"adj.",def:"incapable of being persuaded or placated"},
+  {id:480,word:"Flagrant",pos:"adj.",def:"offensive, egregious"},
+  {id:964,word:"Vapid",pos:"adj.",def:"lacking liveliness, dull"},
+  {id:395,word:"Effulgent",pos:"adj.",def:"radiant, splendorous"},
+  {id:269,word:"Consumption",pos:"n.",def:"the act of consuming"},
+  {id:66,word:"Ambivalent",pos:"adj.",def:"having opposing feelings"},
+  {id:697,word:"Obscure",pos:"adj.",def:"unclear, partially hidden"},
+  {id:812,word:"Quixotic",pos:"adj.",def:"idealistic, impractical"},
+  {id:959,word:"Utilitarian",pos:"adj.",def:"relating to or aiming at usefulness"},
+  {id:46,word:"Affinity",pos:"n.",def:"a spontaneous feeling of closeness"},
+  {id:774,word:"Preponderance",pos:"adj.",def:"superiority in importance or quantity The preponderance of evidence pointed"},
+  {id:506,word:"Grandiose",pos:"adj.",def:"on a magnificent or exaggerated scale"},
+  {id:882,word:"Scurrilous",pos:"adj.",def:"vulgar, coarse"},
+  {id:409,word:"Emollient",pos:"adj.",def:"soothing"},
+  {id:780,word:"Pretense",pos:"n.",def:"an appearance or action intended to deceive"},
+  {id:598,word:"Intrepid",pos:"adj.",def:"brave in the face of danger"},
+  {id:270,word:"Contemporaneous",pos:"adj.",def:"existing during the same time"},
+  {id:552,word:"Inchoate",pos:"adj.",def:"unformed or formless, in a beginning stage"},
+  {id:975,word:"Vicarious",pos:"adj.",def:"experiencing through another"},
+  {id:216,word:"Cobbler",pos:"n.",def:"a person who makes or repairs shoes"},
+  {id:763,word:"Pliable",pos:"adj.",def:"flexible"},
+  {id:993,word:"Winsome",pos:"adj.",def:"charming, pleasing"},
+  {id:147,word:"Bashful",pos:"adj.",def:"shy, excessively timid"},
+  {id:470,word:"Fetid",pos:"adj.",def:"having a foul odor"},
+  {id:973,word:"Vestige",pos:"n.",def:"a mark or"},
+  {id:512,word:"Hallowed",pos:"adj.",def:"revered, consecrated"},
+  {id:672,word:"Mundane",pos:"adj.",def:"concerned with the world rather than with heaven, commonplace"},
+  {id:218,word:"Cogent",pos:"adj.",def:"intellectually convincing"},
+  {id:736,word:"Penitent",pos:"adj.",def:"remorseful, regretful"},
+  {id:557,word:"Incumbent",pos:"n.",def:"one who holds an office"},
+  {id:68,word:"Amenable",pos:"adj.",def:"willing, compliant"},
+  {id:324,word:"Demure",pos:"adj.",def:"quiet, modest, reserved"},
+  {id:825,word:"Reclusive",pos:"adj.",def:"solitary, shunning society"},
+  {id:983,word:"Vitriolic",pos:"adj.",def:"having a caustic quality"},
+  {id:292,word:"Criteria",pos:"n.",def:"standards by which something is judged"},
+  {id:787,word:"Profligate",pos:"adj.",def:"dissolute, extravagant"},
+  {id:702,word:"Obtuse",pos:"adj.",def:"lacking quickness of sensibility or intellect"},
+  {id:571,word:"Ingenious",pos:"adj.",def:"clever, resourceful"},
+  {id:705,word:"Ominous",pos:"adj.",def:"foreboding or foreshadowing evil; threatening"},
+  {id:630,word:"Litigant",pos:"n.",def:"someone engaged in a lawsuit"},
+  {id:389,word:"Ecstatic",pos:"adj.",def:"intensely and overpoweringly happy"},
+  {id:474,word:"Figurative",pos:"adj.",def:"symbolic, not literal"},
+  {id:995,word:"Wizened",pos:"adj.",def:"dry, shrunken, wrinkled"},
+  {id:547,word:"Inane",pos:"adj.",def:"silly and meaningless"},
+  {id:621,word:"Legerdemain",pos:"n.",def:"deception, slight-of-hand"},
+  {id:176,word:"Callous",pos:"adj.",def:"harsh, cold, unfeeling"},
+  {id:908,word:"Strident",pos:"adj.",def:"harsh, loud"},
+  {id:74,word:"Anachronistic",pos:"adj.",def:"out of its proper time"},
+  {id:700,word:"Obstinate",pos:"adj.",def:"not yielding easily, very stubborn"},
+  {id:519,word:"Hegemony",pos:"n.",def:"domination over others"},
+  {id:971,word:"Verbose",pos:"adj.",def:"wordy, impaired by wordiness , loud"},
+  {id:687,word:"Nondescript",pos:"adj.",def:"lacking a distinctive character"},
+  {id:380,word:"Dogmatic",pos:"adj.",def:"aggressively and arrogantly sure about unproved principles"},
+  {id:167,word:"Brusque",pos:"adj.",def:"short, abrupt, dismissive"},
+  {id:75,word:"Analgesic",pos:"n.",def:"something that reduces pain"},
+  {id:855,word:"Resolute",pos:"adj.",def:"firm, determined"},
+  {id:465,word:"Fatuous",pos:"adj.",def:"silly, foolish"},
+  {id:955,word:"Unctuous",pos:"adj.",def:"smooth or greasy in texture, appearance, manner"},
+  {id:948,word:"Truculent",pos:"adj.",def:"ready to fight, cruel"},
+  {id:245,word:"Concord",pos:"n.",def:"harmonious agreement"},
+  {id:104,word:"Aquatic",pos:"adj.",def:"relating to"},
+  {id:876,word:"Sanctimonious",pos:"adj.",def:"giving a hypocritical appearance of piety"},
+  {id:82,word:"Animated",pos:"adj.",def:"Lively, full of energy and movement"},
+  {id:297,word:"Cunning",pos:"adj.",def:"sly, clever at being deceitful"},
+  {id:593,word:"Interlocutor",pos:"n.",def:"someone who participates in a dialogue or conversation"},
+  {id:792,word:"Propitious",pos:"adj.",def:"favorable"},
+  {id:234,word:"Complicit",pos:"adj.",def:"being an accomplice in a wrongful act"},
+  {id:678,word:"Nebulous",pos:"adj.",def:"vaguely defined, cloudy"},
+  {id:47,word:"Affluent",pos:"adj.",def:"rich, wealthy"},
+  {id:610,word:"Juxtaposition",pos:"n.",def:"two things placed beside each other for the sake of implicit comparison"},
+  {id:72,word:"Amorous",pos:"adj.",def:"showing love, particularly affectionate"},
+  {id:883,word:"Sedentary",pos:"adj.",def:"sitting, settled"},
+  {id:907,word:"Strenuous",pos:"adj.",def:"requiring tremendous energy or stamina"},
+  {id:644,word:"Mawkish",pos:"adj.",def:"characterized by sick sentimentality"},
+  {id:784,word:"Proclivity",pos:"n.",def:"a strong inclination toward something"},
+  {id:850,word:"Reputable",pos:"adj.",def:"of good reputation"},
+  {id:566,word:"Inept",pos:"adj.",def:"unsuitable or incapable, not qualified"},
+  {id:388,word:"Eclectic",pos:"adj.",def:"consisting of a diverse variety of elements"},
+  {id:748,word:"Pervasive",pos:"adj.",def:"having the tendency to spread throughout"},
+  {id:489,word:"Fortitude",pos:"n.",def:"strength, guts"},
+  {id:45,word:"Affable",pos:"adj.",def:"friendly, amiable"},
+  {id:271,word:"Contentious",pos:"adj.",def:"having a tendency to quarrel or dispute"},
+  {id:619,word:"Laudatory",pos:"adj.",def:"expressing admiration or praise"},
+  {id:991,word:"Whimsical",pos:"adj.",def:"fanciful, full"},
+  {id:673,word:"Munificence",pos:"n.",def:"generosity in giving"},
+  {id:221,word:"Collateral",pos:"adj.",def:"secondary; used as security for a debt"},
+  {id:965,word:"Variegated",pos:"adj.",def:"diversified, distinctly marked"},
+  {id:715,word:"Pacific",pos:"adj.",def:"soothing"},
+  {id:891,word:"Sinuous",pos:"adj.",def:"lithe, serpentine"},
+  {id:322,word:"Demarcation",pos:"n.",def:"the marking of boundaries or categories"},
+  {id:285,word:"Corrosive",pos:"adj.",def:"having the tendency to erode or eat away"},
+  {id:604,word:"Irascible",pos:"adj.",def:"easily angered"},
+  {id:430,word:"Erudite",pos:"adj.",def:"Highly educated and knowledgeable"},
+  {id:987,word:"Vociferous",pos:"adj.",def:"loud, boisterous"},
+  {id:556,word:"Increment",pos:"n.",def:"an enlargement; the process of increasing"},
+  {id:719,word:"Pallid",pos:"adj.",def:"lacking color"},
+  {id:666,word:"Myriad",pos:"adj.",def:"consisting of a very great number"},
+  {id:734,word:"Pellucid",pos:"adj.",def:"easily intelligible, clear"},
+  {id:204,word:"Circumscribed",pos:"adj.",def:"marked off, bounded"},
+  {id:838,word:"Renown",pos:"n.",def:"honor, acclaim"},
+  {id:28,word:"Acerbic",pos:"adj.",def:"biting, bitter in tone or taste"},
+  {id:96,word:"Apathetic",pos:"adj.",def:"lacking concern, non-emotional"},
+  {id:33,word:"Adamant",pos:"adj.",def:"impervious, immovable, unyielding"},
+  {id:605,word:"Iridescent",pos:"adj.",def:"showing rainbow colors"},
+  {id:223,word:"Collusion",pos:"n.",def:"secret agreement, conspiracy"},
+  {id:559,word:"Indigenous",pos:"adj.",def:"originating in a region"},
+  {id:914,word:"Superfluous",pos:"adj.",def:"exceeding what is necessary"},
+  {id:693,word:"Obdurate",pos:"adj.",def:"unyielding to persuasion or stubbornly insensitive to change"},
+  {id:105,word:"Arable",pos:"adj.",def:"suitable for growing crops"},
+  {id:304,word:"Debacle",pos:"n.",def:"A disastrous failure or disruption"},
+  {id:229,word:"Compelling",pos:"adj.",def:"forceful, demanding attention"},
+  {id:760,word:"Plausible",pos:"adj.",def:"believable, reasonable"},
+  {id:570,word:"Infusion",pos:"n.",def:"an injection of one substance into another"},
+  {id:293,word:"Culmination",pos:"n.",def:"the climax toward which something progresses"},
+  {id:726,word:"Parody",pos:"n.",def:"a satirical imitation"},
+  {id:171,word:"Cacophony",pos:"n.",def:"tremendous noise, disharmonious sound"},
+  {id:981,word:"Virtuoso",pos:"n.",def:"one who excels in an art; a highly skilled musical performer"},
+  {id:16,word:"Absolution",pos:"n.",def:"freedom from blame, guilt, sin"},
+  {id:554,word:"Inclination",pos:"n.",def:"a tendency, propensity"},
+  {id:78,word:"Anathema",pos:"n.",def:"something cursed, a detestable person"},
+  {id:967,word:"Veneer",pos:"n.",def:"a superficial"},
+  {id:63,word:"Altercation",pos:"n.",def:"a dispute, fight"},
+  {id:56,word:"Alacrity",pos:"n.",def:"eagerness, speed"},
+  {id:421,word:"Enmity",pos:"n.",def:"ill will, hatred, hostility"},
+  {id:195,word:"Chaos",pos:"n.",def:"absolute disorder"},
+  {id:249,word:"Confection",pos:"n.",def:"a sweet, fancy food"},
+  {id:485,word:"Forbearance",pos:"n.",def:"patience, restraint, toleration"},
+  {id:768,word:"Potentate",pos:"n.",def:"one who has great power, a ruler"},
+  {id:875,word:"Salve",pos:"n.",def:"a soothing balm"},
+  {id:647,word:"Medley",pos:"n.",def:"a mixture of differing things"},
+  {id:725,word:"Pariah",pos:"n.",def:"an outcast, a repulsive person"},
+  {id:735,word:"Penchant",pos:"n.",def:"a tendency, partiality, preference"},
+  {id:22,word:"Acclaim",pos:"n.",def:"high praise"},
+  {id:231,word:"Complacency",pos:"n.",def:"self-satisfied ignorance of danger"},
+  {id:731,word:"Pathos",pos:"n.",def:"an emotion of sympathy"},
+  {id:676,word:"Nadir",pos:"n.",def:"the lowest point of something"},
+  {id:88,word:"Antecedent",pos:"n.",def:"something that came before"},
+  {id:934,word:"Tome",pos:"n.",def:"a large book"},
+  {id:246,word:"Condolence",pos:"n.",def:"an expression of sympathy in sorrow"},
+  {id:372,word:"Dissonance",pos:"n.",def:"lack of harmony or consistency"},
+  {id:809,word:"Quandary",pos:"n.",def:"a perplexing, bad situation"},
+  {id:797,word:"Prowess",pos:"n.",def:"extraordinary ability"},
+  {id:1000,word:"Zephyr",pos:"n.",def:"a gentle breeze"},
+  {id:932,word:"Tirade",pos:"n.",def:"a long speech marked by harsh or biting language"},
+  {id:999,word:"Zenith",pos:"n.",def:"the highest point, culminating point"},
+  {id:258,word:"Congruity",pos:"n.",def:"the quality of being in agreement"},
+  {id:542,word:"Implement",pos:"n.",def:"an instrument, utensil, tool"},
+  {id:611,word:"Knell",pos:"n.",def:"the solemn sound of a bell, often indicating a death"},
+  {id:643,word:"Maverick",pos:"n.",def:"an independent,"},
+  {id:157,word:"Bias",pos:"n.",def:"a tendency, inclination, prejudice"},
+  {id:113,word:"Ardor",pos:"n.",def:"extreme vigor, energy, enthusiasm"},
+  {id:94,word:"Antithesis",pos:"n.",def:"the absolute opposite"},
+  {id:522,word:"Hiatus",pos:"n.",def:"a break or gap in duration or continuity"},
+  {id:926,word:"Temerity",pos:"n.",def:"audacity, recklessness"},
+  {id:765,word:"Polemic",pos:"n.",def:"an aggressive argument against a specific opinion"},
+  {id:253,word:"Conformist",pos:"n.",def:"one who behaves the same as others"},
+  {id:659,word:"Mores",pos:"n.",def:"the moral attitudes and fixed customs of a group of people."},
+  {id:275,word:"Conundrum",pos:"n.",def:"puzzle, problem"},
+  {id:411,word:"Empathy",pos:"n.",def:"sensitivity to another’s feelings as if they were one’s own I have great empathy for"},
+  {id:235,word:"Compliment",pos:"n.",def:"an expression of esteem or approval"},
+  {id:225,word:"Combustion",pos:"n.",def:"the act or process of burning"},
+  {id:277,word:"Convention",pos:"n.",def:"an assembly of people"},
+  {id:747,word:"Perusal",pos:"n.",def:"a careful examination, review"},
+  {id:624,word:"Liability",pos:"n.",def:"legal responsibility"},
+  {id:664,word:"Munificence",pos:"n.",def:"great generosity in giving"},
+  {id:274,word:"Contusion",pos:"n.",def:"bruise, injury"},
+  {id:651,word:"Metamorphosis",pos:"n.",def:"the change of form, shape, substance"},
+  {id:888,word:"Serendipity",pos:"n.",def:"luck, finding good things without looking for them"},
+  {id:722,word:"Paradox",pos:"n.",def:"an apparently contradictory statement that is perhaps true"},
+  {id:634,word:"Maelstrom",pos:"n.",def:"a destructive whirlpool which rapidly sucks in objects"},
+  {id:81,word:"Anguish",pos:"n.",def:"extreme sadness, torment"},
+  {id:128,word:"Asylum",pos:"n.",def:"a place of refuge, a sanctuary"},
+  {id:550,word:"Incendiary",pos:"n.",def:"a person who agitates"},
+  {id:827,word:"Rectitude",pos:"n.",def:"uprightness, extreme morality"},
+  {id:390,word:"Edict",pos:"n.",def:"an order, decree"},
+  {id:95,word:"Anxiety",pos:"n.",def:"intense uneasiness"},
+  {id:782,word:"Privation",pos:"n.",def:"lacking basic necessities"},
+  {id:160,word:"Blemish",pos:"n.",def:"an imperfection, flaw"},
+  {id:349,word:"Dirge",pos:"n.",def:"a mournful"},
+  {id:164,word:"Boon",pos:"n.",def:"a gift or blessing"},
+  {id:460,word:"Facade",pos:"n.",def:"a deceptive appearance or attitude"},
+  {id:226,word:"Commendation",pos:"n.",def:"a notice of approval or recognition"},
+  {id:575,word:"Iniquity",pos:"n.",def:"wickedness or sin"},
+  {id:617,word:"Largess",pos:"n.",def:"great and lavish generosity in the giving of gifts"},
+  {id:518,word:"Hedonist",pos:"n.",def:"one who believes pleasure should be the primary pursuit of humans"},
+  {id:239,word:"Compunction",pos:"n.",def:"distress caused by feeling guilty"},
+  {id:224,word:"Colossus",pos:"n.",def:"a gigantic statue or thing"},
+  {id:31,word:"Acumen",pos:"n.",def:"keen insight"},
+  {id:90,word:"Anthology",pos:"n.",def:"a selected collection of writings, songs, etc."},
+  {id:759,word:"Plaudits",pos:"n.",def:"enthusiastic approval, applause"},
+  {id:755,word:"Pittance",pos:"n.",def:"a very small amount, especially relating to money"},
+  {id:143,word:"Ballad",pos:"n.",def:"A love song or poem"},
+  {id:251,word:"Conflagration",pos:"n.",def:"great fire"},
+  {id:282,word:"Coronation",pos:"n.",def:"the act of"},
+  {id:655,word:"Modicum",pos:"n.",def:"a small amount of something"},
+  {id:283,word:"Corpulence",pos:"",def:"(adj.)extreme fatness"},
+  {id:266,word:"Constrain",pos:"",def:"(v.)to forcibly restrict"}
 ];
 
-// ═══════════════════════════════════════════════════════════════
-// STORAGE HELPERS
-// ═══════════════════════════════════════════════════════════════
-const STORAGE_KEY = 'citysmarts_vocab_v2';
+// ═══════════════════════════════════════════════════════
+// CONFIG
+// 5 words/day × 100 days = 500 introduced via daily schedule
+// Full 1000 accessible via Study Ahead toggle
+// ═══════════════════════════════════════════════════════
+const WORDS_PER_DAY  = 5;
+const SCHEDULE_DAYS  = 100;   // 5×100 = 500 scheduled words
+const SESSION_SIZE   = 15;
+const BUCKET_INTERVALS = [1, 2, 4, 7, 14];
+const STORAGE_KEY    = 'citysmarts_vocab_v3';
 
+// ═══════════════════════════════════════════════════════
+// STORAGE
+// ═══════════════════════════════════════════════════════
+function todayISO() { return new Date().toISOString().slice(0,10); }
+function daysSince(iso) {
+  return Math.max(0, Math.floor((new Date(todayISO()) - new Date(iso)) / 86400000));
+}
 function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch(e) {}
+  try { const r = localStorage.getItem(STORAGE_KEY); if (r) return JSON.parse(r); } catch(e){}
   return null;
 }
-
 function saveState(s) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch(e) {}
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch(e){}
 }
-
-function todayISO() {
-  return new Date().toISOString().slice(0,10);
-}
-
-function daysSince(isoDate) {
-  const ms = new Date(todayISO()) - new Date(isoDate);
-  return Math.floor(ms / 86400000);
-}
-
 function initState() {
-  const existing = loadState();
-  if (existing) return existing;
-  const s = {
-    startDate: todayISO(),
-    lastVisit: todayISO(),
-    streak: 1,
-    progress: {},  // wordId -> {bucket, lastStudiedDay, correct, wrong}
-    wotdSeen: {},  // date -> wordId (which word was shown that day)
-  };
-  saveState(s);
-  return s;
+  const ex = loadState();
+  if (ex && ex.version === 3) return ex;
+  const s = { version:3, startDate:todayISO(), lastVisit:todayISO(), streak:1,
+               progress:{}, wotdViewed:{} };
+  saveState(s); return s;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// SRS ENGINE
-// ═══════════════════════════════════════════════════════════════
-const BUCKET_INTERVALS = [1, 2, 4, 7, 14]; // days between reviews
-const SESSION_SIZE = 15;
+// ═══════════════════════════════════════════════════════
+// PACING: 5 words per day for 100 days
+// day 0 → words[0..4], day 1 → words[5..9], etc.
+// ═══════════════════════════════════════════════════════
+function getTodayWords(state) {
+  const day = Math.min(daysSince(state.startDate), SCHEDULE_DAYS - 1);
+  const start = day * WORDS_PER_DAY;
+  return WORDS.slice(start, start + WORDS_PER_DAY);
+}
 
-function getIntroducedWords(state, includeAll) {
+function getIntroducedPool(state, studyAhead) {
+  if (studyAhead) return WORDS;
   const day = daysSince(state.startDate);
-  if (includeAll) return WORDS;
-  // Words introduced = day 0 → word[0], day 1 → word[1], etc.
-  // Student has seen words 0..day (capped at 99)
-  const count = Math.min(day + 1, 100);
+  const count = Math.min((day + 1) * WORDS_PER_DAY, WORDS.length);
   return WORDS.slice(0, count);
 }
 
-function getDueWords(state, pool) {
+function getDueQueue(state, pool) {
   const day = daysSince(state.startDate);
   const due = [], other = [];
   for (const w of pool) {
     const p = state.progress[w.id];
     if (!p) { due.push(w); continue; }
     const interval = BUCKET_INTERVALS[Math.min(p.bucket - 1, 4)];
-    const daysSinceStudied = day - (p.lastStudiedDay || 0);
-    if (daysSinceStudied >= interval) due.push(w);
+    if ((day - (p.lastStudiedDay || 0)) >= interval) due.push(w);
     else other.push(w);
   }
-  // Sort due by bucket asc (lowest bucket = most in need)
-  due.sort((a,b) => {
-    const ab = state.progress[a.id]?.bucket || 0;
-    const bb = state.progress[b.id]?.bucket || 0;
-    return ab - bb;
-  });
-  let queue = due.slice(0, SESSION_SIZE);
-  if (queue.length < SESSION_SIZE) {
-    const extra = other
-      .sort((a,b) => (state.progress[a.id]?.bucket||0) - (state.progress[b.id]?.bucket||0))
-      .slice(0, SESSION_SIZE - queue.length);
-    queue = [...queue, ...extra];
+  due.sort((a,b) => (state.progress[a.id]?.bucket||0) - (state.progress[b.id]?.bucket||0));
+  let q = due.slice(0, SESSION_SIZE);
+  if (q.length < SESSION_SIZE) {
+    q = [...q, ...other.sort((a,b) => (state.progress[a.id]?.bucket||0) - (state.progress[b.id]?.bucket||0))
+               .slice(0, SESSION_SIZE - q.length)];
   }
-  return queue.sort(() => Math.random() - 0.5);
+  return q.sort(() => Math.random() - 0.5);
 }
 
-function getWotdWord(state) {
-  const day = daysSince(state.startDate);
-  return WORDS[day % 100];
-}
-
-function getMasteredCount(state) {
+function getMastered(state) {
   return Object.values(state.progress).filter(p => p.bucket >= 5).length;
 }
 
-function getOverallDist(state) {
+function getBucketDist(state) {
   const dist = {0:0,1:0,2:0,3:0,4:0,5:0};
-  for (const w of WORDS) {
-    const p = state.progress[w.id];
-    dist[p ? Math.min(p.bucket,5) : 0]++;
-  }
+  for (const w of WORDS) { const p = state.progress[w.id]; dist[p ? Math.min(p.bucket,5) : 0]++; }
   return dist;
 }
 
-// Build 4 MC answer choices: 1 correct + 3 distractors, shuffled
-// Distractors are picked from WORDS that share the same part of speech when
-// possible (makes choices more genuinely challenging), fallback to any word.
 function buildMCChoices(correctWord) {
   const samePOS = WORDS.filter(w => w.id !== correctWord.id && w.pos === correctWord.pos);
   const other   = WORDS.filter(w => w.id !== correctWord.id && w.pos !== correctWord.pos);
   const pool = [...samePOS, ...other];
-  // Fisher-Yates shuffle, take first 3
-  for (let i = pool.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [pool[i], pool[j]] = [pool[j], pool[i]];
-  }
+  for (let i = pool.length-1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [pool[i],pool[j]]=[pool[j],pool[i]]; }
   const choices = [
-    {word: correctWord, isCorrect: true},
-    {word: pool[0],     isCorrect: false},
-    {word: pool[1],     isCorrect: false},
-    {word: pool[2],     isCorrect: false},
+    {word:correctWord, isCorrect:true},
+    {word:pool[0], isCorrect:false},
+    {word:pool[1], isCorrect:false},
+    {word:pool[2], isCorrect:false},
   ];
-  // Shuffle choices so correct answer isn't always first
-  for (let i = choices.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [choices[i], choices[j]] = [choices[j], choices[i]];
-  }
+  for (let i = choices.length-1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [choices[i],choices[j]]=[choices[j],choices[i]]; }
   return choices;
 }
 
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // APP STATE
-// ═══════════════════════════════════════════════════════════════
-let S = initState(); // storage state
+// ═══════════════════════════════════════════════════════
+let S = initState();
 let UI = {
   tab: 'wotd',
+  wotdIdx: 0,        // which of today's 5 words (0–4)
   wotdFlipped: false,
-  studyMode: 'flashcard',   // 'flashcard' | 'mc'
+  studyMode: 'flashcard',
   studyQueue: [],
   studyIdx: 0,
   studyFlipped: false,
   studySessionStats: {correct:0, wrong:0},
   studyDone: false,
   studyAhead: false,
-  mcChoices: [],            // [{word, isCorrect}] shuffled 4 options
-  mcAnswered: null,         // null | {selectedIdx, correctIdx}
+  mcChoices: [],
+  mcAnswered: null,
   confirmReset: false,
 };
 
-// Update streak on load
-(function updateStreak() {
+// Update streak
+(function() {
   const today = todayISO();
   if (S.lastVisit === today) return;
-  const yesterday = new Date(today);
-  yesterday.setDate(yesterday.getDate() - 1);
-  const yday = yesterday.toISOString().slice(0,10);
-  if (S.lastVisit === yday) {
-    S.streak = (S.streak || 1) + 1;
-  } else {
-    S.streak = 1;
-  }
+  const yday = new Date(today); yday.setDate(yday.getDate()-1);
+  const ydayStr = yday.toISOString().slice(0,10);
+  S.streak = (S.lastVisit === ydayStr) ? (S.streak||1)+1 : 1;
   S.lastVisit = today;
   saveState(S);
 })();
 
-// ═══════════════════════════════════════════════════════════════
-// CAT COLORS
-// ═══════════════════════════════════════════════════════════════
-const CAT_COLOR = {
-  Character:   '#7C3AED',  // purple
-  Thinking:    '#2563EB',  // blue
-  Change:      '#C2610A',  // amber-orange
-  Description: '#047857',  // green
-  Language:    '#BE185D',  // pink
-};
-
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
 // RENDER HELPERS
-// ═══════════════════════════════════════════════════════════════
-function chipHTML(text, color) {
-  return `<span class="chip" style="color:${color};background:${color}18;border:1px solid ${color}30">${text}</span>`;
+// ═══════════════════════════════════════════════════════
+function chipHTML(text) {
+  return `<span class="chip">${text}</span>`;
 }
 
-function cardHTML(word, flipped, showHint=true) {
-  const cc = CAT_COLOR[word.cat] || '#888';
+function cardHTML(word, flipped) {
   return `
   <div class="card-wrap ${flipped?'flipped':''}" id="card-wrap" onclick="flipCard()">
     <div class="card-flipper">
       <div class="card-face card-front">
-        <div class="card-tags">
-          ${chipHTML(word.cat, cc)}
-          ${chipHTML(word.pos, 'var(--gold)')}
-        </div>
+        <div class="card-tags">${chipHTML(word.pos)}</div>
         <div class="card-word">${word.word}</div>
-        <div class="card-pos">${word.pos}.</div>
-        ${showHint ? `<div class="card-hint">Tap to reveal</div>` : ''}
+        <div class="card-pos">${word.pos}</div>
+        <div class="card-hint">Tap to reveal</div>
       </div>
       <div class="card-face card-back">
-        <div class="card-back-label">${word.word} · ${word.pos}.</div>
+        <div class="card-back-label">${word.word} · ${word.pos}</div>
         <div class="card-def">${word.def}</div>
-        <div class="card-ex">"${word.ex}"</div>
       </div>
     </div>
   </div>`;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// RENDER HEADER
-// ═══════════════════════════════════════════════════════════════
 function renderHeader() {
   const day = daysSince(S.startDate) + 1;
   document.getElementById('h-day').textContent = day;
-  document.getElementById('h-mastered').textContent = getMasteredCount(S);
+  document.getElementById('h-mastered').textContent = getMastered(S);
   document.getElementById('h-streak').textContent = (S.streak||1) + '🔥';
 }
 
-// ═══════════════════════════════════════════════════════════════
-// RENDER WOTD
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// WOTD
+// ═══════════════════════════════════════════════════════
 function renderWotd() {
-  const word = getWotdWord(S);
+  const todayWords = getTodayWords(S);
   const day = daysSince(S.startDate) + 1;
-  const introduced = Math.min(day, 100);
+  const word = todayWords[UI.wotdIdx];
+  const introduced = Math.min(daysSince(S.startDate) + 1, SCHEDULE_DAYS) * WORDS_PER_DAY;
+
+  // Dot selector for the 5 words
+  const dots = todayWords.map((w,i) => {
+    const viewed = S.wotdViewed[w.id];
+    const active = i === UI.wotdIdx;
+    let cls = 'word-dot';
+    if (active) cls += ' active';
+    else if (viewed) cls += ' seen';
+    return `<div class="${cls}" onclick="selectWotd(${i})">${i+1}</div>`;
+  }).join('');
+
   document.getElementById('main-content').innerHTML = `
     <div class="section">
       <div class="wotd-header">
-        <div class="wotd-day">Day <span>${day}</span> · Word ${((day-1)%100)+1} of 100</div>
+        <div class="wotd-day">Day <span>${day}</span> · ${WORDS_PER_DAY} New Words</div>
         <div class="streak-badge">🔥 ${S.streak||1} day streak</div>
       </div>
-      ${cardHTML(word, UI.wotdFlipped, true)}
+      <div class="word-dots">${dots}</div>
+      ${cardHTML(word, UI.wotdFlipped)}
       <div class="wotd-cta">
         ${UI.wotdFlipped
           ? `<button class="btn-primary" onclick="switchTab('study')">Study Your ${introduced} Introduced Words →</button>
-             <div class="wotd-note">Each day adds a new word to your study pool.</div>`
-          : `<div class="wotd-note">Flip the card to learn today's word, then head to Study to practice everything you've learned so far.</div>`
+             <div class="wotd-note">Use the dots above to browse all 5 of today's words.</div>`
+          : `<div class="wotd-note">Tap the card to reveal the definition. Use the dots to browse all 5 words.</div>`
         }
       </div>
     </div>`;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// RENDER STUDY
-// ═══════════════════════════════════════════════════════════════
-function studyHeaderHTML() {
-  const day = daysSince(S.startDate) + 1;
-  const introduced = Math.min(day, 100);
+// ═══════════════════════════════════════════════════════
+// STUDY
+// ═══════════════════════════════════════════════════════
+function studyControlsHTML() {
   return `
     <div class="mode-toggle">
-      <button class="mode-btn ${UI.studyMode==='flashcard'?'active':''}"
-        onclick="setStudyMode('flashcard')">🃏 Flashcards</button>
-      <button class="mode-btn ${UI.studyMode==='mc'?'active':''}"
-        onclick="setStudyMode('mc')">🎯 Multiple Choice</button>
+      <button class="mode-btn ${UI.studyMode==='flashcard'?'active':''}" onclick="setStudyMode('flashcard')">🃏 Flashcards</button>
+      <button class="mode-btn ${UI.studyMode==='mc'?'active':''}" onclick="setStudyMode('mc')">🎯 Multiple Choice</button>
     </div>
     <div class="toggle-row" style="width:100%;max-width:480px">
       <div class="toggle-label">
-        <strong>Study Ahead</strong>
-        Unlock all 100 words
+        <strong>Unlock Full List</strong>
+        Study all 1,000 ISEE words
       </div>
       <label class="toggle">
-        <input type="checkbox" ${UI.studyAhead?'checked':''}
-          onchange="toggleStudyAhead(this.checked)"/>
+        <input type="checkbox" ${UI.studyAhead?'checked':''} onchange="toggleStudyAhead(this.checked)"/>
         <span class="slider"></span>
       </label>
     </div>`;
 }
 
 function renderStudy() {
-  const day = daysSince(S.startDate) + 1;
-  const introduced = Math.min(day, 100);
+  const introduced = Math.min(daysSince(S.startDate)+1, SCHEDULE_DAYS) * WORDS_PER_DAY;
 
   if (UI.studyDone) {
-    const {correct, wrong} = UI.studySessionStats;
-    const tot = correct + wrong;
-    const pct = tot > 0 ? Math.round(correct/tot*100) : 0;
+    const {correct,wrong} = UI.studySessionStats;
+    const tot = correct+wrong;
+    const pct = tot>0 ? Math.round(correct/tot*100) : 0;
     const emoji = pct>=80?'🏆':pct>=60?'⭐':'📚';
     document.getElementById('main-content').innerHTML = `
       <div class="done-screen">
@@ -663,7 +1474,7 @@ function renderStudy() {
         <div class="stat-row">
           <div class="stat-box"><div class="stat-val" style="color:var(--green)">${correct}</div><div class="stat-lbl">Got It</div></div>
           <div class="stat-box"><div class="stat-val" style="color:var(--red)">${wrong}</div><div class="stat-lbl">Learning</div></div>
-          <div class="stat-box"><div class="stat-val" style="color:var(--gold)">${getMasteredCount(S)}</div><div class="stat-lbl">Mastered</div></div>
+          <div class="stat-box"><div class="stat-val" style="color:var(--gold)">${getMastered(S)}</div><div class="stat-lbl">Mastered</div></div>
         </div>
         <button class="btn-primary" onclick="startStudySession()">Study Again</button>
       </div>`;
@@ -673,34 +1484,28 @@ function renderStudy() {
   if (UI.studyQueue.length === 0) {
     document.getElementById('main-content').innerHTML = `
       <div class="section">
-        ${studyHeaderHTML()}
+        ${studyControlsHTML()}
         <div class="empty-screen">
           <div class="empty-emoji">✨</div>
           <div class="screen-title">All Caught Up</div>
-          <div class="screen-sub">
-            No words are due right now.<br/>
-            You've mastered <strong style="color:var(--gold)">${getMasteredCount(S)}</strong>
-            of <strong>${introduced}</strong> introduced words.
-          </div>
+          <div class="screen-sub">No words are due right now.<br/>
+            You've mastered <strong style="color:var(--gold)">${getMastered(S)}</strong>
+            of <strong>${introduced}</strong> introduced words.</div>
           <button class="btn-neutral" onclick="startStudySession()">Study Anyway</button>
         </div>
       </div>`;
     return;
   }
 
-  if (UI.studyMode === 'mc') {
-    renderMC();
-  } else {
-    renderFlashcard();
-  }
+  UI.studyMode === 'mc' ? renderMC() : renderFlashcard();
 }
 
 function renderFlashcard() {
   const word = UI.studyQueue[UI.studyIdx];
-  const pct  = UI.studyIdx / UI.studyQueue.length * 100;
+  const pct = UI.studyIdx / UI.studyQueue.length * 100;
   document.getElementById('main-content').innerHTML = `
     <div class="section">
-      ${studyHeaderHTML()}
+      ${studyControlsHTML()}
       <div class="prog-wrap">
         <div class="prog-meta">
           <span>${UI.studyIdx+1} of ${UI.studyQueue.length}</span>
@@ -708,7 +1513,7 @@ function renderFlashcard() {
         </div>
         <div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
       </div>
-      ${cardHTML(word, UI.studyFlipped, true)}
+      ${cardHTML(word, UI.studyFlipped)}
       <div class="btn-row" style="opacity:${UI.studyFlipped?1:0};pointer-events:${UI.studyFlipped?'auto':'none'};transition:opacity .25s">
         <button class="btn btn-wrong" onclick="respond(false)">✗&nbsp; Still Learning</button>
         <button class="btn btn-right" onclick="respond(true)">✓&nbsp; Got It</button>
@@ -717,18 +1522,17 @@ function renderFlashcard() {
 }
 
 function renderMC() {
-  const word    = UI.studyQueue[UI.studyIdx];
+  const word = UI.studyQueue[UI.studyIdx];
   const choices = UI.mcChoices;
   const answered = UI.mcAnswered;
-  const pct     = UI.studyIdx / UI.studyQueue.length * 100;
-  const cc      = CAT_COLOR[word.cat] || '#888';
+  const pct = UI.studyIdx / UI.studyQueue.length * 100;
 
-  const choiceButtons = choices.map((c, i) => {
+  const choiceButtons = choices.map((c,i) => {
     let cls = 'mc-choice';
     let disabled = '';
     if (answered !== null) {
       disabled = 'disabled';
-      if (c.isCorrect)           cls += ' correct';
+      if (c.isCorrect) cls += ' correct';
       else if (i === answered.selectedIdx && !c.isCorrect) cls += ' wrong';
     }
     return `<button class="${cls}" ${disabled} onclick="selectAnswer(${i})">${c.word.def}</button>`;
@@ -739,12 +1543,12 @@ function renderMC() {
     const wasRight = choices[answered.selectedIdx].isCorrect;
     resultMsg = wasRight
       ? `<div class="mc-result" style="color:var(--green)">✓ Correct!</div>`
-      : `<div class="mc-result" style="color:var(--red)">✗ Not quite — the green answer is correct.</div>`;
+      : `<div class="mc-result" style="color:var(--red)">✗ Not quite — the correct answer is highlighted in green.</div>`;
   }
 
   document.getElementById('main-content').innerHTML = `
     <div class="section">
-      ${studyHeaderHTML()}
+      ${studyControlsHTML()}
       <div class="prog-wrap">
         <div class="prog-meta">
           <span>${UI.studyIdx+1} of ${UI.studyQueue.length}</span>
@@ -753,12 +1557,9 @@ function renderMC() {
         <div class="prog-track"><div class="prog-fill" style="width:${pct}%"></div></div>
       </div>
       <div class="mc-card">
-        <div class="card-tags">
-          ${chipHTML(word.cat, cc)}
-          ${chipHTML(word.pos, 'var(--gold)')}
-        </div>
+        <div class="card-tags">${chipHTML(word.pos)}</div>
         <div class="mc-word">${word.word}</div>
-        <div class="mc-pos">${word.pos}.</div>
+        <div class="mc-pos">${word.pos}</div>
         <div class="mc-prompt">Choose the correct definition</div>
       </div>
       <div class="mc-choices">${choiceButtons}</div>
@@ -766,43 +1567,43 @@ function renderMC() {
     </div>`;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// RENDER STATS
-// ═══════════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+// STATS
+// ═══════════════════════════════════════════════════════
 function renderStats() {
-  const dist = getOverallDist(S);
-  const day = daysSince(S.startDate) + 1;
-  const introduced = Math.min(day, 100);
+  const dist = getBucketDist(S);
+  const introduced = Math.min(daysSince(S.startDate)+1, SCHEDULE_DAYS) * WORDS_PER_DAY;
   const buckets = [
-    {key:0,label:'Unseen',    color:'var(--muted)'},
-    {key:1,label:'Learning',  color:'var(--red)'},
-    {key:2,label:'Reviewing', color:'#FB923C'},
-    {key:3,label:'Progressing',color:'var(--gold)'},
-    {key:4,label:'Almost There',color:'#16A34A'},
-    {key:5,label:'Mastered ✓',color:'var(--green)'},
+    {key:0, label:'Unseen',       color:'var(--muted2)'},
+    {key:1, label:'Learning',     color:'var(--red)'},
+    {key:2, label:'Reviewing',    color:'#FB923C'},
+    {key:3, label:'Progressing',  color:'var(--gold)'},
+    {key:4, label:'Almost There', color:'#16A34A'},
+    {key:5, label:'Mastered ✓',  color:'var(--green)'},
   ];
-  const struggling = WORDS.filter(w => {
-    const p = S.progress[w.id];
-    return p && p.bucket === 1 && (p.wrong||0) > 0;
-  }).sort((a,b)=>(S.progress[b.id]?.wrong||0)-(S.progress[a.id]?.wrong||0)).slice(0,10);
-
-  const bucketRows = buckets.map(b=>{
+  const bucketRows = buckets.map(b => {
     const count = dist[b.key]||0;
-    const pct = Math.round(count/100*100);
+    const pct = Math.round(count/WORDS.length*100);
     return `<div class="bucket-row">
       <div class="bucket-meta">
         <span class="bucket-name" style="color:${b.color}">${b.label}</span>
-        <span style="color:var(--muted);font-size:12px">${count}</span>
+        <span style="color:var(--muted2)">${count}</span>
       </div>
       <div class="bucket-bar-track"><div class="bucket-bar-fill" style="background:${b.color};width:${pct}%"></div></div>
     </div>`;
   }).join('');
 
-  const struggleRows = struggling.length ? struggling.map(w=>`
-    <div class="struggle-row">
-      <div><span class="struggle-word">${w.word}</span><span class="struggle-pos">${w.pos}.</span></div>
-      <span class="struggle-count">✗ ${S.progress[w.id]?.wrong}</span>
-    </div>`).join('') : '<div style="font-size:13px;color:var(--muted);padding:8px 0">Nothing struggling yet — keep studying!</div>';
+  const struggling = WORDS.filter(w => {
+    const p = S.progress[w.id];
+    return p && p.bucket === 1 && (p.wrong||0) > 0;
+  }).sort((a,b) => (S.progress[b.id]?.wrong||0)-(S.progress[a.id]?.wrong||0)).slice(0,10);
+
+  const struggleRows = struggling.length
+    ? struggling.map(w => `<div class="struggle-row">
+        <div><span class="struggle-word">${w.word}</span><span class="struggle-pos">${w.pos}</span></div>
+        <span class="struggle-count">✗ ${S.progress[w.id]?.wrong}</span>
+      </div>`).join('')
+    : '<div style="font-size:13px;color:var(--muted2);padding:8px 0">Nothing struggling yet — keep studying!</div>';
 
   const resetHTML = UI.confirmReset
     ? `<div class="confirm-panel">
@@ -818,10 +1619,10 @@ function renderStats() {
     <div class="stats-section">
       <h2>Your Progress</h2>
       <div class="panel">
-        <div class="panel-label">Word Distribution</div>
+        <div class="panel-label">Word Distribution (${WORDS.length} total)</div>
         ${bucketRows}
       </div>
-      <div class="panel" style="max-height:260px;overflow-y:auto">
+      <div class="panel" style="max-height:240px;overflow-y:auto">
         <div class="panel-label">Needs Work (${struggling.length})</div>
         ${struggleRows}
       </div>
@@ -829,43 +1630,48 @@ function renderStats() {
     </div>`;
 }
 
-function setStudyMode(mode) {
-  UI.studyMode = mode;
-  startStudySession();
-}
-
+// ═══════════════════════════════════════════════════════
+// INTERACTIONS
+// ═══════════════════════════════════════════════════════
 function switchTab(tab) {
   UI.tab = tab;
-  ['wotd','study','stats'].forEach(t=>{
-    document.getElementById('tab-'+t).classList.toggle('active', t===tab);
-  });
+  ['wotd','study','stats'].forEach(t =>
+    document.getElementById('tab-'+t).classList.toggle('active', t===tab));
   if (tab === 'study' && UI.studyQueue.length === 0 && !UI.studyDone) {
-    startStudySession();
-    return;
+    startStudySession(); return;
   }
+  render();
+}
+
+function selectWotd(idx) {
+  UI.wotdIdx = idx;
+  UI.wotdFlipped = false;
+  const word = getTodayWords(S)[idx];
+  if (!S.wotdViewed) S.wotdViewed = {};
+  S.wotdViewed[word.id] = true;
+  saveState(S);
   render();
 }
 
 function flipCard() {
   if (UI.tab === 'wotd') {
     UI.wotdFlipped = !UI.wotdFlipped;
-  } else if (UI.tab === 'study') {
+    const word = getTodayWords(S)[UI.wotdIdx];
+    if (!S.wotdViewed) S.wotdViewed = {};
+    S.wotdViewed[word.id] = true;
+    saveState(S);
+  } else {
     UI.studyFlipped = true;
   }
   render();
 }
 
-// MC: student picks an answer
 function selectAnswer(idx) {
-  if (UI.mcAnswered !== null) return; // already answered
+  if (UI.mcAnswered !== null) return;
   const correctIdx = UI.mcChoices.findIndex(c => c.isCorrect);
-  UI.mcAnswered = {selectedIdx: idx, correctIdx};
-  const wasRight = UI.mcChoices[idx].isCorrect;
+  UI.mcAnswered = {selectedIdx:idx, correctIdx};
   render();
-  // Auto-advance after 1.4s
-  setTimeout(() => {
-    respond(wasRight);
-  }, 1400);
+  setTimeout(() => respond(UI.mcChoices[idx].isCorrect), 1400);
 }
 
 function respond(correct) {
@@ -873,66 +1679,50 @@ function respond(correct) {
   const day  = daysSince(S.startDate);
   const p    = S.progress[word.id] || {bucket:1, lastStudiedDay:0, correct:0, wrong:0};
   S.progress[word.id] = {
-    bucket:          correct ? Math.min(p.bucket+1, 5) : 1,
-    lastStudiedDay:  day,
-    correct:         (p.correct||0) + (correct?1:0),
-    wrong:           (p.wrong||0)  + (correct?0:1),
+    bucket: correct ? Math.min(p.bucket+1,5) : 1,
+    lastStudiedDay: day,
+    correct: (p.correct||0)+(correct?1:0),
+    wrong:   (p.wrong||0)+(correct?0:1),
   };
   if (correct) UI.studySessionStats.correct++;
   else         UI.studySessionStats.wrong++;
   saveState(S);
   UI.studyFlipped = false;
   UI.mcAnswered   = null;
-  if (UI.studyIdx + 1 >= UI.studyQueue.length) {
+  if (UI.studyIdx+1 >= UI.studyQueue.length) {
     UI.studyDone = true;
   } else {
     UI.studyIdx++;
-    // Pre-build choices for the next MC card
-    if (UI.studyMode === 'mc') {
-      UI.mcChoices = buildMCChoices(UI.studyQueue[UI.studyIdx]);
-    }
+    if (UI.studyMode === 'mc') UI.mcChoices = buildMCChoices(UI.studyQueue[UI.studyIdx]);
   }
   render();
 }
+
+function setStudyMode(mode) { UI.studyMode = mode; startStudySession(); }
+function toggleStudyAhead(v) { UI.studyAhead = v; startStudySession(); }
 
 function startStudySession() {
-  const pool       = getIntroducedWords(S, UI.studyAhead);
-  UI.studyQueue    = getDueWords(S, pool);
-  UI.studyIdx      = 0;
-  UI.studyFlipped  = false;
-  UI.mcAnswered    = null;
+  const pool = getIntroducedPool(S, UI.studyAhead);
+  UI.studyQueue = getDueQueue(S, pool);
+  UI.studyIdx = 0; UI.studyFlipped = false;
+  UI.mcAnswered = null;
   UI.studySessionStats = {correct:0, wrong:0};
-  UI.studyDone     = false;
-  // Pre-build first MC choices if needed
-  if (UI.studyMode === 'mc' && UI.studyQueue.length > 0) {
+  UI.studyDone = false;
+  if (UI.studyMode === 'mc' && UI.studyQueue.length > 0)
     UI.mcChoices = buildMCChoices(UI.studyQueue[0]);
-  }
   render();
-}
-
-function toggleStudyAhead(checked) {
-  UI.studyAhead = checked;
-  startStudySession();
 }
 
 function askReset()    { UI.confirmReset = true;  render(); }
 function cancelReset() { UI.confirmReset = false; render(); }
 function doReset() {
-  S.progress   = {};
-  S.startDate  = todayISO();
-  S.lastVisit  = todayISO();
-  S.streak     = 1;
+  S.progress = {}; S.startDate = todayISO(); S.lastVisit = todayISO();
+  S.streak = 1; S.wotdViewed = {};
   saveState(S);
-  UI.confirmReset = false;
-  UI.studyQueue   = [];
-  UI.studyDone    = false;
-  UI.mcAnswered   = null;
+  UI.confirmReset = false; UI.studyQueue = []; UI.studyDone = false; UI.mcAnswered = null;
   render();
 }
 
-// ═══════════════════════════════════════════════════════════════
-// MAIN RENDER
-// ═══════════════════════════════════════════════════════════════
 function render() {
   renderHeader();
   if (UI.tab === 'wotd')  renderWotd();
